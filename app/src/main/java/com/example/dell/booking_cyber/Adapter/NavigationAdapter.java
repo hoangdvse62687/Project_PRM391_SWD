@@ -175,7 +175,7 @@ public class NavigationAdapter extends AppCompatActivity
             menu.findItem(R.id.action_signup).setVisible(false);
             AccountDTO accountDTO = accountManager.getAccount();
             TextView navUsername = (TextView) findViewById(R.id.header_username);
-            navUsername.setText(accountDTO.getUsername());
+            navUsername.setText(accountManager.userDTO.getName());
 
             TextView navEmail = (TextView) findViewById(R.id.textView);
             navEmail.setText(accountDTO.getUsername());

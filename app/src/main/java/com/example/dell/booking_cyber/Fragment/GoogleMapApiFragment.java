@@ -28,6 +28,8 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
+import com.example.dell.booking_cyber.DTO.CyberGamingDTO;
+import com.example.dell.booking_cyber.Model.CybercoreManager;
 import com.example.dell.booking_cyber.Model.DirectionFinder;
 import com.example.dell.booking_cyber.Model.DirectionFinderListener;
 import com.example.dell.booking_cyber.Model.Route;
@@ -63,7 +65,8 @@ public class GoogleMapApiFragment extends Fragment implements LocationListener,G
     private Marker mMarker;
     private List<Polyline> polylinePaths = new ArrayList<>();
     private static final String MYTAG = "MYTAG";
-
+    private List<CyberGamingDTO> cyberGamingDTOS;
+    private CybercoreManager cybercoreManager;
     // Mã yêu cầu uhỏi người dùng cho phép xem vị trí hiện tại của họ (***).
     // Giá trị mã 8bit (value < 256).
     public static final int REQUEST_ID_ACCESS_COURSE_FINE_LOCATION = 100;
@@ -99,59 +102,31 @@ public class GoogleMapApiFragment extends Fragment implements LocationListener,G
         myMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-//                if(marker.getSnippet().equals("Het May")){
-//                    return;
-//                }
-                String[] member_names = {"Quan Ba Dao 2","Quan FFQ","Quan KOW"};
-                String[] status = {"Con May","Het May","Con May"};
-                if(marker.getTitle().equals(member_names[0])){
-                    //Intent intent = new Intent(getContext().getApplicationContext(), ShopDetailActivity.class);
-                    //intent.putExtra("ID",1);
-                    //startActivity(intent);
-                }
-
-                if(marker.getTitle().equals(member_names[1])){
-                    //Intent intent = new Intent(getContext().getApplicationContext(), ShopDetailActivity.class);
-                    //intent.putExtra("ID",2);
-                    //startActivity(intent);
-                }
-
-                if(marker.getTitle().equals(member_names[2])){
-                    //Intent intent = new Intent(getContext().getApplicationContext(), ShopDetailActivity.class);
-                    //intent.putExtra("ID",3);
-                    //startActivity(intent);
+                for (CyberGamingDTO item:
+                     cyberGamingDTOS) {
+                    if(marker.getTitle().equals(item.getName())){
+                        //Intent intent = new Intent(getContext().getApplicationContext(), ShopDetailActivity.class);
+                        //intent.putExtra("ID",1);
+                        //startActivity(intent);
+                    }
                 }
             }
         });
-        String[] member_names = {"Quan Ba Dao 2","Quan FFQ","Quan KOW"};
-        String[] status = {"Con May","Het May","Con May"};
+        if(cybercoreManager == null){
+            cybercoreManager = new CybercoreManager();
+        }
+        cyberGamingDTOS = cybercoreManager.getAllCybercore();
         myMap.setOnMarkerClickListener(this);
-        MarkerOptions option = new MarkerOptions();
-        option.title(member_names[0]);
-        option.snippet(status[0]);
-        option.icon(BitmapDescriptorFactory.fromResource(R.drawable.green_marker));
-        option.position(new LatLng(10.852823,106.626263));
-        Marker marker = myMap.addMarker(option);
-        markers.add(marker);
-
-        MarkerOptions option2 = new MarkerOptions();
-        option2.title(member_names[2]);
-        option2.snippet(status[2]);
-        option2.icon(BitmapDescriptorFactory.fromResource(R.drawable.gray_marker));
-        option2.position(new LatLng(10.854617,106.624563));
-
-        Marker marker2 = myMap.addMarker(option2);
-        markers.add(marker2);
-
-        MarkerOptions option3 = new MarkerOptions();
-        option3.title(member_names[1]);
-        option3.snippet(status[1]);
-        option3.icon(BitmapDescriptorFactory.fromResource(R.drawable.green_marker));
-        option3.position(new LatLng(10.856342,106.624385));
-
-        Marker marker3 = myMap.addMarker(option3);
-        markers.add(marker3);
-
+        for (CyberGamingDTO item:
+             cyberGamingDTOS) {
+            MarkerOptions option = new MarkerOptions();
+            option.title(item.getName());
+            option.snippet("\n"+"\n"+"\n");
+            option.icon(BitmapDescriptorFactory.fromResource(R.drawable.green_marker));
+            option.position(new LatLng(item.getLatitude(),item.getLogitude()));
+            Marker marker = myMap.addMarker(option);
+            markers.add(marker);
+        }
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -15,9 +15,14 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -26,6 +31,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -37,7 +43,7 @@ import java.util.List;
 public class AccountManager extends Activity {
     Gson gson = new Gson();
     AccountDTO account = new AccountDTO();
-    UserDTO userDTO = new UserDTO();
+    public UserDTO userDTO = new UserDTO();
     final String fileDirectory = "Token.txt";
     private static final int READ_BLOCK_SIZE = 500;
 
@@ -64,10 +70,8 @@ public class AccountManager extends Activity {
         else if (account != null && account.getRole().equals(LocaleData.ROLE_USER)) {
             //Get Detail account
             if (getDataUserDTOByAccountId(account.getId())) {
-                if (userDTO.getActive() && !userDTO.getDeleted()) {
-                    if (writeFileToken(account, userDTO))
-                        return true;
-                }
+                if (writeFileToken(account, userDTO))
+                    return true;
             }
         }
         return false;
@@ -221,9 +225,11 @@ public class AccountManager extends Activity {
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            String link = LocaleData.USER_GETBYACCOUNTID_URL + Id;
-            URL url = new URL(link);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openConnection().getInputStream()));
+            String link = LocaleData.CUSTOMER_GETBYACCOUNTID_URL + Id;
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpGet httpGet = new HttpGet(link);
+            HttpResponse response = httpclient.execute(httpGet);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
             String data = reader.readLine();
             if (data != null) {
                 userDTO = gson.fromJson(data, UserDTO.class);
@@ -243,20 +249,18 @@ public class AccountManager extends Activity {
         }
         if (postCreateAccount(data)) {
             //not yet implement post data userDetail
-            return true;
+            if(putCreateCustomer(userDTO,account.getId()))
+                return writeFileToken(account,userDTO);
         }
         return false;
     }
 
     private boolean postCreateAccount(AccountDTO data) {
         try {
-            URL url = new URL(LocaleData.ACCOUNT_CREATE_URL);
-            HttpURLConnection request = (HttpURLConnection) url.openConnection();
-            request.setRequestMethod("POST");
-            request.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-            request.setRequestProperty("Accept", "application/json");
-            request.setDoOutput(true);
-            request.setDoInput(true);
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(LocaleData.ACCOUNT_CREATE_URL);
 
             JSONObject json = new JSONObject();
             json.put(JSON_USERNAME_RETURN_KEY, data.getUsername());
@@ -265,14 +269,16 @@ public class AccountManager extends Activity {
             json.put("active", true);
             json.put("deleted", false);
 
-            DataOutputStream os = new DataOutputStream(request.getOutputStream());
-            os.writeBytes(json.toString());
-
-            os.flush();
-            os.close();
-            Log.i("STATUS", String.valueOf(request.getResponseCode()));
-            Log.i("MSG" , request.getResponseMessage());
-            request.disconnect();
+            StringEntity se = new StringEntity( json.toString());
+            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+            httppost.setEntity(se);
+            HttpResponse response = httpclient.execute(httppost);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+            String returnJson = reader.readLine();
+            if (data == null) {
+                return false;
+            }
+            account = gson.fromJson(returnJson, AccountDTO.class);
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -280,4 +286,34 @@ public class AccountManager extends Activity {
         return false;
     }
 
+    private boolean putCreateCustomer(UserDTO userDTO,Integer accountId){
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPut httpPut = new HttpPut(LocaleData.CUSTOMER_CREATE_URL);
+
+            JSONObject json = new JSONObject();
+            json.put("accountId",accountId);
+            json.put("active",true);
+            json.put("avatar","");
+            json.put("deleted",false);
+            json.put("email",userDTO.getEmail());
+            json.put("name",userDTO.getName());
+            json.put("phone",userDTO.getPhone());
+            json.put("sex",1);
+
+            StringEntity se = new StringEntity( json.toString());
+            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+            httpPut.setEntity(se);
+            HttpResponse response = httpclient.execute(httpPut);
+            if(response!=null){
+                InputStream in = response.getEntity().getContent();
+            }
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
 }
