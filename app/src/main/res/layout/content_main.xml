@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    tools:showIn="@layout/app_bar_main"
+    android:layout_marginBottom="60dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <fragment
+            android:id="@+id/googleMap"
+            android:name="com.google.android.gms.maps.MapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <android.support.v7.widget.CardView
+            android:layout_marginTop="57.9dp"
+            android:layout_marginLeft="19.2dp"
+            android:layout_marginRight="19.2dp"
+            android:layout_width="match_parent"
+            android:layout_height="46.1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_marginTop="17dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="17dp"
+                    android:layout_height="17dp"
+                    android:src="@drawable/gray_marker_location"/>
+
+                <AutoCompleteTextView
+                    android:id="@+id/searchTool"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="18dp"
+                    android:background="#00000000"
+                    android:textColorHint="#000000"
+                    android:inputType="text"
+                    android:textSize="13.4sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Chọn Khu Vực Bạn Muốn Tìm Kiếm"/>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/btnHide"
+                android:drawableTop="@drawable/black_arrow_down"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Danh sách đặt chỗ"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:gravity="center"
+                android:layout_above="@+id/orderView"></TextView>
+            <android.support.v7.widget.CardView
+                android:id="@+id/orderView"
+                android:layout_marginLeft="16.3dp"
+                android:layout_marginRight="16.1dp"
+                app:cardCornerRadius="10dp"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="184.2dp">
+                <include layout="@layout/base_list_view_component"/>
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
+    </FrameLayout>
+</LinearLayout>
