@@ -181,21 +181,22 @@ public class GoogleMapApiFragment extends Fragment implements LocationListener,G
                 onMyMapReady(googleMap);
             }
         });
-
         String[] member_names = {"Quận 12","Quận Gò Vấp","Quận Tân Bình"};
         searchTool = getActivity().findViewById(R.id.searchTool);
         ArrayAdapter adapter = new ArrayAdapter(getActivity(),R.layout.dropdown,member_names);
-        searchTool.setAdapter(adapter);
-        searchTool.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                MarkerOptions option = new MarkerOptions();
-                option.position(new LatLng(markers.get(position).getPosition().latitude
-                        ,markers.get(position).getPosition().longitude));
-                myMap.animateCamera(CameraUpdateFactory.newLatLng(option.getPosition()), 250, null);
-                markers.get(position).showInfoWindow();
-            }
-        });
+        if(searchTool != null){
+            searchTool.setAdapter(adapter);
+            searchTool.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    MarkerOptions option = new MarkerOptions();
+                    option.position(new LatLng(markers.get(position).getPosition().latitude
+                            ,markers.get(position).getPosition().longitude));
+                    myMap.animateCamera(CameraUpdateFactory.newLatLng(option.getPosition()), 250, null);
+                    markers.get(position).showInfoWindow();
+                }
+            });
+        }
     }
 
     @Override

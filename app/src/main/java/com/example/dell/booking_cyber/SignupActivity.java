@@ -118,8 +118,8 @@ public class SignupActivity extends NavigationAdapter {
     }
 
     private void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "Đăng ký thất bại", Toast.LENGTH_LONG).show();
-
+        Toast.makeText(getBaseContext(), "Email đã tồn tại", Toast.LENGTH_LONG).show();
+        txtEmail.setError("Email này đã tồn tại");
         btnSignup.setEnabled(true);
     }
 

@@ -1,5 +1,9 @@
 package com.example.dell.booking_cyber.Constant;
 
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class LocaleData {
     public static final String ROLE_USER = "user";
 
@@ -10,4 +14,18 @@ public class LocaleData {
     public static final String CUSTOMER_CREATE_URL = "https://swd-backend-lamtt.herokuapp.com/customer";
 
     public static final String CYBER_GETALL_URL = "https://swd-backend-lamtt.herokuapp.com/cyber";
+
+    public static boolean HandleErrorMessageResponse(Integer statusResponse){
+        switch (statusResponse){
+            case 500:
+                return false;
+            case 401:
+                return false;
+            case 404:
+                return false;
+            case 200:
+                return true;
+        }
+        return true;
+    }
 }

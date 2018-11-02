@@ -22,6 +22,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -202,11 +203,12 @@ public class AccountManager extends Activity {
             HttpResponse response = httpclient.execute(httppost);
             BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
             String data = reader.readLine();
-            if (data == null) {
-                return false;
+            if(LocaleData.HandleErrorMessageResponse(response.getStatusLine().getStatusCode())){
+                if(data != null){
+                    account = gson.fromJson(data, AccountDTO.class);
+                    return true;
+                }
             }
-            account = gson.fromJson(data, AccountDTO.class);
-            return true;
         } catch (ClientProtocolException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -227,9 +229,11 @@ public class AccountManager extends Activity {
             HttpResponse response = httpclient.execute(httpGet);
             BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
             String data = reader.readLine();
-            if (data != null) {
-                customerDTO = gson.fromJson(data, CustomerDTO.class);
-                return true;
+            if (LocaleData.HandleErrorMessageResponse(response.getStatusLine().getStatusCode())) {
+                if(data != null){
+                    customerDTO = gson.fromJson(data, CustomerDTO.class);
+                    return true;
+                }
             }
         } catch (MalformedURLException ex) {
             ex.printStackTrace();
@@ -271,11 +275,12 @@ public class AccountManager extends Activity {
             HttpResponse response = httpclient.execute(httppost);
             BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
             String returnJson = reader.readLine();
-            if (data == null) {
-                return false;
+            if(LocaleData.HandleErrorMessageResponse(response.getStatusLine().getStatusCode())){
+                if(returnJson != null){
+                    account = gson.fromJson(returnJson, AccountDTO.class);
+                    return true;
+                }
             }
-            account = gson.fromJson(returnJson, AccountDTO.class);
-            return true;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -303,10 +308,14 @@ public class AccountManager extends Activity {
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
             httpPut.setEntity(se);
             HttpResponse response = httpclient.execute(httpPut);
-            if(response!=null){
-                InputStream in = response.getEntity().getContent();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+            String returnJson = reader.readLine();
+            if(LocaleData.HandleErrorMessageResponse(response.getStatusLine().getStatusCode())){
+                if(returnJson != null){
+                    this.customerDTO = gson.fromJson(returnJson,CustomerDTO.class);
+                    return true;
+                }
             }
-            return true;
         } catch (Exception ex) {
             ex.printStackTrace();
         }

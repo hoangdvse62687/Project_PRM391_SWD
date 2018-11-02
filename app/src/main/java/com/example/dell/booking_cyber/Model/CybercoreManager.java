@@ -39,8 +39,12 @@ public class CybercoreManager {
             HttpResponse response = httpclient.execute(httpGet);
             BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
             String json = reader.readLine();
-            TypeToken<List<CyberGamingDTO>> typeToken = new TypeToken<List<CyberGamingDTO>>(){};
-            data = gson.fromJson(json,typeToken.getType());
+            if(LocaleData.HandleErrorMessageResponse(response.getStatusLine().getStatusCode())){
+                if(json != null){
+                    TypeToken<List<CyberGamingDTO>> typeToken = new TypeToken<List<CyberGamingDTO>>(){};
+                    data = gson.fromJson(json,typeToken.getType());
+                }
+            }
 
         }catch (Exception ex){
             ex.printStackTrace();
