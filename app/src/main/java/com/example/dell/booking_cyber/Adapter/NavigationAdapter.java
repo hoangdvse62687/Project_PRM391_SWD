@@ -189,6 +189,9 @@ public class NavigationAdapter extends AppCompatActivity
             toolbar.setNavigationIcon(null);
 
             //Back icon setup
+            menu.findItem(R.id.action_login).setVisible(false);
+            menu.findItem(R.id.action_signup).setVisible(false);
+            menu.findItem(R.id.action_logout).setVisible(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
