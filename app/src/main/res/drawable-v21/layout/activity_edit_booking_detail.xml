@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+<android.support.v4.widget.DrawerLayout
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:openDrawer="start">
+
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".EditBookingDetailActivity">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </android.support.design.widget.AppBarLayout>
+        <!-- Insert content -->
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:fitsSystemWindows="true"
+            tools:context=".EditBookingDetailActivity">
+            <RelativeLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="56dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp">
+
+                <TextView
+                    android:id="@+id/header"
+                    android:text="Phòng máy"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textAlignment="center"
+                    android:textSize="26dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginLeft="30dp"
+                    android:id="@+id/option"
+                    android:layout_below="@+id/header"
+                    android:text="Đã đặt:"
+                    android:textColor="@color/black"
+                    android:layout_width="45dp"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/icon"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_toRightOf="@+id/option"
+                    android:layout_below="@+id/header"
+                    android:src="@drawable/gray_seat"/>
+                <TextView
+                    android:id="@+id/option2"
+                    android:layout_toRightOf="@+id/icon"
+                    android:layout_below="@+id/header"
+                    android:text="Ghế trống:"
+                    android:textColor="@color/black"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/icon2"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_toRightOf="@+id/option2"
+                    android:layout_below="@+id/header"
+                    android:src="@drawable/green_seat"/>
+
+                <TextView
+                    android:id="@+id/option3"
+                    android:layout_toRightOf="@+id/icon2"
+                    android:layout_below="@+id/header"
+                    android:text="Bạn Đặt:"
+                    android:textColor="@color/black"
+                    android:layout_width="65dp"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/icon3"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_toRightOf="@+id/option3"
+                    android:layout_below="@+id/header"
+                    android:src="@drawable/yellow_seat"/>
+                <View
+                    android:id="@+id/line"
+                    android:layout_below="@+id/option4"
+                    android:layout_height="1dp"
+                    android:layout_width="match_parent"
+                    android:background="@color/iron"/>
+                <RelativeLayout
+                    android:id="@+id/listSeat"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="80dp"
+                    android:paddingRight="26dp"
+                    android:paddingLeft="26dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:textColor="@color/black" />
+                    <ImageView
+                        android:tag="1"
+                        android:id="@+id/seat1"
+                        android:layout_width="48dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/gray_seat"/>
+                    <TextView
+                        android:id="@+id/lblSeat1"
+                        android:layout_below="@+id/seat1"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_below="@+id/lblSeat1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2"
+                        android:textColor="@color/black" />
+                    <ImageView
+                        android:layout_below="@+id/lblSeat1"
+                        android:id="@+id/seat2"
+                        android:layout_width="48dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/gray_seat"/>
+                    <TextView
+                        android:id="@+id/lblSeat2"
+                        android:layout_below="@+id/seat2"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_below="@+id/lblSeat2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3"
+                        android:textColor="@color/black" />
+                    <ImageView
+                        android:layout_below="@+id/lblSeat2"
+                        android:id="@+id/seat3"
+                        android:layout_width="48dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/gray_seat"/>
+                    <TextView
+                        android:id="@+id/lblSeat3"
+                        android:layout_below="@+id/seat3"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_toRightOf="@+id/seat1"
+                        android:layout_marginLeft="150dp"
+                        android:gravity="end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4"
+                        android:textColor="@color/black" />
+                    <ImageView
+                        android:layout_toRightOf="@+id/seat1"
+                        android:layout_marginLeft="150dp"
+                        android:id="@+id/seat4"
+                        android:layout_width="48dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/gray_seat"/>
+                    <TextView
+                        android:id="@+id/lblSeat4"
+                        android:layout_below="@+id/seat4"
+                        android:layout_toRightOf="@+id/lblSeat1"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_below="@+id/lblSeat4"
+                        android:layout_toRightOf="@+id/seat2"
+                        android:layout_marginLeft="150dp"
+                        android:gravity="end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5"
+                        android:textColor="@color/black" />
+                    <ImageView
+                        android:layout_below="@+id/lblSeat4"
+                        android:layout_toRightOf="@+id/seat2"
+                        android:layout_marginLeft="150dp"
+                        android:id="@+id/seat5"
+                        android:layout_width="48dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/gray_seat"/>
+                    <TextView
+                        android:id="@+id/lblSeat5"
+                        android:layout_below="@+id/seat5"
+                        android:layout_toRightOf="@+id/lblSeat2"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_below="@+id/lblSeat5"
+                        android:layout_toRightOf="@+id/seat3"
+                        android:layout_marginLeft="150dp"
+                        android:gravity="end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="6"
+                        android:textColor="@color/black" />
+                    <ImageView
+                        android:layout_below="@+id/lblSeat5"
+                        android:layout_toRightOf="@+id/seat3"
+                        android:layout_marginLeft="150dp"
+                        android:id="@+id/seat6"
+                        android:layout_width="48dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/gray_seat"/>
+                    <TextView
+                        android:id="@+id/lblSeat6"
+                        android:layout_below="@+id/seat6"
+                        android:layout_toRightOf="@+id/lblSeat3"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
+                <Button
+                    android:textColor="#fff"
+                    android:background="@drawable/button_bg_rounded_corners"
+                    android:id="@+id/btnPurchase"
+                    android:layout_below="@+id/listSeat"
+                    android:onClick="clickToPurchase"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Lưu"/>
+            </RelativeLayout>
+        </ScrollView>
+        <!-- end content -->
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@android:drawable/ic_dialog_email" />
+
+    </android.support.design.widget.CoordinatorLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_main"
+        app:menu="@menu/activity_main_drawer" />
+
+</android.support.v4.widget.DrawerLayout>
+
+<android.support.design.widget.BottomNavigationView
+    android:id="@+id/navigation"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="0dp"
+    android:layout_marginStart="0dp"
+    android:background="?android:attr/windowBackground"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:menu="@menu/navigation" />
+</android.support.constraint.ConstraintLayout>

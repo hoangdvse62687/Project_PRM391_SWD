@@ -28,6 +28,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
+import com.example.dell.booking_cyber.CyberDetailActivity;
 import com.example.dell.booking_cyber.DTO.CyberGamingDTO;
 import com.example.dell.booking_cyber.Model.CybercoreManager;
 import com.example.dell.booking_cyber.Model.DirectionFinder;
@@ -105,9 +106,9 @@ public class GoogleMapApiFragment extends Fragment implements LocationListener,G
                 for (CyberGamingDTO item:
                      cyberGamingDTOS) {
                     if(marker.getTitle().equals(item.getName())){
-                        //Intent intent = new Intent(getContext().getApplicationContext(), ShopDetailActivity.class);
-                        //intent.putExtra("ID",1);
-                        //startActivity(intent);
+                        Intent intent = new Intent(getContext().getApplicationContext(), CyberDetailActivity.class);
+                        intent.putExtra("ID",item.getId());
+                        startActivity(intent);
                     }
                 }
             }

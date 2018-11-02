@@ -187,6 +187,16 @@ public class NavigationAdapter extends AppCompatActivity
         if(!profileNavigationOn){
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             toolbar.setNavigationIcon(null);
+
+            //Back icon setup
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
         }
         return super.onPrepareOptionsMenu(menu);
     }

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fitsSystemWindows="true"
+        tools:context=".ShopDetailActivity"
+        android:orientation="vertical"
+        android:layout_marginTop="50dp">
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/poster_img"
+                android:layout_width="136dp"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="8dp"
+                app:cardUseCompatPadding="true">
+
+                <ImageView
+                    android:id="@+id/poster"
+                    android:layout_width="124dp"
+                    android:layout_height="113dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/icon_shop_detail" />
+            </android.support.v7.widget.CardView>
+
+            <!--<TextView-->
+                <!--android:id="@+id/txtShopName"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_toRightOf="@+id/poster_img"-->
+                <!--android:textColor="@color/black"-->
+                <!--android:textSize="21dp"-->
+                <!--android:textStyle="bold" />-->
+
+            <RatingBar
+                android:id="@+id/ratingbarShop"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtShopName"
+                android:layout_toRightOf="@+id/poster_img"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:rating="3"
+                android:scaleX="1.0"
+                android:scaleY="1.0"
+                android:stepSize="1.0"
+                android:theme="@style/RatingBar" />
+
+            <TextView
+                android:id="@+id/txtStatus"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/txtShopName"
+                android:layout_below="@+id/ratingbarShop"
+                android:layout_toRightOf="@+id/poster_img"
+                android:drawableLeft="@drawable/green_seat_small"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/txtPrice"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/txtStatus"
+                android:layout_below="@+id/txtStatus"
+                android:layout_toRightOf="@+id/poster_img"
+                android:drawableLeft="@drawable/ic_attach_money"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/txtAddress"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/txtPrice"
+                android:layout_below="@+id/txtPrice"
+                android:layout_toRightOf="@+id/poster_img"
+                android:drawableLeft="@drawable/gray_marker_location"
+                android:textSize="14dp" />
+            <TextView
+                android:textColor="@color/orange"
+                android:gravity="left|center"
+                android:id="@+id/txtDiscount"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/txtAddress"
+                android:layout_below="@+id/txtAddress"
+                android:layout_toRightOf="@+id/poster_img"
+                android:drawableLeft="@drawable/discount"
+                android:text="10%"
+                android:textSize="14dp" />
+            <Button
+                android:layout_marginLeft="80dp"
+                android:layout_toRightOf="@+id/poster_img"
+                android:layout_below="@+id/txtDiscount"
+                android:id="@+id/btnBookingSeat"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/button_bg_rounded_corners"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Đặt máy"
+                android:textColor="#fff"
+                android:textSize="16dp"
+                android:layout_marginBottom="5dp"/>
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+        <LinearLayout
+            android:layout_below="@+id/header"
+            android:layout_above="@+id/btnBookingSeat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabMode="fixed"
+                app:tabGravity="fill"/>
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"  />
+        </LinearLayout>
+</RelativeLayout>

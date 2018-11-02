@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:fillViewport="true"
+app:layout_behavior="@string/appbar_scrolling_view_behavior"
+tools:context=".Fragment.CyberCommentFragment">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:id="@+id/formComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:id="@+id/profile_pic3"
+            android:contentDescription="desc"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/ic_user"
+            />
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/member_name3"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/profile_pic3"
+            android:paddingBottom="10dp"
+            android:text="user@fpt.edu.vn"
+            android:textSize="16sp"
+            />
+        <RatingBar
+            android:layout_marginTop="12dp"
+            android:id="@+id/ratingbar3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:isIndicator="false"
+            android:layout_toRightOf="@+id/member_name3"
+            android:numStars="5"
+            android:rating="5"
+            android:scaleX="1.0"
+            android:scaleY="1.0"
+            android:stepSize="1.0"
+            style="?android:attr/ratingBarStyleSmall"
+            android:theme="@style/RatingBar" />
+        <EditText
+            android:layout_width="170dp"
+            android:layout_height="100dp"
+            android:id="@+id/Description3"
+            android:layout_alignLeft="@+id/member_name3"
+            android:layout_below="@+id/member_name3"
+            android:hint="Để lại bình luận tại đây"
+            android:singleLine="true"
+            android:textSize="16sp"/>
+        <Button
+            android:background="@drawable/button_bg_rounded_corners"
+            android:id="@+id/btnButtonListView"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/Description3"
+            android:layout_alignBottom="@+id/Description3"
+            android:layout_alignParentRight="true"
+            android:textColor="#fff"
+            android:text="Gửi"
+            android:textSize="16sp" />
+    </RelativeLayout>
+    <View
+        android:layout_height="1dp"
+        android:layout_width="match_parent"
+        android:background="@color/iron"/>
+    <include layout="@layout/base_list_view_component"/>
+</LinearLayout>
+</ScrollView>

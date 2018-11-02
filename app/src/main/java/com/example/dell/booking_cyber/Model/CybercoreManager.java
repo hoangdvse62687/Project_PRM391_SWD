@@ -45,10 +45,31 @@ public class CybercoreManager {
                     data = gson.fromJson(json,typeToken.getType());
                 }
             }
-
         }catch (Exception ex){
             ex.printStackTrace();
         }
         return data;
+    }
+
+    public CyberGamingDTO getCyberById(Integer Id){
+        try{
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpGet httpGet = new HttpGet(LocaleData.CYBER_GETCYBERBYID_URL+Id);
+
+            HttpResponse response = httpclient.execute(httpGet);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+            String json = reader.readLine();
+            if(LocaleData.HandleErrorMessageResponse(response.getStatusLine().getStatusCode())){
+                if(json != null){
+                    CyberGamingDTO data = gson.fromJson(json,CyberGamingDTO.class);
+                    return data;
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return null;
     }
 }

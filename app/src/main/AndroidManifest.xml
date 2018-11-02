@@ -30,7 +30,8 @@
         </activity>
         <activity android:name=".ReloadActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".SignupActivity"></activity>
+        <activity android:name=".SignupActivity" />
+        <activity android:name=".CyberDetailActivity"></activity>
     </application>
 
 </manifest>

@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:fillViewport="true"
+app:layout_behavior="@string/appbar_scrolling_view_behavior"
+tools:context=".Fragment.DetailCyberFragment">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        app:cardCornerRadius="5dp">
+        <include layout="@layout/gallery_view_component"></include>
+    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        app:cardCornerRadius="5dp">
+        <RelativeLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:gravity="center"
+                android:id="@+id/lblConfiguration"
+                android:textSize="17.5dp"
+                android:textColor="@color/black"
+                android:text="Cấu hình:"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content" />
+            <View
+                android:layout_toRightOf="@+id/lblConfiguration"
+                android:id="@+id/lineDevine"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/gray"></View>
+            <Spinner
+                android:layout_toRightOf="@+id/lineDevine"
+                android:id="@+id/spnConfiguration"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"></Spinner>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        app:cardCornerRadius="5dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <View
+                android:layout_height="1dp"
+                android:layout_width="match_parent"
+                android:background="@color/iron"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Phần cứng"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:gravity="center"></TextView>
+            <View
+                android:layout_height="1dp"
+                android:layout_width="match_parent"
+                android:background="@color/iron"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/CPU"
+                    android:layout_width="100dp"
+                    android:layout_height="60dp"
+                    android:padding="5dp"
+                    android:text="CPU"/>
+                <TextView
+                    android:id="@+id/txtCPU"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_toRightOf="@+id/CPU"
+                    android:textAlignment="textStart"
+                    android:padding="5dp"
+                    android:textColor="@color/black" />
+                <View
+                    android:id="@+id/view1"
+                    android:layout_below="@+id/CPU"
+                    android:layout_height="1dp"
+                    android:layout_width="match_parent"
+                    android:background="@color/iron"/>
+                <TextView
+                    android:id="@+id/GPU"
+                    android:layout_width="100dp"
+                    android:layout_height="60dp"
+                    android:padding="5dp"
+                    android:layout_below="@+id/view1"
+                    android:text="Card Màn Hình"/>
+                <TextView
+                    android:id="@+id/txtGPU"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_toRightOf="@+id/GPU"
+                    android:padding="5dp"
+                    android:layout_below="@+id/view1"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black" />
+                <View
+                    android:id="@+id/view2"
+                    android:layout_below="@+id/GPU"
+                    android:layout_height="1dp"
+                    android:layout_width="match_parent"
+                    android:background="@color/iron"/>
+                <TextView
+                    android:id="@+id/RAM"
+                    android:layout_below="@+id/view2"
+                    android:layout_width="100dp"
+                    android:padding="5dp"
+                    android:layout_height="60dp"
+                    android:text="RAM"/>
+                <TextView
+                    android:id="@+id/txtRAM"
+                    android:layout_width="match_parent"
+                    android:layout_below="@+id/view2"
+                    android:layout_height="60dp"
+                    android:padding="5dp"
+                    android:layout_toRightOf="@+id/RAM"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black" />
+                <View
+                    android:id="@+id/view3"
+                    android:layout_below="@+id/RAM"
+                    android:layout_height="1dp"
+                    android:layout_width="match_parent"
+                    android:background="@color/iron"/>
+                <TextView
+                    android:id="@+id/Keyboard"
+                    android:layout_below="@+id/view3"
+                    android:layout_width="100dp"
+                    android:padding="5dp"
+                    android:layout_height="60dp"
+                    android:text="Bàn Phím"/>
+                <TextView
+                    android:id="@+id/txtKeyboard"
+                    android:layout_width="match_parent"
+                    android:layout_below="@+id/view3"
+                    android:layout_height="60dp"
+                    android:padding="5dp"
+                    android:layout_toRightOf="@+id/Keyboard"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black" />
+                <View
+                    android:id="@+id/view4"
+                    android:layout_below="@+id/Keyboard"
+                    android:layout_height="1dp"
+                    android:layout_width="match_parent"
+                    android:background="@color/iron"/>
+                <TextView
+                    android:layout_below="@+id/view4"
+                    android:id="@+id/Mouse"
+                    android:padding="5dp"
+                    android:layout_width="100dp"
+                    android:layout_height="60dp"
+                    android:text="Chuột"/>
+                <TextView
+                    android:id="@+id/txtMouse"
+                    android:layout_below="@+id/view4"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:padding="5dp"
+                    android:layout_toRightOf="@+id/Mouse"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black" />
+                <View
+                    android:id="@+id/view5"
+                    android:layout_below="@+id/Mouse"
+                    android:layout_height="1dp"
+                    android:layout_width="match_parent"
+                    android:background="@color/iron"/>
+                <TextView
+                    android:layout_below="@+id/view5"
+                    android:id="@+id/Screen"
+                    android:layout_width="100dp"
+                    android:padding="5dp"
+                    android:layout_height="60dp"
+                    android:text="Màn Hình"/>
+                <TextView
+                    android:id="@+id/txtScreen"
+                    android:layout_below="@+id/view5"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:padding="5dp"
+                    android:layout_toRightOf="@+id/Screen"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black" />
+            </RelativeLayout>
+            <View
+                android:layout_height="1dp"
+                android:layout_width="match_parent"
+                android:background="@color/iron"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Thông Tin Thêm"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:gravity="center"></TextView>
+            <TextView
+                android:id="@+id/textSeparator"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text=""
+                android:textAllCaps="true"
+                android:textColor="#FFF"
+                android:textStyle="bold"
+                android:visibility="visible" />
+            <View
+                android:layout_height="1dp"
+                android:layout_width="match_parent"
+                android:background="@color/iron"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txtAdditionInfo"
+                    android:textColor="@color/black"
+                    android:padding="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+            <View
+                android:layout_height="1dp"
+                android:layout_width="match_parent"
+                android:background="@color/iron"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>
+</ScrollView>
