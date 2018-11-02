@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.example.dell.booking_cyber.Adapter.NavigationAdapter;
 import com.example.dell.booking_cyber.Constant.LocaleData;
 import com.example.dell.booking_cyber.DTO.AccountDTO;
-import com.example.dell.booking_cyber.DTO.UserDTO;
+import com.example.dell.booking_cyber.DTO.CustomerDTO;
 
 public class SignupActivity extends NavigationAdapter {
 
@@ -86,14 +86,14 @@ public class SignupActivity extends NavigationAdapter {
         String reEnterPassword = txtreEnterPassword.getText().toString();
 
         final AccountDTO accountDTO = new AccountDTO(email,password,LocaleData.ROLE_USER,true,false);
-        final UserDTO userDTO = new UserDTO(name,"",email,mobile,Double.parseDouble("1"),true,false);
+        final CustomerDTO customerDTO = new CustomerDTO(name,"",email,mobile,Double.parseDouble("1"),true,false);
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
                         // On complete call either onSignupSuccess or onSignupFailed
                         // depending on success
                         try{
-                            if(accountManager.signup(accountDTO,userDTO)){
+                            if(accountManager.signup(accountDTO, customerDTO)){
                                 onSignupSuccess();
                             }else {
                                 onSignupFailed();

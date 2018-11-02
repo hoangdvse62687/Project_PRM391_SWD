@@ -3,11 +3,10 @@ package com.example.dell.booking_cyber.Model;
 import android.app.Activity;
 import android.content.Context;
 import android.os.StrictMode;
-import android.util.Log;
 
 import com.example.dell.booking_cyber.Constant.LocaleData;
 import com.example.dell.booking_cyber.DTO.AccountDTO;
-import com.example.dell.booking_cyber.DTO.UserDTO;
+import com.example.dell.booking_cyber.DTO.CustomerDTO;
 import com.google.gson.Gson;
 
 import org.apache.http.HttpResponse;
@@ -26,7 +25,6 @@ import org.apache.http.protocol.HTTP;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -34,16 +32,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AccountManager extends Activity {
     Gson gson = new Gson();
     AccountDTO account = new AccountDTO();
-    public UserDTO userDTO = new UserDTO();
+    public CustomerDTO customerDTO = new CustomerDTO();
     final String fileDirectory = "Token.txt";
     private static final int READ_BLOCK_SIZE = 500;
 
@@ -70,7 +66,7 @@ public class AccountManager extends Activity {
         else if (account != null && account.getRole().equals(LocaleData.ROLE_USER)) {
             //Get Detail account
             if (getDataUserDTOByAccountId(account.getId())) {
-                if (writeFileToken(account, userDTO))
+                if (writeFileToken(account, customerDTO))
                     return true;
             }
         }
@@ -100,7 +96,7 @@ public class AccountManager extends Activity {
         }
     }
 
-    public boolean signup(AccountDTO accountDTO, UserDTO userDetail) {
+    public boolean signup(AccountDTO accountDTO, CustomerDTO userDetail) {
         //Insert data to database here
         if(createAccount(accountDTO,userDetail)){
             //Write data into token
@@ -134,7 +130,7 @@ public class AccountManager extends Activity {
             String[] data = s.split("-");
             if (data.length == 6) {
                 account = new AccountDTO(data[INDEX_EMAIL], data[INDEX_PASSWORD], data[INDEX_ROLE], true, false);
-                userDTO = new UserDTO(data[INDEX_NAME], "", data[INDEX_EMAIL], data[INDEX_PHONE]
+                customerDTO = new CustomerDTO(data[INDEX_NAME], "", data[INDEX_EMAIL], data[INDEX_PHONE]
                         , Double.parseDouble(data[INDEX_GENDER]), true, false);
             }
         } catch (Exception ex) {
@@ -153,7 +149,7 @@ public class AccountManager extends Activity {
         return true;
     }
 
-    private boolean writeFileToken(AccountDTO data, UserDTO detailUser) {
+    private boolean writeFileToken(AccountDTO data, CustomerDTO detailUser) {
         if (data == null)
             return false;
         FileOutputStream fos = null;
@@ -232,7 +228,7 @@ public class AccountManager extends Activity {
             BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
             String data = reader.readLine();
             if (data != null) {
-                userDTO = gson.fromJson(data, UserDTO.class);
+                customerDTO = gson.fromJson(data, CustomerDTO.class);
                 return true;
             }
         } catch (MalformedURLException ex) {
@@ -243,14 +239,14 @@ public class AccountManager extends Activity {
         return false;
     }
 
-    private boolean createAccount(AccountDTO data, UserDTO userDetail) {
+    private boolean createAccount(AccountDTO data, CustomerDTO userDetail) {
         if (data == null || userDetail == null) {
             return false;
         }
         if (postCreateAccount(data)) {
             //not yet implement post data userDetail
-            if(putCreateCustomer(userDTO,account.getId()))
-                return writeFileToken(account,userDTO);
+            if(putCreateCustomer(customerDTO,account.getId()))
+                return writeFileToken(account, customerDTO);
         }
         return false;
     }
@@ -286,7 +282,7 @@ public class AccountManager extends Activity {
         return false;
     }
 
-    private boolean putCreateCustomer(UserDTO userDTO,Integer accountId){
+    private boolean putCreateCustomer(CustomerDTO customerDTO, Integer accountId){
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -298,9 +294,9 @@ public class AccountManager extends Activity {
             json.put("active",true);
             json.put("avatar","");
             json.put("deleted",false);
-            json.put("email",userDTO.getEmail());
-            json.put("name",userDTO.getName());
-            json.put("phone",userDTO.getPhone());
+            json.put("email", customerDTO.getEmail());
+            json.put("name", customerDTO.getName());
+            json.put("phone", customerDTO.getPhone());
             json.put("sex",1);
 
             StringEntity se = new StringEntity( json.toString());

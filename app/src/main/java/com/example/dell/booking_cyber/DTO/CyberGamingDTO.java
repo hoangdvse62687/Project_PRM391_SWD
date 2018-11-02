@@ -105,7 +105,7 @@ public class CyberGamingDTO implements Serializable {
     }
 
     public void setActive(Boolean active) {
-        active = active;
+        this.active = active;
     }
 
     public Boolean getDeleted() {
@@ -113,6 +113,6 @@ public class CyberGamingDTO implements Serializable {
     }
 
     public void setDeleted(Boolean deleted) {
-        deleted = deleted;
+        this.deleted = deleted;
     }
 }

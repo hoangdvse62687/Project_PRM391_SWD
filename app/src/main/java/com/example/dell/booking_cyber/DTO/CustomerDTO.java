@@ -2,7 +2,7 @@ package com.example.dell.booking_cyber.DTO;
 
 import java.io.Serializable;
 
-public class UserDTO implements Serializable {
+public class CustomerDTO implements Serializable {
     private Integer id;
 
     private Integer accountId;
@@ -21,10 +21,10 @@ public class UserDTO implements Serializable {
 
     private Boolean deleted;
 
-    public UserDTO() {
+    public CustomerDTO() {
     }
 
-    public UserDTO(String name, String avatar, String email, String phone, Double sex, Boolean active, Boolean deleted) {
+    public CustomerDTO(String name, String avatar, String email, String phone, Double sex, Boolean active, Boolean deleted) {
         this.name = name;
         this.avatar = avatar;
         this.email = email;
@@ -34,7 +34,7 @@ public class UserDTO implements Serializable {
         this.deleted = deleted;
     }
 
-    public UserDTO(Integer id, Integer accountId, String name, String avatar, String email, String phone, Double sex, Boolean active, Boolean deleted) {
+    public CustomerDTO(Integer id, Integer accountId, String name, String avatar, String email, String phone, Double sex, Boolean active, Boolean deleted) {
         this.id = id;
         this.accountId = accountId;
         this.name = name;
