@@ -166,7 +166,7 @@ public class AccountManager extends Activity {
             osw.write(data.getRole() + "-");
             osw.write(detailUser.getName() + "-");
             osw.write(detailUser.getPhone() + "-");
-            osw.write(detailUser.getSex().toString() + "-");
+            osw.write("1" + "-");
             osw.flush();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -245,7 +245,7 @@ public class AccountManager extends Activity {
         }
         if (postCreateAccount(data)) {
             //not yet implement post data userDetail
-            if(putCreateCustomer(customerDTO,account.getId()))
+            if(putCreateCustomer(userDetail,account.getId()))
                 return writeFileToken(account, customerDTO);
         }
         return false;
