@@ -68,14 +68,19 @@ public class MainActivity extends NavigationAdapter {
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
+                        // On complete call either onLoginSuccess or onLoginFailed
                         try{
                             OnHandleData();
+                        }catch (Exception ex){
+                            Intent intent = new Intent(MainActivity.this,ReloadActivity.class);
+                            startActivity(intent);
+                            finish();
+                            ex.printStackTrace();
                         }finally {
                             progressDialog.dismiss();
                         }
                     }
-                }
-                ,1000);
+                },1000);
     }
     private void OnHandleData(){
         try{

@@ -107,7 +107,7 @@ public class SignupActivity extends NavigationAdapter {
                             progressDialog.dismiss();
                         }
                     }
-                }, 3000);
+                }, 1000);
     }
 
 

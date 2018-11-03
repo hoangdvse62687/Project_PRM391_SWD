@@ -86,7 +86,7 @@ public class LoginActivity extends NavigationAdapter {
                             }
                         }catch (Exception ex){
                             Intent intent = new Intent(LoginActivity.this,ReloadActivity.class);
-                            startActivityForResult(intent,0);
+                            startActivity(intent);
                             finish();
                             ex.printStackTrace();
                         }finally {

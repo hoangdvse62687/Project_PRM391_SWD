@@ -120,13 +120,15 @@ public class GoogleMapApiFragment extends Fragment implements LocationListener,G
         myMap.setOnMarkerClickListener(this);
         for (CyberGamingDTO item:
              cyberGamingDTOS) {
-            MarkerOptions option = new MarkerOptions();
-            option.title(item.getName());
-            option.snippet("\n"+"\n"+"\n");
-            option.icon(BitmapDescriptorFactory.fromResource(R.drawable.green_marker));
-            option.position(new LatLng(item.getLatitude(),item.getLogitude()));
-            Marker marker = myMap.addMarker(option);
-            markers.add(marker);
+            if(item.getLatitude() != null && item.getLogitude() != null){
+                MarkerOptions option = new MarkerOptions();
+                option.title(item.getName());
+                option.snippet("\n"+"\n"+"\n");
+                option.icon(BitmapDescriptorFactory.fromResource(R.drawable.green_marker));
+                option.position(new LatLng(item.getLatitude(),item.getLogitude()));
+                Marker marker = myMap.addMarker(option);
+                markers.add(marker);
+            }
         }
     }
     @Override

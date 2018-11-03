@@ -72,19 +72,18 @@ public class CyberDetailActivity extends NavigationAdapter {
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        try{
-                            HandleData();
-                            setupViewPager();
-                            tabLayout.setupWithViewPager(viewPager);
-                        }finally {
-                            progressDialog.dismiss();
-                        }
-                    }
-                }
-                ,1000);
+        try{
+            HandleData();
+            setupViewPager();
+            tabLayout.setupWithViewPager(viewPager);
+        }catch (Exception ex){
+            Intent intent1 = new Intent(CyberDetailActivity.this,ReloadActivity.class);
+            startActivity(intent1);
+            finish();
+            ex.printStackTrace();
+        }finally {
+            progressDialog.dismiss();
+        }
 
     }
 
