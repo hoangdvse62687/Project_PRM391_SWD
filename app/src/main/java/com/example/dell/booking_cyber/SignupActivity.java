@@ -30,6 +30,7 @@ public class SignupActivity extends NavigationAdapter {
     protected void onCreate(Bundle savedInstanceState) {
         super.layout = R.layout.activity_signup;
         super.currentClass = SignupActivity.class;
+        super.profileNavigationOn = false;
         super.BottomNavigationOn = false;
         super.onCreate(savedInstanceState);
 

@@ -22,6 +22,7 @@ public class LoginActivity extends NavigationAdapter {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.profileNavigationOn = false;
         super.layout = R.layout.activity_login;
         super.currentClass = LoginActivity.class;
         super.BottomNavigationOn = false;

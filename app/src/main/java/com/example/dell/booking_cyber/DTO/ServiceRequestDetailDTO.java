@@ -40,11 +40,35 @@ public class ServiceRequestDetailDTO implements Serializable {
 
     private String configurationName;
 
-    private Boolean isApproved;
+    private Boolean approved;
 
     private Boolean active;
 
     private Boolean deleted;
+
+    public ServiceRequestDetailDTO(Integer id, String username, String cyberGamingName, Double duration, Integer numberOfServiceSlot, Boolean isDone, Double isPaid, LocalDateTime paidDate, LocalDateTime dateRequest, LocalDateTime goingDate, String evaluation, Integer star, Double longitude, Double latitude, String code, Double totalPrice, String roomname, String configurationName, Boolean approved, Boolean active, Boolean deleted) {
+        this.id = id;
+        this.username = username;
+        this.cyberGamingName = cyberGamingName;
+        this.duration = duration;
+        this.numberOfServiceSlot = numberOfServiceSlot;
+        this.isDone = isDone;
+        this.isPaid = isPaid;
+        this.paidDate = paidDate;
+        this.dateRequest = dateRequest;
+        this.goingDate = goingDate;
+        this.evaluation = evaluation;
+        this.star = star;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.code = code;
+        this.totalPrice = totalPrice;
+        this.roomname = roomname;
+        this.configurationName = configurationName;
+        this.approved = approved;
+        this.active = active;
+        this.deleted = deleted;
+    }
 
     public Integer getId() {
         return id;
@@ -191,11 +215,11 @@ public class ServiceRequestDetailDTO implements Serializable {
     }
 
     public Boolean getApproved() {
-        return isApproved;
+        return approved;
     }
 
     public void setApproved(Boolean approved) {
-        isApproved = approved;
+        this.approved = approved;
     }
 
     public Boolean getActive() {
