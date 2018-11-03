@@ -15,10 +15,16 @@ import com.example.dell.booking_cyber.Adapter.NavigationAdapter;
 import com.example.dell.booking_cyber.Adapter.OrderListViewAdapter;
 import com.example.dell.booking_cyber.Constant.LocaleData;
 import com.example.dell.booking_cyber.DTO.ServiceRequestDTO;
+import com.example.dell.booking_cyber.DTO.ServiceRequestDetailDTO;
 import com.example.dell.booking_cyber.Fragment.GoogleMapApiFragment;
 import com.example.dell.booking_cyber.DTO.AccountDTO;
+import com.example.dell.booking_cyber.Model.ServiceRequestManager;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends NavigationAdapter {
     boolean isHiddenItem = true;
@@ -85,7 +91,7 @@ public class MainActivity extends NavigationAdapter {
     private void OnHandleData(){
         try{
             AccountDTO accountDTO = super.accountManager.getAccount();
-            if(accountDTO == null){
+            if(accountDTO == null || accountDTO.getUsername() == null){
                 //Handle unauthorized
                 onHandleDataunauthorized();
             }else if(accountDTO.getRole().equals(LocaleData.ROLE_USER)){
@@ -96,7 +102,6 @@ public class MainActivity extends NavigationAdapter {
             ex.printStackTrace();
             Intent intent = new Intent(this,ReloadActivity.class);
             startActivityForResult(intent,0);
-            finish();
         }
     }
     private void onHandleDataunauthorized(){
@@ -110,9 +115,31 @@ public class MainActivity extends NavigationAdapter {
             //load data request in process here
             OrderListViewAdapter adapter = new OrderListViewAdapter(this,fragment);
             listView.setAdapter(adapter);
-            ArrayList<Integer> listImg = new ArrayList<>();
-            listImg.add(R.id.icon_view);
-            adapter.addItem(new ServiceRequestDTO());
+            List<ServiceRequestDetailDTO> listOrders = new ArrayList<>();
+            ServiceRequestManager serviceRequestManager = new ServiceRequestManager();
+            listOrders = serviceRequestManager.getConfigurationByCyberId(super.accountManager.customerDTO.getId());
+
+            //Handle Data time and Approve here
+            Date currentTime = new Date();
+            List<ServiceRequestDetailDTO> listOrDerShowInMap = new ArrayList<>();
+            if(listOrders != null){
+                for (ServiceRequestDetailDTO item:
+                        listOrders) {
+                    if(item.getApproved() && !item.getDone()){
+                        Date timeStart = LocaleData.addHours(item.getGoingDate(),-LocaleData.TIME_ZONE);//get time start
+                        Date timeEnd = LocaleData.addHours(item.getGoingDate(),-LocaleData.TIME_ZONE);
+                        timeEnd = LocaleData.addHours(timeEnd,Integer.parseInt(item.getDuration().toString().substring(0,1)));
+
+                        if(currentTime.before(timeEnd)){
+                            listOrDerShowInMap.add(item);
+                        }
+                    }
+                }
+            }
+            for (ServiceRequestDetailDTO item:
+                 listOrDerShowInMap) {
+                adapter.addItem(item);
+            }
 
         }else{
             btnHide.setVisibility(View.GONE);

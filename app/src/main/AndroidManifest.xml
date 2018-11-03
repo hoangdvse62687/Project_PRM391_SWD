@@ -31,7 +31,8 @@
         <activity android:name=".ReloadActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignupActivity" />
-        <activity android:name=".CyberDetailActivity"></activity>
+        <activity android:name=".CyberDetailActivity" />
+        <activity android:name=".ForgotPasswordActivity"></activity>
     </application>
 
 </manifest>

@@ -67,7 +67,7 @@ public class SignupActivity extends NavigationAdapter {
     public void signup() {
 
         if (!validate()) {
-            onSignupFailed();
+            btnSignup.setEnabled(true);
             return;
         }
 

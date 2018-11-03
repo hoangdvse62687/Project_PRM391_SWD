@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Calendar;
+import java.util.Date;
 
 public class LocaleData {
     public static final String ROLE_USER = "user";
@@ -18,6 +20,7 @@ public class LocaleData {
     public static final String AUTHENCATION_CHECKLOGIN_URL = "https://swd-backend-lamtt.herokuapp.com/authencation/checkLogin";
 
     public static final String ACCOUNT_CREATE_URL = "https://swd-backend-lamtt.herokuapp.com/account";
+    public static final String ACCOUNT_GETALL_URL = "https://swd-backend-lamtt.herokuapp.com/account";
 
     public static final String CUSTOMER_GETBYACCOUNTID_URL = "https://swd-backend-lamtt.herokuapp.com/customer/getByAccountId?accountId=";
     public static final String CUSTOMER_CREATE_URL = "https://swd-backend-lamtt.herokuapp.com/customer";
@@ -28,6 +31,10 @@ public class LocaleData {
     public static final String CONFIGURATION_GETBYCYBERID_URL = "https://swd-backend-lamtt.herokuapp.com/configuration/getByCyberId/";
 
     public static final String IMAGE_GETBYCYBERID_URL = "https://swd-backend-lamtt.herokuapp.com/image/getByCyberId?cyberId=";
+
+    public static final String SERVICEREQUEST_GETBYACCOUNTID_URL = "https://swd-backend-lamtt.herokuapp.com/serviceRequest/getByAccountRequestId/";
+
+    public static int TIME_ZONE = 7;
 
     public static boolean HandleErrorMessageResponse(Integer statusResponse){
         switch (statusResponse){
@@ -47,5 +54,12 @@ public class LocaleData {
         Bitmap bit=null;
         bit = BitmapFactory.decodeStream((InputStream) new URL(url).getContent());
         return bit;
+    }
+
+    public static Date addHours(Date currentTime,int number){
+        Calendar cal = Calendar.getInstance(); // creates calendar
+        cal.setTime(currentTime); // sets calendar time/date
+        cal.add(Calendar.HOUR_OF_DAY, number); // adds one hour
+        return cal.getTime();
     }
 }

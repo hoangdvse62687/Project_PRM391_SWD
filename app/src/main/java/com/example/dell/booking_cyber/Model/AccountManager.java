@@ -6,8 +6,10 @@ import android.os.StrictMode;
 
 import com.example.dell.booking_cyber.Constant.LocaleData;
 import com.example.dell.booking_cyber.DTO.AccountDTO;
+import com.example.dell.booking_cyber.DTO.ConfigurationDTO;
 import com.example.dell.booking_cyber.DTO.CustomerDTO;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -50,6 +52,8 @@ public class AccountManager extends Activity {
     final Integer INDEX_NAME = 3;
     final Integer INDEX_PHONE = 4;
     final Integer INDEX_GENDER = 5;
+    final Integer INDEX_CUSTOMERID = 6;
+    final Integer INDEX_ACCOUNTID = 7;
 
     final String JSON_USERNAME_RETURN_KEY = "username";
     final String JSON_PASSWORD_RETURN_KEY = "password";
@@ -99,11 +103,7 @@ public class AccountManager extends Activity {
 
     public boolean signup(AccountDTO accountDTO, CustomerDTO userDetail) {
         //Insert data to database here
-        if(createAccount(accountDTO,userDetail)){
-            //Write data into token
-            return writeFileToken(accountDTO, userDetail);
-        }
-        return false;
+        return createAccount(accountDTO,userDetail);
     }
 
     public AccountDTO getAccount() {
@@ -111,6 +111,29 @@ public class AccountManager extends Activity {
             return account;
         else
             return null;
+    }
+
+    public List<AccountDTO> getAllAccount(){
+        try{
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpGet httpGet = new HttpGet(LocaleData.ACCOUNT_GETALL_URL);
+
+            HttpResponse response = httpclient.execute(httpGet);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+            String json = reader.readLine();
+            if(LocaleData.HandleErrorMessageResponse(response.getStatusLine().getStatusCode())){
+                if(json != null){
+                    TypeToken<List<AccountDTO>> typeToken = new TypeToken<List<AccountDTO>>(){};
+                    List<AccountDTO> data = gson.fromJson(json,typeToken.getType());
+                    return data;
+                }
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return null;
     }
 
     private boolean readFileToken() {
@@ -129,9 +152,9 @@ public class AccountManager extends Activity {
                 buffer = new char[READ_BLOCK_SIZE];
             }
             String[] data = s.split("-");
-            if (data.length == 6) {
-                account = new AccountDTO(data[INDEX_EMAIL], data[INDEX_PASSWORD], data[INDEX_ROLE], true, false);
-                customerDTO = new CustomerDTO(data[INDEX_NAME], "", data[INDEX_EMAIL], data[INDEX_PHONE]
+            if (data.length == 8) {
+                account = new AccountDTO(Integer.parseInt(data[INDEX_ACCOUNTID]),data[INDEX_EMAIL], data[INDEX_PASSWORD], data[INDEX_ROLE], true, false);
+                customerDTO = new CustomerDTO(Integer.parseInt(data[INDEX_CUSTOMERID]),Integer.parseInt(data[INDEX_ACCOUNTID]),data[INDEX_NAME], "", data[INDEX_EMAIL], data[INDEX_PHONE]
                         , Double.parseDouble(data[INDEX_GENDER]), true, false);
             }
         } catch (Exception ex) {
@@ -168,6 +191,8 @@ public class AccountManager extends Activity {
             osw.write(detailUser.getName() + "-");
             osw.write(detailUser.getPhone() + "-");
             osw.write("1" + "-");
+            osw.write(detailUser.getId().toString() + "-");
+            osw.write(detailUser.getAccountId().toString() + "-");
             osw.flush();
         } catch (Exception ex) {
             ex.printStackTrace();

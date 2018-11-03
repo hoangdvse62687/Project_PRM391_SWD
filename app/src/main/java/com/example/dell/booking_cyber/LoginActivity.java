@@ -19,6 +19,7 @@ public class LoginActivity extends NavigationAdapter {
     EditText txtPassword;
     Button btnLogin;
     TextView link_SignUp;
+    TextView txtForgotPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,7 @@ public class LoginActivity extends NavigationAdapter {
         txtPassword = (EditText) findViewById(R.id.txtPassword);
         btnLogin = (Button) findViewById(R.id.btnLogin);
         link_SignUp = (TextView)findViewById(R.id.txtSignUp);
+        txtForgotPassword = findViewById(R.id.txtForgotPassword);
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -48,13 +50,16 @@ public class LoginActivity extends NavigationAdapter {
                 finish();
             }
         });
+        txtForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),ForgotPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
         if(super.accountManager.isLogin()){
             finish();
         }
-
-    }
-
-    public void InitData(){
 
     }
 
@@ -104,7 +109,7 @@ public class LoginActivity extends NavigationAdapter {
         String password = txtPassword.getText().toString();
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            txtEmail.setError("email chưa đúng");
+            txtEmail.setError("email chưa đúng định dạng");
             valid = false;
         } else {
             txtEmail.setError(null);

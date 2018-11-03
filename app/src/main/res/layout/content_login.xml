@@ -57,10 +57,15 @@
         <TextView android:id="@+id/txtSignUp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
             android:text="Bạn chưa có tài khoản? Đăng ký ngay"
             android:gravity="center"
             android:textSize="16dip"/>
-
+        <TextView android:id="@+id/txtForgotPassword"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:text="Quên mật khẩu?"
+            android:gravity="center"
+            android:textSize="16dip"/>
     </LinearLayout>
 </ScrollView>

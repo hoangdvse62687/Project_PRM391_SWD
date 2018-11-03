@@ -15,15 +15,15 @@ public class ServiceRequestDTO implements Serializable {
 
     private Integer numberOfServiceSlot;
 
-    private Boolean isDone;
+    private Boolean done;
 
     private Double isPaid;
 
-    private LocalDateTime paidDate;
+    private Date paidDate;
 
-    private LocalDateTime dateRequest;
+    private Date dateRequest;
 
-    private LocalDateTime goingDate;
+    private Date goingDate;
 
     private String evaluation;
 
@@ -50,13 +50,13 @@ public class ServiceRequestDTO implements Serializable {
     public ServiceRequestDTO() {
     }
 
-    public ServiceRequestDTO(Integer id, Integer userId, Integer cyberGamingId, Double duration, Integer numberOfServiceSlot, Boolean isDone, Double isPaid, LocalDateTime paidDate, LocalDateTime dateRequest, LocalDateTime goingDate, String evaluation, Integer star, Double longitude, Double latitude, String code, Double totalPrice, Integer roomId, Integer configurationId, Boolean approved, Boolean active, Boolean deleted) {
+    public ServiceRequestDTO(Integer id, Integer userId, Integer cyberGamingId, Double duration, Integer numberOfServiceSlot, Boolean done, Double isPaid, Date paidDate, Date dateRequest, Date goingDate, String evaluation, Integer star, Double longitude, Double latitude, String code, Double totalPrice, Integer roomId, Integer configurationId, Boolean approved, Boolean active, Boolean deleted) {
         this.id = id;
         this.userId = userId;
         this.cyberGamingId = cyberGamingId;
         this.duration = duration;
         this.numberOfServiceSlot = numberOfServiceSlot;
-        this.isDone = isDone;
+        this.done = done;
         this.isPaid = isPaid;
         this.paidDate = paidDate;
         this.dateRequest = dateRequest;
@@ -115,11 +115,11 @@ public class ServiceRequestDTO implements Serializable {
     }
 
     public Boolean getDone() {
-        return isDone;
+        return done;
     }
 
     public void setDone(Boolean done) {
-        isDone = done;
+        this.done = done;
     }
 
     public Double getIsPaid() {
@@ -130,27 +130,27 @@ public class ServiceRequestDTO implements Serializable {
         this.isPaid = isPaid;
     }
 
-    public LocalDateTime getPaidDate() {
+    public Date getPaidDate() {
         return paidDate;
     }
 
-    public void setPaidDate(LocalDateTime paidDate) {
+    public void setPaidDate(Date paidDate) {
         this.paidDate = paidDate;
     }
 
-    public LocalDateTime getDateRequest() {
+    public Date getDateRequest() {
         return dateRequest;
     }
 
-    public void setDateRequest(LocalDateTime dateRequest) {
+    public void setDateRequest(Date dateRequest) {
         this.dateRequest = dateRequest;
     }
 
-    public LocalDateTime getGoingDate() {
+    public Date getGoingDate() {
         return goingDate;
     }
 
-    public void setGoingDate(LocalDateTime goingDate) {
+    public void setGoingDate(Date goingDate) {
         this.goingDate = goingDate;
     }
 

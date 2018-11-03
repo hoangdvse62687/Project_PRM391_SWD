@@ -2,6 +2,7 @@ package com.example.dell.booking_cyber.DTO;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class ServiceRequestDetailDTO implements Serializable {
     private Integer id;
@@ -14,15 +15,15 @@ public class ServiceRequestDetailDTO implements Serializable {
 
     private Integer numberOfServiceSlot;
 
-    private Boolean isDone;
+    private Boolean done;
 
     private Double isPaid;
 
-    private LocalDateTime paidDate;
+    private Date paidDate;
 
-    private LocalDateTime dateRequest;
+    private Date dateRequest;
 
-    private LocalDateTime goingDate;
+    private Date goingDate;
 
     private String evaluation;
 
@@ -46,13 +47,13 @@ public class ServiceRequestDetailDTO implements Serializable {
 
     private Boolean deleted;
 
-    public ServiceRequestDetailDTO(Integer id, String username, String cyberGamingName, Double duration, Integer numberOfServiceSlot, Boolean isDone, Double isPaid, LocalDateTime paidDate, LocalDateTime dateRequest, LocalDateTime goingDate, String evaluation, Integer star, Double longitude, Double latitude, String code, Double totalPrice, String roomname, String configurationName, Boolean approved, Boolean active, Boolean deleted) {
+    public ServiceRequestDetailDTO(Integer id, String username, String cyberGamingName, Double duration, Integer numberOfServiceSlot, Boolean done, Double isPaid, Date paidDate, Date dateRequest, Date goingDate, String evaluation, Integer star, Double longitude, Double latitude, String code, Double totalPrice, String roomname, String configurationName, Boolean approved, Boolean active, Boolean deleted) {
         this.id = id;
         this.username = username;
         this.cyberGamingName = cyberGamingName;
         this.duration = duration;
         this.numberOfServiceSlot = numberOfServiceSlot;
-        this.isDone = isDone;
+        this.done = done;
         this.isPaid = isPaid;
         this.paidDate = paidDate;
         this.dateRequest = dateRequest;
@@ -111,11 +112,11 @@ public class ServiceRequestDetailDTO implements Serializable {
     }
 
     public Boolean getDone() {
-        return isDone;
+        return done;
     }
 
     public void setDone(Boolean done) {
-        isDone = done;
+        this.done = done;
     }
 
     public Double getIsPaid() {
@@ -126,27 +127,27 @@ public class ServiceRequestDetailDTO implements Serializable {
         this.isPaid = isPaid;
     }
 
-    public LocalDateTime getPaidDate() {
+    public Date getPaidDate() {
         return paidDate;
     }
 
-    public void setPaidDate(LocalDateTime paidDate) {
+    public void setPaidDate(Date paidDate) {
         this.paidDate = paidDate;
     }
 
-    public LocalDateTime getDateRequest() {
+    public Date getDateRequest() {
         return dateRequest;
     }
 
-    public void setDateRequest(LocalDateTime dateRequest) {
+    public void setDateRequest(Date dateRequest) {
         this.dateRequest = dateRequest;
     }
 
-    public LocalDateTime getGoingDate() {
+    public Date getGoingDate() {
         return goingDate;
     }
 
-    public void setGoingDate(LocalDateTime goingDate) {
+    public void setGoingDate(Date goingDate) {
         this.goingDate = goingDate;
     }
 

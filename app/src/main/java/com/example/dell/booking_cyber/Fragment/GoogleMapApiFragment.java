@@ -354,9 +354,9 @@ public class GoogleMapApiFragment extends Fragment implements LocationListener,G
         mMarker = myMap.addMarker(markerOptions);
     }
 
-    public void findDirection(){
-        String origin = "10.8530,106.6296";
-        String des = "10.852823,106.626263";
+    public void findDirection(String ori,String destination){
+        String origin = ori;
+        String des = destination;
         try {
             new DirectionFinder(this, origin, des).execute();
         } catch (UnsupportedEncodingException e) {
