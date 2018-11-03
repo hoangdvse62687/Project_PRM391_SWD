@@ -9,16 +9,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.dell.booking_cyber.Adapter.NavigationAdapter;
 import com.example.dell.booking_cyber.Adapter.ViewPagerAdapter;
+import com.example.dell.booking_cyber.Constant.LocaleData;
 import com.example.dell.booking_cyber.DTO.CyberGamingDTO;
 import com.example.dell.booking_cyber.Fragment.CyberCommentFragment;
 import com.example.dell.booking_cyber.Fragment.DetailCyberFragment;
 import com.example.dell.booking_cyber.Model.CybercoreManager;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -33,6 +36,7 @@ public class CyberDetailActivity extends NavigationAdapter {
     Button btnBooking;
     TabLayout tabLayout;
     ViewPager viewPager;
+    ImageView imgPoster;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.profileNavigationOn = false;
@@ -47,6 +51,7 @@ public class CyberDetailActivity extends NavigationAdapter {
         btnBooking = findViewById(R.id.btnBookingSeat);
         viewPager  = findViewById(R.id.viewpager);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
+        imgPoster = findViewById(R.id.imgPoster);
         btnBooking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,16 +100,17 @@ public class CyberDetailActivity extends NavigationAdapter {
         return false;
     }
 
-    private void HandleData(){
+    private void HandleData() throws IOException{
         if(getData()){
             renderView(detail);
         }
     }
 
-    private void renderView(CyberGamingDTO data){
+    private void renderView(CyberGamingDTO data) throws IOException{
         getSupportActionBar().setTitle(data.getName());
         ratingbarCyber.setRating(Float.parseFloat(data.getStarAverage().toString()));
         txtAddress.setText(data.getAddress());
+        imgPoster.setImageBitmap(LocaleData.loadBitmap(data.getLogo()));
     }
     private void setupViewPager() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());

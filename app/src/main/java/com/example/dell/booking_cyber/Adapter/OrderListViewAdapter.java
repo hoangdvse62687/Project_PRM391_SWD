@@ -10,10 +10,12 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.dell.booking_cyber.Constant.LocaleData;
 import com.example.dell.booking_cyber.DTO.ServiceRequestDTO;
 import com.example.dell.booking_cyber.Fragment.GoogleMapApiFragment;
 import com.example.dell.booking_cyber.R;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -52,7 +54,7 @@ public class OrderListViewAdapter extends BaseAdapter {
     }
 
     private class ViewHolder{
-        public ImageView imgShop;
+        public ImageView imgCyber;
         public TextView lblShopName;
         public RatingBar ratingShop;
         public TextView lblQuantityOrder;
@@ -61,18 +63,23 @@ public class OrderListViewAdapter extends BaseAdapter {
         public Button btnFindWay;
 
         public void initData(ServiceRequestDTO detail){
-            SimpleDateFormat df = new SimpleDateFormat("HH:mm");
-            this.lblShopName.setText("Ba Dao 2");
-            this.ratingShop.setRating(3);
-            this.lblQuantityOrder.setText("3");
-            this.lblTotalMoney.setText("10,000d");
-            this.lblTimeStart.setText(df.format(new Date()));
-            this.btnFindWay.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    fragment.findDirection();
-                }
-            });
+            try{
+                this.imgCyber.setImageBitmap(LocaleData.loadBitmap("https://image.ibb.co/eZasF0/icon-shop-detail.jpg"));
+                SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+                this.lblShopName.setText("Ba Dao 2");
+                this.ratingShop.setRating(3);
+                this.lblQuantityOrder.setText("3");
+                this.lblTotalMoney.setText("10,000d");
+                this.lblTimeStart.setText(df.format(new Date()));
+                this.btnFindWay.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fragment.findDirection();
+                    }
+                });
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -81,7 +88,7 @@ public class OrderListViewAdapter extends BaseAdapter {
         ViewHolder viewHolder = null;
         viewHolder = new ViewHolder();
         convertView = mInflater.inflate(R.layout.order_view_component, null);
-        viewHolder.imgShop = convertView.findViewById(R.id.imgShop);
+        viewHolder.imgCyber = convertView.findViewById(R.id.imgCyber);
         viewHolder.lblShopName = convertView.findViewById(R.id.lblShopName);
         viewHolder.ratingShop = convertView.findViewById(R.id.ratingShop);
         viewHolder.lblQuantityOrder = convertView.findViewById(R.id.lblNumOrder);

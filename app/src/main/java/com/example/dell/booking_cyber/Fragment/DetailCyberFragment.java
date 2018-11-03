@@ -3,6 +3,7 @@ package com.example.dell.booking_cyber.Fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -15,9 +16,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.dell.booking_cyber.Adapter.GalleryViewPagerAdapter;
+import com.example.dell.booking_cyber.Constant.LocaleData;
 import com.example.dell.booking_cyber.DTO.ConfigurationDTO;
+import com.example.dell.booking_cyber.DTO.ImageDTO;
 import com.example.dell.booking_cyber.MainActivity;
 import com.example.dell.booking_cyber.Model.ConfigurationManager;
+import com.example.dell.booking_cyber.Model.ImageManager;
 import com.example.dell.booking_cyber.R;
 
 import java.util.ArrayList;
@@ -69,6 +73,20 @@ public class DetailCyberFragment extends Fragment {
         GalleryViewPager = view.findViewById(R.id.GalleryViewPager);
         spnConfiguration = view.findViewById(R.id.spnConfiguration);
         HandleData();
+        List<ImageDTO> listImage = new ArrayList<>();
+        ImageManager imageManager = new ImageManager();
+        listImage = imageManager.getImageByCyberId(cyberId);
+        ArrayList<Bitmap> listBitMap = new ArrayList<>();
+        try{
+            for (ImageDTO item:
+                    listImage) {
+                listBitMap.add(LocaleData.loadBitmap(item.getImageURL()));
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        GalleryViewPagerAdapter viewPagerAdapter = new GalleryViewPagerAdapter(getContext(),listBitMap);
+        GalleryViewPager.setAdapter(viewPagerAdapter);
         return view;
     }
 
@@ -104,7 +122,10 @@ public class DetailCyberFragment extends Fragment {
                                 public void run() {
                                     try{
                                         renderView(configurationDTOs.get(resourceId));
-                                    }finally {
+                                    }catch (Exception ex){
+                                        ex.printStackTrace();
+                                    }
+                                    finally {
                                         progressDialog.dismiss();
                                     }
                                 }
@@ -128,12 +149,5 @@ public class DetailCyberFragment extends Fragment {
         txtMouse.setText(detail.getMouse());
         txtScreen.setText(detail.getHeadphone());
         txtAdditionInfo.setText("Giá "+detail.getPrice().toString() +"đ"+"/1h");
-        ArrayList<Integer> listImgId = new ArrayList<>();
-        listImgId.add(R.drawable.ffq_view);
-        listImgId.add(R.drawable.ffq_view2);
-        listImgId.add(R.drawable.ffq_view3);
-        listImgId.add(R.drawable.ffq_view4);
-        GalleryViewPagerAdapter viewPagerAdapter = new GalleryViewPagerAdapter(getContext(),listImgId);
-        GalleryViewPager.setAdapter(viewPagerAdapter);
     }
 }

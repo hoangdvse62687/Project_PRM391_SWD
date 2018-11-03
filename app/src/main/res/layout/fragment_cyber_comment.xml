@@ -63,7 +63,7 @@ tools:context=".Fragment.CyberCommentFragment">
             android:textSize="16sp"/>
         <Button
             android:background="@drawable/button_bg_rounded_corners"
-            android:id="@+id/btnButtonListView"
+            android:id="@+id/btnComment"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/Description3"

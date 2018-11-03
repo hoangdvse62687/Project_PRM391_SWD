@@ -1,6 +1,7 @@
 package com.example.dell.booking_cyber.Adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -17,9 +18,9 @@ import java.util.ArrayList;
 public class GalleryViewPagerAdapter extends PagerAdapter {
     private Context context;
     private LayoutInflater layoutInFlater;
-    private ArrayList<Integer> imgIDs = new ArrayList<>();
+    private ArrayList<Bitmap> imgIDs = new ArrayList<>();
 
-    public GalleryViewPagerAdapter(Context context,ArrayList<Integer> imgIDs) {
+    public GalleryViewPagerAdapter(Context context,ArrayList<Bitmap> imgIDs) {
         this.context = context;
         this.imgIDs = imgIDs;
     }
@@ -40,7 +41,7 @@ public class GalleryViewPagerAdapter extends PagerAdapter {
         layoutInFlater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInFlater.inflate(R.layout.gallery_view_pager,null);
         ImageView imageView = (ImageView) view.findViewById(R.id.imageGalleryViewPager);
-        imageView.setImageResource(imgIDs.get(position));
+        imageView.setImageBitmap(imgIDs.get(position));
         ViewPager viewPager = (ViewPager) container;
         viewPager.addView(view,0);
 
