@@ -23,6 +23,7 @@ import com.example.dell.booking_cyber.LoginActivity;
 import com.example.dell.booking_cyber.DTO.AccountDTO;
 import com.example.dell.booking_cyber.Model.AccountManager;
 import com.example.dell.booking_cyber.R;
+import com.example.dell.booking_cyber.ScanQRActivity;
 import com.example.dell.booking_cyber.SignupActivity;
 
 public class NavigationAdapter extends AppCompatActivity
@@ -139,7 +140,8 @@ public class NavigationAdapter extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_profile) {
-            // Handle the camera action
+            Intent intent = new Intent(this, ScanQRActivity.class);
+            startActivity(intent);
         }
         if (id == R.id.nav_transaction) {
 

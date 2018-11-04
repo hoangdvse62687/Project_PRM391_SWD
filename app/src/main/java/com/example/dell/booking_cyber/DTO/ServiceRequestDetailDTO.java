@@ -17,7 +17,7 @@ public class ServiceRequestDetailDTO implements Serializable {
 
     private Boolean done;
 
-    private Double isPaid;
+    private Boolean paid;
 
     private Date paidDate;
 
@@ -47,14 +47,14 @@ public class ServiceRequestDetailDTO implements Serializable {
 
     private Boolean deleted;
 
-    public ServiceRequestDetailDTO(Integer id, String username, String cyberGamingName, Double duration, Integer numberOfServiceSlot, Boolean done, Double isPaid, Date paidDate, Date dateRequest, Date goingDate, String evaluation, Integer star, Double longitude, Double latitude, String code, Double totalPrice, String roomname, String configurationName, Boolean approved, Boolean active, Boolean deleted) {
+    public ServiceRequestDetailDTO(Integer id, String username, String cyberGamingName, Double duration, Integer numberOfServiceSlot, Boolean done, Boolean paid, Date paidDate, Date dateRequest, Date goingDate, String evaluation, Integer star, Double longitude, Double latitude, String code, Double totalPrice, String roomname, String configurationName, Boolean approved, Boolean active, Boolean deleted) {
         this.id = id;
         this.username = username;
         this.cyberGamingName = cyberGamingName;
         this.duration = duration;
         this.numberOfServiceSlot = numberOfServiceSlot;
         this.done = done;
-        this.isPaid = isPaid;
+        this.paid = paid;
         this.paidDate = paidDate;
         this.dateRequest = dateRequest;
         this.goingDate = goingDate;
@@ -119,12 +119,12 @@ public class ServiceRequestDetailDTO implements Serializable {
         this.done = done;
     }
 
-    public Double getIsPaid() {
-        return isPaid;
+    public Boolean getPaid() {
+        return paid;
     }
 
-    public void setIsPaid(Double isPaid) {
-        this.isPaid = isPaid;
+    public void setPaid(Boolean paid) {
+        this.paid = paid;
     }
 
     public Date getPaidDate() {
