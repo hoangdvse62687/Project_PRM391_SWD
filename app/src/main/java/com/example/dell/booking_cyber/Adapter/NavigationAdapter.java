@@ -24,6 +24,7 @@ import com.example.dell.booking_cyber.DTO.AccountDTO;
 import com.example.dell.booking_cyber.Model.AccountManager;
 import com.example.dell.booking_cyber.R;
 import com.example.dell.booking_cyber.ScanQRActivity;
+import com.example.dell.booking_cyber.ServiceRequestHistory;
 import com.example.dell.booking_cyber.SignupActivity;
 
 public class NavigationAdapter extends AppCompatActivity
@@ -144,7 +145,8 @@ public class NavigationAdapter extends AppCompatActivity
             startActivity(intent);
         }
         if (id == R.id.nav_transaction) {
-
+            Intent intent = new Intent(this, ServiceRequestHistory.class);
+            startActivity(intent);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
