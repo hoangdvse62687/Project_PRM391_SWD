@@ -117,7 +117,7 @@ public class MainActivity extends NavigationAdapter {
             listView.setAdapter(adapter);
             List<ServiceRequestDetailDTO> listOrders = new ArrayList<>();
             ServiceRequestManager serviceRequestManager = new ServiceRequestManager();
-            listOrders = serviceRequestManager.getConfigurationByCyberId(super.accountManager.customerDTO.getId());
+            listOrders = serviceRequestManager.getServiceRequestByCustomerId(super.accountManager.customerDTO.getId());
 
             //Handle Data time and Approve here
             Date currentTime = new Date();

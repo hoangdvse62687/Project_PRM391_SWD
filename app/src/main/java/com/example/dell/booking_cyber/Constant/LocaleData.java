@@ -3,16 +3,27 @@ package com.example.dell.booking_cyber.Constant;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Base64;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.EnumMap;
+import java.util.Map;
 
 public class LocaleData {
     public static final String ROLE_USER = "user";
@@ -33,6 +44,8 @@ public class LocaleData {
     public static final String IMAGE_GETBYCYBERID_URL = "https://swd-backend-lamtt.herokuapp.com/image/getByCyberId?cyberId=";
 
     public static final String SERVICEREQUEST_GETBYACCOUNTID_URL = "https://swd-backend-lamtt.herokuapp.com/serviceRequest/getByAccountRequestId/";
+    public static final String SERVICEREQUEST_GETBYID_URL = "https://swd-backend-lamtt.herokuapp.com/serviceRequest/";
+    public static final String SERVICEREQUEST_UPDATE_URL = "https://swd-backend-lamtt.herokuapp.com/serviceRequest";
 
     public static int TIME_ZONE = 7;
 
@@ -61,5 +74,28 @@ public class LocaleData {
         cal.setTime(currentTime); // sets calendar time/date
         cal.add(Calendar.HOUR_OF_DAY, number); // adds one hour
         return cal.getTime();
+    }
+
+    public static Bitmap renderQRCode(String barcode_content)throws WriterException{
+        if(barcode_content == null && barcode_content.isEmpty()){
+            return null;
+        }
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        try {
+            BitMatrix bitMatrix = multiFormatWriter.encode(barcode_content, BarcodeFormat.QR_CODE,200,200);
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            return barcodeEncoder.createBitmap(bitMatrix);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String BitMapToString(Bitmap bitmap){
+        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,200, baos);
+        byte [] b=baos.toByteArray();
+        String temp= Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
     }
 }

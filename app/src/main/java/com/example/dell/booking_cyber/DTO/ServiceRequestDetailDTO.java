@@ -7,7 +7,11 @@ import java.util.Date;
 public class ServiceRequestDetailDTO implements Serializable {
     private Integer id;
 
+    private Integer userId;
+
     private String username;
+
+    private Integer cyberGamingId;
 
     private String cyberGamingName;
 
@@ -37,7 +41,11 @@ public class ServiceRequestDetailDTO implements Serializable {
 
     private Double totalPrice;
 
+    private Integer roomId;
+
     private String roomname;
+
+    private Integer configurationId;
 
     private String configurationName;
 
@@ -47,9 +55,12 @@ public class ServiceRequestDetailDTO implements Serializable {
 
     private Boolean deleted;
 
-    public ServiceRequestDetailDTO(Integer id, String username, String cyberGamingName, Double duration, Integer numberOfServiceSlot, Boolean done, Boolean paid, Date paidDate, Date dateRequest, Date goingDate, String evaluation, Integer star, Double longitude, Double latitude, String code, Double totalPrice, String roomname, String configurationName, Boolean approved, Boolean active, Boolean deleted) {
+
+    public ServiceRequestDetailDTO(Integer id, Integer userId, String username, Integer cyberGamingId, String cyberGamingName, Double duration, Integer numberOfServiceSlot, Boolean done, Boolean paid, Date paidDate, Date dateRequest, Date goingDate, String evaluation, Integer star, Double longitude, Double latitude, String code, Double totalPrice, Integer roomId, String roomname, Integer configurationId, String configurationName, Boolean approved, Boolean active, Boolean deleted) {
         this.id = id;
+        this.userId = userId;
         this.username = username;
+        this.cyberGamingId = cyberGamingId;
         this.cyberGamingName = cyberGamingName;
         this.duration = duration;
         this.numberOfServiceSlot = numberOfServiceSlot;
@@ -64,7 +75,9 @@ public class ServiceRequestDetailDTO implements Serializable {
         this.latitude = latitude;
         this.code = code;
         this.totalPrice = totalPrice;
+        this.roomId = roomId;
         this.roomname = roomname;
+        this.configurationId = configurationId;
         this.configurationName = configurationName;
         this.approved = approved;
         this.active = active;
@@ -237,5 +250,37 @@ public class ServiceRequestDetailDTO implements Serializable {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getCyberGamingId() {
+        return cyberGamingId;
+    }
+
+    public void setCyberGamingId(Integer cyberGamingId) {
+        this.cyberGamingId = cyberGamingId;
+    }
+
+    public Integer getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(Integer roomId) {
+        this.roomId = roomId;
+    }
+
+    public Integer getConfigurationId() {
+        return configurationId;
+    }
+
+    public void setConfigurationId(Integer configurationId) {
+        this.configurationId = configurationId;
     }
 }

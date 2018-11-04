@@ -4,14 +4,24 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Vibrator;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.dell.booking_cyber.Constant.LocaleData;
+import com.example.dell.booking_cyber.DTO.ServiceRequestDTO;
+import com.example.dell.booking_cyber.DTO.ServiceRequestDetailDTO;
+import com.example.dell.booking_cyber.Model.ServiceRequestManager;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -19,10 +29,34 @@ import com.google.zxing.integration.android.IntentResult;
 public class ScanQRActivity extends AppCompatActivity{
     private static final int REQUEST_CAMERA = 1;
 
+    TextView content;
+    ImageView ic_ok;
+    TextView code;
+    TextView txtTotalPrice;
+    Button btnAccept;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_qr);
+        content = findViewById(R.id.content);
+        ic_ok = findViewById(R.id.ic_ok);
+        code = findViewById(R.id.code);
+        txtTotalPrice = findViewById(R.id.txtTotalPrice);
+        btnAccept = findViewById(R.id.btnAccept);
+        try{
+            Bitmap data = LocaleData.renderQRCode("hello world");
+            ic_ok.setImageBitmap(data);
+            String string = LocaleData.BitMapToString(data);
+            Log.e("QR CODE",string);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        btnAccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         int apiVersion = android.os.Build.VERSION.SDK_INT;
         if (apiVersion >= android.os.Build.VERSION_CODES.M) {
             if (!checkPermission()) {
@@ -96,6 +130,8 @@ public class ScanQRActivity extends AppCompatActivity{
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultcode, intent);
         if(result != null){
             String contents = result.getContents();
+            //Xủ lý logic scan mã QR ở đây
+
             // lấy hiệu ứng rung khi scan thành công.
             Vibrator v = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
             // SET RUNG 400 MILLISECONDS
