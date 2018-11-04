@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".MainActivity">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+      android:id="@+id/txtClose"
+      android:layout_width="30dp"
+      android:layout_height="30dp"
+      android:text="X"
+      android:textColor="@color/black"
+      android:textStyle="bold"
+      android:textSize="20dp"
+      android:gravity="center"/>
+
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Đánh giá của bạn"
+      android:textColor="@color/black"
+      android:textSize="20dp"
+      android:gravity="center"
+      android:layout_marginTop="0dp"
+      android:layout_marginBottom="5dp"/>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="5dp"
+      android:background="@drawable/custom_border"
+      android:orientation="horizontal"
+      android:weightSum="5">
+
+      <ImageView
+        android:id="@+id/imgCybercoreIcon"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:src="@drawable/cybercore_icon_01" />
+
+      <LinearLayout
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="4"
+        android:orientation="vertical">
+
+        <TextView
+          android:id="@+id/txtCybercoreName"
+          android:layout_width="match_parent"
+          android:layout_height="30dp"
+          android:paddingLeft="20dp"
+          android:paddingTop="5dp"
+          android:text="Tên quán"
+          android:textColor="@color/black"
+          android:textSize="18dp" />
+
+        <TextView
+          android:id="@+id/txtAddress"
+          android:layout_width="match_parent"
+          android:layout_height="30dp"
+          android:paddingLeft="20dp"
+          android:paddingTop="5dp"
+          android:text="Địa chỉ(ngắn)"
+          android:textColor="@color/black"
+          android:textSize="12dp" />
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="5dp"
+      android:background="@drawable/custom_border"
+      android:orientation="vertical"
+      android:weightSum="5">
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:paddingLeft="20dp"
+        android:paddingTop="5dp"
+        android:text="Thang điểm của bạn"
+        android:textColor="@color/black"
+        android:textSize="17dp"
+        android:gravity="center"/>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal">
+
+        <ImageView
+          android:id="@+id/star01"
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:src="@drawable/ic_star_border"/>
+
+        <ImageView
+          android:id="@+id/star02"
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:src="@drawable/ic_star_border" />
+
+        <ImageView
+          android:id="@+id/star03"
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:src="@drawable/ic_star_border" />
+
+        <ImageView
+          android:id="@+id/star04"
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:src="@drawable/ic_star_border" />
+
+        <ImageView
+          android:id="@+id/star05"
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:src="@drawable/ic_star_border" />
+
+      </LinearLayout>
+
+      <View
+        android:layout_width="290dp"
+        android:layout_height="0.1dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        android:background="@color/gray"
+        android:layout_gravity="center"/>
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:paddingLeft="20dp"
+        android:paddingTop="5dp"
+        android:text="Ý kiến đóng góp của bạn"
+        android:textColor="@color/black"
+        android:textSize="15dp"/>
+
+      <EditText
+        android:id="@+id/edtEvaluation"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20sp"/>
+
+      <Button
+        android:id="@+id/btnEvaluation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:textColor="@color/white"
+        android:text="Gửi đánh giá"/>
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+</ScrollView>
