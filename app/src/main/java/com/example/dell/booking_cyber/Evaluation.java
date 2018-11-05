@@ -10,11 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dell.booking_cyber.DTO.Booking;
-import com.example.dell.booking_cyber.List.BookingList;
 
 public class Evaluation extends AppCompatActivity {
-  private ImageView imgCybercoreIcon;
-  private TextView txtCybercoreName, txtAddress,txtClose;
+  private ImageView imgCybercoreIcon, imgBack;
+  private TextView txtCybercoreName, txtAddress;
   private EditText edtEvaluation;
   private Button btnEvaluation;
 
@@ -29,16 +28,16 @@ public class Evaluation extends AppCompatActivity {
     setContentView(R.layout.evaluation);
 
     // Get intent and bundle
-    intent = getIntent();
-    extras = intent.getExtras();
+//    intent = getIntent();
+//    extras = intent.getExtras();
 
     // Identify booking to be evaluate
-    if (extras != null) {
-      booking = BookingList.bookingList.get(extras.getInt("position"));
-    }
+//    if (extras != null) {
+//      booking = BookingList.bookingList.get(extras.getInt("position"));
+//    }
 
     identifyElements();
-    setElementsShowAndDisplay();
+//    setElementsShowAndDisplay();
 
     onCloseListener();
   }
@@ -47,7 +46,7 @@ public class Evaluation extends AppCompatActivity {
     imgCybercoreIcon = findViewById(R.id.imgCybercoreIcon);
     txtCybercoreName = findViewById(R.id.txtCybercoreName);
     txtAddress = findViewById(R.id.txtAddress);
-    txtClose = findViewById(R.id.txtClose);
+    imgBack = findViewById(R.id.imgBack);
     edtEvaluation = findViewById(R.id.edtEvaluation);
     btnEvaluation = findViewById(R.id.btnEvaluation);
   }
@@ -66,7 +65,7 @@ public class Evaluation extends AppCompatActivity {
   }
 
   private void onCloseListener() {
-    this.txtClose.setOnClickListener(new View.OnClickListener() {
+    this.imgBack.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         finish();
