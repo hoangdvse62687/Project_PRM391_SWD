@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -27,10 +28,12 @@ import java.util.Date;
 import java.util.Locale;
 
 public class ServiceRequestDetail extends AppCompatActivity {
+  private final int EVALUATION_REQUEST_CODE = 1;
+
   private Dialog dialog;
 
   private TextView txtCybercoreName, txtAddress, txtEvaluation;
-  private TextView txtnumOfSeat, txtGoingDate, txtGoingTime, txtDuration, txtPrice, txtStatus, txtBookingDate;
+  private TextView txtnumOfSeat, txtGoingDate, txtGoingTime, txtDuration, txtPrice, txtStatus, txtBookingDate, txtRoom, txtConfiguration;
   private ImageView imgUserIcon, imgCybercoreIcon, imgEditBooking, imgDeleteBooking;
   RatingBar ratingStar;
 
@@ -89,6 +92,8 @@ public class ServiceRequestDetail extends AppCompatActivity {
     imgEditBooking = findViewById(R.id.imgEditBooking);
     imgDeleteBooking = findViewById(R.id.imgDeleteBooking);
     txtnumOfSeat = findViewById(R.id.txtnumOfSeat);
+    txtRoom = findViewById(R.id.txtRoom);
+    txtConfiguration = findViewById(R.id.txtConfiguration);
     txtGoingDate = findViewById(R.id.txtGoingDate);
     txtGoingTime = findViewById(R.id.txtGoingTime);
     txtDuration = findViewById(R.id.txtDuration);
@@ -113,6 +118,8 @@ public class ServiceRequestDetail extends AppCompatActivity {
             : LocaleData.NOT_EVALUATED;
 
     String numberOfSeat = serviceRequestDetailDTO.getNumberOfServiceSlot().toString();
+    String room = serviceRequestDetailDTO.getRoomname();
+    String configuration = serviceRequestDetailDTO.getConfigurationName();
 
     String hour, minute;
 
@@ -161,6 +168,8 @@ public class ServiceRequestDetail extends AppCompatActivity {
     }
 
     txtnumOfSeat.setText(numberOfSeat);
+    txtRoom.setText(room);
+    txtConfiguration.setText(configuration);
     txtGoingDate.setText(goingDate);
     txtGoingTime.setText(goingTime);
     txtDuration.setText(duration);
@@ -263,7 +272,8 @@ public class ServiceRequestDetail extends AppCompatActivity {
           public void onClick(View v) {
             Intent intent = new Intent(ServiceRequestDetail.this, Evaluation.class);
             intent.putExtra("serviceRequestDetailDTO", serviceRequestDetailDTO);
-            startActivity(intent);
+            intent.putExtra("cyberGamingDTO", cyberGamingDTO);
+            startActivityForResult(intent, EVALUATION_REQUEST_CODE);
           }
         });
       } else {
@@ -271,6 +281,20 @@ public class ServiceRequestDetail extends AppCompatActivity {
       }
     } else {
       layoutEvaluation.setVisibility(View.GONE);
+    }
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    switch (requestCode) {
+      case EVALUATION_REQUEST_CODE:
+        if (resultCode == RESULT_OK) {
+          ratingStar.setRating(data.getIntExtra("numOfStar", 0));
+        }
+        break;
+      default:
+        break;
     }
   }
 }

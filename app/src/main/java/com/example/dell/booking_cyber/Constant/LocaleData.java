@@ -41,6 +41,8 @@ public class LocaleData {
     public static final String SERVICEREQUEST_GETBYID_URL = "https://swd-backend-lamtt.herokuapp.com/serviceRequest/";
     public static final String SERVICEREQUEST_UPDATE_COMPLATE_URL = "https://swd-backend-lamtt.herokuapp.com/serviceRequest/complete/";
 
+    public static final String SERVICEREQUEST_UPDATE = "https://swd-backend-lamtt.herokuapp.com/serviceRequest/";
+
     public static final String VIETNAMESE_LANGUAGE = "vi";
     public static final String VIETNAMESE_COUNTRY = "VI";
     public static final String HOUR_AND_MINUTE_FORMAT = "HH:mm";
@@ -53,6 +55,9 @@ public class LocaleData {
     public static final String NOT_COMPLETE = "Không hoàn thành";
     public static final String NOT_YET_ARRIVED = "Chưa đến";
     public static final String WAITING_TO_APPROVED = "Đang chờ kiểm duyệt";
+    public static final String EVALUATE_REQUIRED = "Xin hãy nhập đánh giá của bạn";
+    public static final String LONG_EVALUATION = "Đánh giá của bạn quá dài";
+    public static final String STAR_NOT_RATING = "Hãy chấm sao xếp hạng của bạn";
 
     public static int TIME_ZONE = 7;
 

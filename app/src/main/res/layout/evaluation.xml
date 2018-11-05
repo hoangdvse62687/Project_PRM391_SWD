@@ -98,35 +98,17 @@
         android:layout_marginBottom="20dp"
         android:orientation="horizontal">
 
-        <ImageView
-          android:id="@+id/star01"
-          android:layout_width="30dp"
-          android:layout_height="30dp"
-          android:src="@drawable/ic_star_border"/>
-
-        <ImageView
-          android:id="@+id/star02"
-          android:layout_width="30dp"
-          android:layout_height="30dp"
-          android:src="@drawable/ic_star_border" />
-
-        <ImageView
-          android:id="@+id/star03"
-          android:layout_width="30dp"
-          android:layout_height="30dp"
-          android:src="@drawable/ic_star_border" />
-
-        <ImageView
-          android:id="@+id/star04"
-          android:layout_width="30dp"
-          android:layout_height="30dp"
-          android:src="@drawable/ic_star_border" />
-
-        <ImageView
-          android:id="@+id/star05"
-          android:layout_width="30dp"
-          android:layout_height="30dp"
-          android:src="@drawable/ic_star_border" />
+        <RatingBar
+            android:id="@+id/ratingStar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:scaleX="3"
+            android:scaleY="3"
+            android:isIndicator="false"
+            android:theme="@style/RatingBar"
+            android:focusable="false"
+            style="@style/Base.Widget.AppCompat.RatingBar.Small"/>
 
       </LinearLayout>
 
@@ -153,8 +135,17 @@
         android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20sp"/>
+        android:layout_gravity="center"/>
+
+      <TextView
+          android:id="@+id/txtEvaluationError"
+          android:layout_width="270dp"
+          android:layout_height="wrap_content"
+          android:textColor="@color/red"
+          android:layout_gravity="center"
+          android:gravity="center"
+          android:text="Đây là lỗi"
+          android:layout_marginBottom="20sp"/>
 
       <Button
         android:id="@+id/btnEvaluation"

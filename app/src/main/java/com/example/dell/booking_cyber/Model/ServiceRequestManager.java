@@ -92,4 +92,31 @@ public class ServiceRequestManager {
         }
         return false;
     }
+
+    public boolean ratingServiceRequest(ServiceRequestDTO dto) {
+        Gson gson = new Gson();
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPut httpPut = new HttpPut(LocaleData.SERVICEREQUEST_UPDATE);
+
+            // Add params to put request
+            StringEntity params = new StringEntity(gson.toJson(dto));
+            httpPut.setHeader("Content-type", "application/json");
+            httpPut.setEntity(params);
+
+            HttpResponse response = httpclient.execute(httpPut);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+            String returnJson = reader.readLine();
+            if(LocaleData.HandleErrorMessageResponse(response.getStatusLine().getStatusCode())){
+                if(returnJson != null){
+                    return true;
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
 }
