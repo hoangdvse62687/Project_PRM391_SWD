@@ -47,8 +47,6 @@ public class LocaleData {
     public static final String SERVICEREQUEST_GETBYID_URL = "https://swd-backend-lamtt.herokuapp.com/serviceRequest/";
     public static final String SERVICEREQUEST_UPDATE_COMPLATE_URL = "https://swd-backend-lamtt.herokuapp.com/serviceRequest/complete/";
 
-    public static final String SERVICEREQUEST_GETBYCUSTOMERID_URL = "https://swd-backend-lamtt.herokuapp.com/serviceRequest/getByAccountRequestId/";
-
     public static int TIME_ZONE = 7;
 
     public static boolean HandleErrorMessageResponse(Integer statusResponse){
