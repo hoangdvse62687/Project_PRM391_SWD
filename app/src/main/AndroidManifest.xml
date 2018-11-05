@@ -6,10 +6,12 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-feature android:name="android.hardware.camera"/>
-    <uses-feature android:name="android.hardware.camera.autofocus"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/sharingan"
@@ -36,12 +38,12 @@
         <activity android:name=".SignupActivity" />
         <activity android:name=".CyberDetailActivity" />
         <activity android:name=".ForgotPasswordActivity" />
-        <activity android:name=".ScanQRActivity"></activity>
+        <activity android:name=".ScanQRActivity" />
         <activity android:name=".ServiceRequestHistory" />
         <activity android:name=".CustomerInformation" />
         <activity android:name=".ServiceRequestDetail" />
         <activity android:name=".Evaluation" />
-
+        <activity android:name=".DisplayQRResultActivity"></activity>
     </application>
 
 </manifest>

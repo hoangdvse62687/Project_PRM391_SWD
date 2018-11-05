@@ -19,8 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dell.booking_cyber.Constant.LocaleData;
+import com.example.dell.booking_cyber.DTO.CustomerDTO;
 import com.example.dell.booking_cyber.DTO.ServiceRequestDTO;
 import com.example.dell.booking_cyber.DTO.ServiceRequestDetailDTO;
+import com.example.dell.booking_cyber.Model.AccountManager;
 import com.example.dell.booking_cyber.Model.ServiceRequestManager;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -29,34 +31,11 @@ import com.google.zxing.integration.android.IntentResult;
 public class ScanQRActivity extends AppCompatActivity{
     private static final int REQUEST_CAMERA = 1;
 
-    TextView content;
-    ImageView ic_ok;
-    TextView code;
-    TextView txtTotalPrice;
-    Button btnAccept;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_qr);
-        content = findViewById(R.id.content);
-        ic_ok = findViewById(R.id.ic_ok);
-        code = findViewById(R.id.code);
-        txtTotalPrice = findViewById(R.id.txtTotalPrice);
-        btnAccept = findViewById(R.id.btnAccept);
-        try{
-            Bitmap data = LocaleData.renderQRCode("hello world");
-            ic_ok.setImageBitmap(data);
-            String string = LocaleData.BitMapToString(data);
-            Log.e("QR CODE",string);
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-        btnAccept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
         int apiVersion = android.os.Build.VERSION.SDK_INT;
         if (apiVersion >= android.os.Build.VERSION_CODES.M) {
             if (!checkPermission()) {
@@ -127,15 +106,63 @@ public class ScanQRActivity extends AppCompatActivity{
     }
 
     public void onActivityResult(int requestCode, int resultcode, Intent intent){
+        boolean isSuccess = false;
+        String note = "";
+        String code = "";
+        String totalPrice = "";
+        String content = "";
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultcode, intent);
         if(result != null){
-            String contents = result.getContents();
-            //Xủ lý logic scan mã QR ở đây
-
-            // lấy hiệu ứng rung khi scan thành công.
-            Vibrator v = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-            // SET RUNG 400 MILLISECONDS
-            v.vibrate(400);
+            try{
+                String contents = result.getContents();
+                // lấy hiệu ứng rung khi scan thành công.
+                Vibrator v = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                // SET RUNG 400 MILLISECONDS
+                v.vibrate(400);
+                //Xủ lý logic scan mã QR ở đây
+                Integer id = Integer.parseInt(contents);
+                ServiceRequestManager serviceRequestManager = new ServiceRequestManager();
+                ServiceRequestDetailDTO detailDTO = serviceRequestManager.getServiceRequestById(id);
+                if(detailDTO == null){
+                    return;
+                }
+                if(detailDTO.getDone()){
+                    //chơi xong rồi thì quét chi?
+                    note = "Mã này đã dùng";
+                    return;
+                }
+                AccountManager accountManager = new AccountManager(ScanQRActivity.this);
+                accountManager.getAccount();
+                CustomerDTO customerDTO = accountManager.customerDTO;
+                if(customerDTO.getId() == null){
+                    return;
+                }
+                if(customerDTO.getId() != detailDTO.getUserId()){
+                    //ko phai ticket cua ban
+                    note = "Mã này không phải của bạn";
+                    return;
+                }
+                // sửa thuộc tính done = true
+                if(!serviceRequestManager.updateDoneStatus(id)){
+                    return;
+                }
+                // thông báo ở view
+                code = detailDTO.getId().toString();
+                content = "Quét mã thành công";
+                totalPrice = detailDTO.getTotalPrice().toString() + "đ";
+                isSuccess = true;
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }finally {
+                Intent intent1 = new Intent(ScanQRActivity.this,DisplayQRResultActivity.class);
+                intent1.putExtra("ISSUCCESS",isSuccess);
+                intent1.putExtra("NOTE",note);
+                intent1.putExtra("CODE",code);
+                intent1.putExtra("CONTENT",content);
+                intent1.putExtra("TOTALPRICE",totalPrice);
+                startActivity(intent1);
+                finish();
+            }
         }
     }
 }

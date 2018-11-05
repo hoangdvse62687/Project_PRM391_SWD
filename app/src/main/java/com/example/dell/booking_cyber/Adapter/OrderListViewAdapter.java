@@ -1,6 +1,7 @@
 package com.example.dell.booking_cyber.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.example.dell.booking_cyber.DTO.ServiceRequestDetailDTO;
 import com.example.dell.booking_cyber.Fragment.GoogleMapApiFragment;
 import com.example.dell.booking_cyber.Model.CybercoreManager;
 import com.example.dell.booking_cyber.R;
+import com.example.dell.booking_cyber.ScanQRActivity;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -64,6 +66,7 @@ public class OrderListViewAdapter extends BaseAdapter {
         public TextView lblTotalMoney;
         public TextView lblTimeStart;
         public Button btnFindWay;
+        public Button btnScanQR;
 
         public void initData(ServiceRequestDetailDTO detail, final int position){
             try{
@@ -93,6 +96,13 @@ public class OrderListViewAdapter extends BaseAdapter {
                         }
                     }
                 });
+                this.btnScanQR.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, ScanQRActivity.class);
+                        context.startActivity(intent);
+                    }
+                });
             }catch (Exception ex){
                 ex.printStackTrace();
             }
@@ -111,6 +121,7 @@ public class OrderListViewAdapter extends BaseAdapter {
         viewHolder.lblTotalMoney = convertView.findViewById(R.id.lblMoney);
         viewHolder.lblTimeStart = convertView.findViewById(R.id.lblTimeStart);
         viewHolder.btnFindWay = convertView.findViewById(R.id.btnFindWay);
+        viewHolder.btnScanQR = convertView.findViewById(R.id.btnScanQR);
         ServiceRequestDetailDTO row_pos = Data.get(position);
         viewHolder.initData(row_pos,position);
         convertView.setTag(viewHolder);

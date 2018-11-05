@@ -141,8 +141,7 @@ public class NavigationAdapter extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_profile) {
-            Intent intent = new Intent(this, ScanQRActivity.class);
-            startActivity(intent);
+
         }
         if (id == R.id.nav_transaction) {
             Intent intent = new Intent(this, ServiceRequestHistory.class);

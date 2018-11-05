@@ -72,39 +72,13 @@ public class ServiceRequestManager {
         return null;
     }
 
-    public boolean updateServiceRequest(ServiceRequestDTO detail){
+    public boolean updateDoneStatus(Integer requestServiceId){
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
             HttpClient httpclient = new DefaultHttpClient();
-            HttpPut httpPut = new HttpPut(LocaleData.SERVICEREQUEST_UPDATE_URL);
+            HttpPut httpPut = new HttpPut(LocaleData.SERVICEREQUEST_UPDATE_COMPLATE_URL+requestServiceId);
 
-            JSONObject json = new JSONObject();
-            json.put("id",detail.getId());
-            json.put("active",detail.getActive());
-            json.put("approved",detail.getApproved());
-            json.put("code",detail.getCode());
-            json.put("configurationId",detail.getConfigurationId());
-            json.put("cyberGamingId", detail.getCyberGamingId());
-            json.put("dateRequest", detail.getDateRequest());
-            json.put("deleted", detail.getDeleted());
-            json.put("done",detail.getDone());
-            json.put("duration",detail.getDuration());
-            json.put("evaluation",detail.getEvaluation());
-            json.put("goingDate",detail.getGoingDate());
-            json.put("latitude",detail.getLatitude());
-            json.put("longitude",detail.getLongitude());
-            json.put("numberOfServiceSlot",detail.getNumberOfServiceSlot());
-            json.put("paid",detail.getPaid());
-            json.put("paidDate",detail.getPaidDate());
-            json.put("roomId",detail.getRoomId());
-            json.put("star",detail.getStar());
-            json.put("totalPrice",detail.getTotalPrice());
-            json.put("userId",detail.getUserId());
-
-            StringEntity se = new StringEntity( json.toString());
-            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            httpPut.setEntity(se);
             HttpResponse response = httpclient.execute(httpPut);
             BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
             String returnJson = reader.readLine();

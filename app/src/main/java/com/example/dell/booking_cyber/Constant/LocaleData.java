@@ -45,7 +45,7 @@ public class LocaleData {
 
     public static final String SERVICEREQUEST_GETBYACCOUNTID_URL = "https://swd-backend-lamtt.herokuapp.com/serviceRequest/getByAccountRequestId/";
     public static final String SERVICEREQUEST_GETBYID_URL = "https://swd-backend-lamtt.herokuapp.com/serviceRequest/";
-    public static final String SERVICEREQUEST_UPDATE_URL = "https://swd-backend-lamtt.herokuapp.com/serviceRequest";
+    public static final String SERVICEREQUEST_UPDATE_COMPLATE_URL = "https://swd-backend-lamtt.herokuapp.com/serviceRequest/complete/";
 
     public static int TIME_ZONE = 7;
 
@@ -82,7 +82,7 @@ public class LocaleData {
         }
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try {
-            BitMatrix bitMatrix = multiFormatWriter.encode(barcode_content, BarcodeFormat.QR_CODE,200,200);
+            BitMatrix bitMatrix = multiFormatWriter.encode(barcode_content, BarcodeFormat.QR_CODE,100,100);
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             return barcodeEncoder.createBitmap(bitMatrix);
         } catch (WriterException e) {
@@ -93,7 +93,7 @@ public class LocaleData {
 
     public static String BitMapToString(Bitmap bitmap){
         ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,200, baos);
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
         byte [] b=baos.toByteArray();
         String temp= Base64.encodeToString(b, Base64.DEFAULT);
         return temp;
