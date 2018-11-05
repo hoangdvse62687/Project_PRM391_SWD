@@ -9,16 +9,20 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.dell.booking_cyber.DTO.Booking;
+import com.example.dell.booking_cyber.DTO.ServiceRequestDetailDTO;
 import com.example.dell.booking_cyber.R;
 
-import java.util.ArrayList;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
-public class ServiceRequestAdapter extends ArrayAdapter<Booking> {
+public class ServiceRequestAdapter extends ArrayAdapter<ServiceRequestDetailDTO> {
   private Context context;
   private int resource;
 
-  public ServiceRequestAdapter(Context context, int resource, ArrayList<Booking> objects) {
+  public ServiceRequestAdapter(Context context, int resource, List<ServiceRequestDetailDTO> objects) {
     super(context, resource, objects);
     this.context = context;
     this.resource = resource;
@@ -28,10 +32,13 @@ public class ServiceRequestAdapter extends ArrayAdapter<Booking> {
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
     // Get the booking information
-    String cybercoreName = getItem(position).getCybercoreName();
-    String bookingDate = getItem(position).getBookingDate().toString();
-    boolean isPaid = getItem(position).isPaid();
-    int price = getItem(position).getPrice();
+    String cybercoreName = getItem(position).getCyberGamingName();
+
+    String bookingDate = new SimpleDateFormat("dd/MM/yyyy").format(getItem(position).getDateRequest());;
+    boolean isPaid = getItem(position).getPaid();
+    boolean isExpired = getItem(position).getGoingDate().compareTo(new Date()) < 0;
+    boolean isApproved = getItem(position).getApproved();
+    double price = getItem(position).getTotalPrice();
 
     LayoutInflater inflater = LayoutInflater.from(this.context);
     convertView = inflater.inflate(this.resource, parent, false);
@@ -43,13 +50,18 @@ public class ServiceRequestAdapter extends ArrayAdapter<Booking> {
 
     txtCybercoreName.setText(cybercoreName);
     txtBookingDate.setText(bookingDate);
-    txtBookingPrice.setText(Integer.toString(price) + ".000 đ");
 
-    txtIsPaid.setText(isPaid ? "Đã đến" : "Chưa đến");
+    txtBookingPrice.setText(NumberFormat.getCurrencyInstance(new Locale("vi", "VI")).format(price).replace("US$", ""));
+
+    String check = isPaid ? "Đã đến" : (isExpired ? "Không hoàn thành" :(isApproved ? "Đang chờ kiểm duyệt" : "Chưa đến"));
+
+    txtIsPaid.setText(isPaid ? "Đã đến" : (isExpired ? "Không hoàn thành" :(isApproved ? "Chưa đến" : "Đang chờ kiểm duyệt")));
 
     int green = ContextCompat.getColor(this.context, R.color.green);
     int orange = ContextCompat.getColor(this.context, R.color.orange);
-    txtIsPaid.setTextColor(isPaid ? green : orange);
+    int red = ContextCompat.getColor(this.context, R.color.red);
+    int blue = ContextCompat.getColor(this.context, R.color.blue);
+    txtIsPaid.setTextColor(isPaid ? green : (isExpired ? red :(isApproved ? orange : blue)));
     return convertView;
   }
 }

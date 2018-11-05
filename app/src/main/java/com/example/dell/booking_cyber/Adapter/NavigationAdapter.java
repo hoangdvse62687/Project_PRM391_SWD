@@ -23,6 +23,7 @@ import com.example.dell.booking_cyber.LoginActivity;
 import com.example.dell.booking_cyber.DTO.AccountDTO;
 import com.example.dell.booking_cyber.Model.AccountManager;
 import com.example.dell.booking_cyber.R;
+import com.example.dell.booking_cyber.ScanQRActivity;
 import com.example.dell.booking_cyber.ServiceRequestHistory;
 import com.example.dell.booking_cyber.SignupActivity;
 
@@ -139,10 +140,10 @@ public class NavigationAdapter extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_profile) {
-            // Handle the camera action
+        if (id == R.id.nav_profile && accountManager.isLogin()) {
+            
         }
-        if (id == R.id.nav_transaction) {
+        if (id == R.id.nav_transaction && accountManager.isLogin()) {
             Intent intent = new Intent(this, ServiceRequestHistory.class);
             startActivity(intent);
         }

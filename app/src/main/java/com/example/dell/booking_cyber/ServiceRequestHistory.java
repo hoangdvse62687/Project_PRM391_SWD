@@ -9,10 +9,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.dell.booking_cyber.Adapter.ServiceRequestAdapter;
-import com.example.dell.booking_cyber.DTO.Booking;
-import com.example.dell.booking_cyber.List.BookingList;
+import com.example.dell.booking_cyber.DTO.ServiceRequestDetailDTO;
+import com.example.dell.booking_cyber.Model.AccountManager;
+import com.example.dell.booking_cyber.Model.ServiceRequestManager;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ServiceRequestHistory extends AppCompatActivity {
   private ListView listViewCybercore;
@@ -26,11 +27,17 @@ public class ServiceRequestHistory extends AppCompatActivity {
     listViewCybercore = findViewById(R.id.listViewCybercore);
     txtClose = findViewById(R.id.txtClose);
 
-    BookingList.addToList();
+    // Calling manager
+    final AccountManager accountManager = new AccountManager(this);
+    final ServiceRequestManager serviceRequestManager = new ServiceRequestManager();
 
-    ArrayList<Booking> bookingList = BookingList.bookingList;
+    // Get current account
+    accountManager.getAccount();
 
-    final ServiceRequestAdapter adapter = new ServiceRequestAdapter(this, R.layout.service_request_item, bookingList);
+    List<ServiceRequestDetailDTO> serviceRequestList = serviceRequestManager.getServiceRequestByCustomerId(
+            accountManager.customerDTO.getId()
+    );
+    ServiceRequestAdapter adapter = new ServiceRequestAdapter(ServiceRequestHistory.this, R.layout.service_request_item, serviceRequestList);
     listViewCybercore.setAdapter(adapter);
 
     onBookingHistoryItemClick();
