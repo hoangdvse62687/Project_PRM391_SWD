@@ -60,6 +60,7 @@ import java.util.List;
 public class GoogleMapApiFragment extends Fragment implements LocationListener,GoogleMap.OnMarkerClickListener,DirectionFinderListener {
 
     private GoogleMap myMap;
+    private List<String> cyberMemberName = new ArrayList<>();
     AutoCompleteTextView searchTool;
     ArrayList<Marker> markers = new ArrayList<>();
     private Circle mCircle;
@@ -129,6 +130,7 @@ public class GoogleMapApiFragment extends Fragment implements LocationListener,G
                 Marker marker = myMap.addMarker(option);
                 markers.add(marker);
             }
+            cyberMemberName.add(item.getName());
         }
     }
     @Override
@@ -184,9 +186,8 @@ public class GoogleMapApiFragment extends Fragment implements LocationListener,G
                 onMyMapReady(googleMap);
             }
         });
-        String[] member_names = {"Quận 12","Quận Gò Vấp","Quận Tân Bình"};
         searchTool = getActivity().findViewById(R.id.searchTool);
-        ArrayAdapter adapter = new ArrayAdapter(getActivity(),R.layout.dropdown,member_names);
+        ArrayAdapter adapter = new ArrayAdapter(getActivity(),R.layout.dropdown,cyberMemberName);
         if(searchTool != null){
             searchTool.setAdapter(adapter);
             searchTool.setOnItemClickListener(new AdapterView.OnItemClickListener() {
