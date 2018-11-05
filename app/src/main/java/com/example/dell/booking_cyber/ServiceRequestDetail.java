@@ -2,33 +2,46 @@ package com.example.dell.booking_cyber;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.example.dell.booking_cyber.DTO.Booking;
-import com.example.dell.booking_cyber.List.BookingList;
+import com.example.dell.booking_cyber.Constant.LocaleData;
+import com.example.dell.booking_cyber.DTO.CustomerDTO;
+import com.example.dell.booking_cyber.DTO.CyberGamingDTO;
+import com.example.dell.booking_cyber.DTO.ServiceRequestDetailDTO;
+import com.example.dell.booking_cyber.Model.AccountManager;
+import com.example.dell.booking_cyber.Model.CybercoreManager;
+
+import java.io.InputStream;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class ServiceRequestDetail extends AppCompatActivity {
   private Dialog dialog;
 
   private TextView txtCybercoreName, txtAddress, txtEvaluation;
-  private TextView txtnumOfSeat, txtDuration, txtTotal, txtDiscount, txtPrice, txtIsPaid, txtBookingDate;
-  private ImageView imgCybercoreIcon, imgEditBooking, imgDeleteBooking, star01, star02, star03, star04, star05;
+  private TextView txtnumOfSeat, txtGoingDate, txtGoingTime, txtDuration, txtPrice, txtStatus, txtBookingDate;
+  private ImageView imgUserIcon, imgCybercoreIcon, imgEditBooking, imgDeleteBooking;
+  RatingBar ratingStar;
 
   private Intent intent;
   private Bundle extras;
 
-  private Booking booking;
-  private TextView txtClose;
-  private LinearLayout lEvaluation;
+  private ServiceRequestDetailDTO serviceRequestDetailDTO;
+  private CyberGamingDTO cyberGamingDTO;
+  private CustomerDTO customerDTO;
+  private ImageView imgBack;
+  private LinearLayout layoutEvaluation, lEvaluation;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -37,85 +50,158 @@ public class ServiceRequestDetail extends AppCompatActivity {
 
     // Get intent & bundle
     intent = getIntent();
-    extras = intent.getExtras();
-
-    // Get color
-    int green = ContextCompat.getColor(this, R.color.green);
-    int orange = ContextCompat.getColor(this, R.color.orange);
 
     // Get dialog
     dialog = new Dialog(this);
 
-    if (extras != null) {
-      booking = BookingList.bookingList.get(extras.getInt("position"));
-    }
+    serviceRequestDetailDTO = (ServiceRequestDetailDTO) intent.getSerializableExtra("serviceRequestDetailDTO");
+
+    // Get cyber_gaming
+    CybercoreManager cybercoreManager = new CybercoreManager();
+    cyberGamingDTO = cybercoreManager.getCyberById(serviceRequestDetailDTO.getCyberGamingId());
+
+    // Get current customer
+    AccountManager accountManager = new AccountManager(ServiceRequestDetail.this);
+    accountManager.getAccount();
+    customerDTO = accountManager.customerDTO;
+
+    // These variable is used to check the status of service request details
+    boolean isPaid = serviceRequestDetailDTO.getPaid();
+    boolean isExpired = serviceRequestDetailDTO.getGoingDate().compareTo(new Date()) < 0;
+    boolean isApproved = serviceRequestDetailDTO.getApproved();
 
     identifyElements();
-    setElementsShowAndDisplay();
-    setElementColor();
+    setElementsShowAndDisplay(isPaid, isExpired, isApproved);
+    setElementColor(isPaid, isExpired, isApproved);
 
     onCloseListener();
+    onEditListener();
     onDeleteListener();
-    onEvaluateListener();
+    onEvaluateListener(isExpired);
   }
 
   private void identifyElements() {
     txtCybercoreName = findViewById(R.id.txtCybercoreName);
     txtAddress = findViewById(R.id.txtAddress);
+    imgUserIcon = findViewById(R.id.imgUserIcon);
     imgCybercoreIcon = findViewById(R.id.imgCybercoreIcon);
     txtEvaluation = findViewById(R.id.txtEvaluation);
     imgEditBooking = findViewById(R.id.imgEditBooking);
     imgDeleteBooking = findViewById(R.id.imgDeleteBooking);
     txtnumOfSeat = findViewById(R.id.txtnumOfSeat);
+    txtGoingDate = findViewById(R.id.txtGoingDate);
+    txtGoingTime = findViewById(R.id.txtGoingTime);
     txtDuration = findViewById(R.id.txtDuration);
-    txtTotal = findViewById(R.id.txtTotal);
-    txtDiscount = findViewById(R.id.txtDiscount);
     txtPrice = findViewById(R.id.txtPrice);
-    txtIsPaid = findViewById(R.id.txtIsPaid);
+    txtStatus = findViewById(R.id.txtStatus);
     txtBookingDate = findViewById(R.id.txtBookingDate);
+    ratingStar = findViewById(R.id.ratingStar);
 
-    star01 = findViewById(R.id.star01);
-    star02 = findViewById(R.id.star02);
-    star03 = findViewById(R.id.star03);
-    star04 = findViewById(R.id.star04);
-    star05 = findViewById(R.id.star05);
-
-    txtClose = findViewById(R.id.txtClose);
+    imgBack = findViewById(R.id.imgBack);
+    layoutEvaluation = findViewById(R.id.layoutEvaluation);
     lEvaluation = findViewById(R.id.lEvaluation);
   }
 
-  private void setElementsShowAndDisplay() {
-    txtCybercoreName.setText(booking.getCybercoreName());
-    txtAddress.setText(booking.getAddress());
-    imgCybercoreIcon.setImageResource(booking.getCybercoreIcon());
-    txtEvaluation.setText(booking.getPointEvaluation() > 0 ? "Đánh giá của bạn" : "Bạn chưa đánh giá");
-    if (booking.isPaid()) {
+  private void setElementsShowAndDisplay(boolean isPaid, boolean isExpired, boolean isApproved) {
+    String cyberCoreName = serviceRequestDetailDTO.getCyberGamingName();
+    String cyberCoreAddress = cyberGamingDTO.getAddress();
+    Bitmap userIcon = getImageFromUrl(customerDTO.getAvatar());
+    Bitmap cyberCoreIcon = getImageFromUrl(cyberGamingDTO.getLogo());
+
+    String evaluation = serviceRequestDetailDTO.getStar() > 0 ?
+            LocaleData.YOUR_EVALUATION
+            : LocaleData.NOT_EVALUATED;
+
+    String numberOfSeat = serviceRequestDetailDTO.getNumberOfServiceSlot().toString();
+
+    String hour, minute;
+
+    String goingDate = new SimpleDateFormat(LocaleData.VIETNAMEESE_DATE_FORMAT)
+            .format(serviceRequestDetailDTO.getGoingDate());
+
+    String goingTime = new SimpleDateFormat(LocaleData.HOUR_AND_MINUTE_FORMAT)
+            .format(serviceRequestDetailDTO.getGoingDate());
+    goingTime = goingTime.replace(":", LocaleData.HOUR + " ") + LocaleData.MINUTE;
+
+    hour = String.valueOf((int) (serviceRequestDetailDTO.getDuration() / 60));
+    minute = String.valueOf((int) (serviceRequestDetailDTO.getDuration() % 60));
+
+    String duration = (Integer.parseInt(hour) > 0) ?
+            hour + LocaleData.HOUR + " " + minute + LocaleData.MINUTE
+            : minute + LocaleData.MINUTE;
+
+    String price = NumberFormat.getCurrencyInstance(new Locale(LocaleData.VIETNAMESE_LANGUAGE, LocaleData.VIETNAMESE_COUNTRY))
+            .format(serviceRequestDetailDTO.getTotalPrice()).replace("US$", "");
+
+    String status = isPaid ?
+            LocaleData.ARRIVED
+            : isExpired ?
+            LocaleData.NOT_COMPLETE
+            : isApproved ?
+            LocaleData.NOT_YET_ARRIVED
+            : LocaleData.WAITING_TO_APPROVED;
+
+    String bookingDate = new SimpleDateFormat(LocaleData.VIETNAMEESE_DATE_FORMAT)
+            .format(serviceRequestDetailDTO.getDateRequest());
+
+    int stars = serviceRequestDetailDTO.getStar();
+
+
+    txtCybercoreName.setText(cyberCoreName);
+    txtAddress.setText(cyberCoreAddress);
+
+    if (userIcon != null) { imgUserIcon.setImageBitmap(userIcon); }
+    if (cyberCoreIcon != null) { imgCybercoreIcon.setImageBitmap(cyberCoreIcon); }
+
+    txtEvaluation.setText(evaluation);
+
+    if (isExpired) {
       imgDeleteBooking.setVisibility(View.INVISIBLE);
       imgEditBooking.setVisibility(View.INVISIBLE);
     }
-    txtnumOfSeat.setText(Integer.toString(booking.getNumOfSeat()));
-    txtDuration.setText(Integer.toString(booking.getHour()) + " giờ " + Integer.toString(booking.getMinute()) + " phút ");
-    txtTotal.setText(Integer.toString(booking.getTotal()) + ".000 đ");
-    txtDiscount.setText(Integer.toString(booking.getDiscount()) + " %");
-    txtPrice.setText(Integer.toString(booking.getPrice()) + ".000 đ");
-    txtIsPaid.setText(booking.isPaid() ? "Đã thanh toán" : "Chưa thanh toán");
-    txtBookingDate.setText(booking.getBookingDate());
 
-    star01.setImageResource(booking.getStar_01());
-    star02.setImageResource(booking.getStar_02());
-    star03.setImageResource(booking.getStar_03());
-    star04.setImageResource(booking.getStar_04());
-    star05.setImageResource(booking.getStar_05());
+    txtnumOfSeat.setText(numberOfSeat);
+    txtGoingDate.setText(goingDate);
+    txtGoingTime.setText(goingTime);
+    txtDuration.setText(duration);
+    txtPrice.setText(price);
+    txtStatus.setText(status);
+    txtBookingDate.setText(bookingDate);
+
+    ratingStar.setRating(stars);
   }
 
-  private void setElementColor() {
+  private Bitmap getImageFromUrl(String... urls) {
+    String urldisplay = urls[0];
+    Bitmap bitmapResult = null;
+    if (urldisplay != null) {
+      try {
+        InputStream in = new java.net.URL(urldisplay).openStream();
+        bitmapResult = BitmapFactory.decodeStream(in);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+    return bitmapResult;
+  }
+
+  private void setElementColor(boolean isPaid, boolean isExpired, boolean isApproved) {
     int green = ContextCompat.getColor(this, R.color.green);
     int orange = ContextCompat.getColor(this, R.color.orange);
-    txtIsPaid.setTextColor(booking.isPaid() ? green : orange);
+    int red = ContextCompat.getColor(this, R.color.red);
+    int blue = ContextCompat.getColor(this, R.color.blue);
+
+    txtStatus.setTextColor(isPaid ?
+            green
+            : isExpired ?
+            red
+            : isApproved ?
+            orange
+            : blue);
   }
 
   private void onCloseListener() {
-    this.txtClose.setOnClickListener(new View.OnClickListener() {
+    this.imgBack.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         finish();
@@ -123,61 +209,68 @@ public class ServiceRequestDetail extends AppCompatActivity {
     });
   }
 
-//  private void onEditListener() {
+  private void onEditListener() {
 //    this,imgEditBooking.setOnClickListener(new View.OnClickListener() {
 //      @Override
 //      public void onClick(View v) {
 //
 //      }
 //    });
-//  }
-
-  private void onDeleteListener() {
-    this.imgDeleteBooking.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        dialog.setContentView(R.layout.delete_confirmation_popup);
-
-        // Identify elements in popup
-        Button btnDelete = dialog.findViewById(R.id.btnDelete);
-        Button btnGoBack = dialog.findViewById(R.id.btnGoback);
-
-        // Set listener for buttons
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            BookingList.bookingList.remove(booking);
-            finish();
-//            startActivity(intent);
-            dialog.dismiss();
-          }
-        });
-
-        btnGoBack.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            dialog.dismiss();
-          }
-        });
-
-        // This is used to fill popup with the window
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        // Start dialog
-        dialog.show();
-      }
-    });
   }
 
-  private void onEvaluateListener() {
+  private void onDeleteListener() {
+//    this.imgDeleteBooking.setOnClickListener(new View.OnClickListener() {
+//      @Override
+//      public void onClick(View v) {
+//        dialog.setContentView(R.layout.delete_confirmation_popup);
+//
+//        // Identify elements in popup
+//        Button btnDelete = dialog.findViewById(R.id.btnDelete);
+//        Button btnGoBack = dialog.findViewById(R.id.btnGoback);
+//
+//        // Set listener for buttons
+//        btnDelete.setOnClickListener(new View.OnClickListener() {
+//          @Override
+//          public void onClick(View v) {
+////            BookingList.bookingList.remove(booking);
+//            finish();
+//            dialog.dismiss();
+//          }
+//        });
+//
+//        btnGoBack.setOnClickListener(new View.OnClickListener() {
+//          @Override
+//          public void onClick(View v) {
+//            dialog.dismiss();
+//          }
+//        });
+//
+//        // This is used to fill popup with the window
+//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//
+//        // Start dialog
+//        dialog.show();
+//      }
+//    });
+  }
+
+  private void onEvaluateListener(boolean isExpired) {
     // Set logic for booking to be evalutate
-    this.lEvaluation.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        Intent intent = new Intent(ServiceRequestDetail.this, Evaluation.class);
-        intent.putExtra("position", extras.getInt("position"));
-        startActivity(intent);
+    if (isExpired & serviceRequestDetailDTO.getDone()) {
+      if (serviceRequestDetailDTO.getStar() == 0) {
+        this.lEvaluation.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            Intent intent = new Intent(ServiceRequestDetail.this, Evaluation.class);
+            intent.putExtra("serviceRequestDetailDTO", serviceRequestDetailDTO);
+            startActivity(intent);
+          }
+        });
+      } else {
+        // Do nothing
       }
-    });
+    } else {
+      layoutEvaluation.setVisibility(View.GONE);
+    }
   }
 }

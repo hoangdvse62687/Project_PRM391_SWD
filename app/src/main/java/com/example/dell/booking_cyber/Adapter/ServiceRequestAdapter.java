@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.dell.booking_cyber.Constant.LocaleData;
 import com.example.dell.booking_cyber.DTO.ServiceRequestDetailDTO;
 import com.example.dell.booking_cyber.R;
 
@@ -34,7 +35,9 @@ public class ServiceRequestAdapter extends ArrayAdapter<ServiceRequestDetailDTO>
     // Get the booking information
     String cybercoreName = getItem(position).getCyberGamingName();
 
-    String bookingDate = new SimpleDateFormat("dd/MM/yyyy").format(getItem(position).getDateRequest());;
+    String bookingDate = new SimpleDateFormat(LocaleData.VIETNAMEESE_DATE_FORMAT)
+            .format(getItem(position).getDateRequest());
+
     boolean isPaid = getItem(position).getPaid();
     boolean isExpired = getItem(position).getGoingDate().compareTo(new Date()) < 0;
     boolean isApproved = getItem(position).getApproved();
@@ -51,17 +54,29 @@ public class ServiceRequestAdapter extends ArrayAdapter<ServiceRequestDetailDTO>
     txtCybercoreName.setText(cybercoreName);
     txtBookingDate.setText(bookingDate);
 
-    txtBookingPrice.setText(NumberFormat.getCurrencyInstance(new Locale("vi", "VI")).format(price).replace("US$", ""));
+    txtBookingPrice.setText(NumberFormat.getCurrencyInstance(new Locale(LocaleData.VIETNAMESE_LANGUAGE, LocaleData.VIETNAMESE_COUNTRY))
+            .format(price).replace("US$", ""));
 
-    String check = isPaid ? "Đã đến" : (isExpired ? "Không hoàn thành" :(isApproved ? "Đang chờ kiểm duyệt" : "Chưa đến"));
-
-    txtIsPaid.setText(isPaid ? "Đã đến" : (isExpired ? "Không hoàn thành" :(isApproved ? "Chưa đến" : "Đang chờ kiểm duyệt")));
+    txtIsPaid.setText(isPaid ?
+            LocaleData.ARRIVED
+            : isExpired ?
+            LocaleData.NOT_COMPLETE
+            : isApproved ?
+            LocaleData.NOT_YET_ARRIVED
+            : LocaleData.WAITING_TO_APPROVED);
 
     int green = ContextCompat.getColor(this.context, R.color.green);
     int orange = ContextCompat.getColor(this.context, R.color.orange);
     int red = ContextCompat.getColor(this.context, R.color.red);
     int blue = ContextCompat.getColor(this.context, R.color.blue);
-    txtIsPaid.setTextColor(isPaid ? green : (isExpired ? red :(isApproved ? orange : blue)));
+
+    txtIsPaid.setTextColor(isPaid ?
+            green
+            : isExpired ?
+            red
+            : isApproved ?
+            orange
+            : blue);
     return convertView;
   }
 }

@@ -6,14 +6,10 @@ import android.graphics.BitmapFactory;
 import android.util.Base64;
 
 import com.google.zxing.BarcodeFormat;
-import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -22,8 +18,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.EnumMap;
-import java.util.Map;
 
 public class LocaleData {
     public static final String ROLE_USER = "user";
@@ -46,6 +40,19 @@ public class LocaleData {
     public static final String SERVICEREQUEST_GETBYACCOUNTID_URL = "https://swd-backend-lamtt.herokuapp.com/serviceRequest/getByAccountRequestId/";
     public static final String SERVICEREQUEST_GETBYID_URL = "https://swd-backend-lamtt.herokuapp.com/serviceRequest/";
     public static final String SERVICEREQUEST_UPDATE_COMPLATE_URL = "https://swd-backend-lamtt.herokuapp.com/serviceRequest/complete/";
+
+    public static final String VIETNAMESE_LANGUAGE = "vi";
+    public static final String VIETNAMESE_COUNTRY = "VI";
+    public static final String HOUR_AND_MINUTE_FORMAT = "HH:mm";
+    public static final String VIETNAMEESE_DATE_FORMAT = "dd/MM/yyyy";
+    public static final String YOUR_EVALUATION = "Đánh giá của bạn";
+    public static final String NOT_EVALUATED = "Bạn chưa đánh giá";
+    public static final String HOUR = " giờ";
+    public static final String MINUTE = " phút";
+    public static final String ARRIVED = "Đã đến";
+    public static final String NOT_COMPLETE = "Không hoàn thành";
+    public static final String NOT_YET_ARRIVED = "Chưa đến";
+    public static final String WAITING_TO_APPROVED = "Đang chờ kiểm duyệt";
 
     public static int TIME_ZONE = 7;
 
