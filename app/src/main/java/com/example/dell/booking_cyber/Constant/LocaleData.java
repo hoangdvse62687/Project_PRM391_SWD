@@ -24,24 +24,24 @@ public class LocaleData {
 
     public static final String AUTHENCATION_CHECKLOGIN_URL = "https://swd-backend-lamtt.herokuapp.com/authencation/checkLogin";
 
-    public static final String ACCOUNT_CREATE_URL = "https://swd-backend-lamtt.herokuapp.com/account";
-    public static final String ACCOUNT_GETALL_URL = "https://swd-backend-lamtt.herokuapp.com/account";
+    public static final String ACCOUNT_CREATE_URL = "https://swd-backend-lamtt.herokuapp.com/accounts";
+    public static final String ACCOUNT_GETALL_URL = "https://swd-backend-lamtt.herokuapp.com/accounts";
 
-    public static final String CUSTOMER_GETBYACCOUNTID_URL = "https://swd-backend-lamtt.herokuapp.com/customer/getByAccountId?accountId=";
-    public static final String CUSTOMER_CREATE_URL = "https://swd-backend-lamtt.herokuapp.com/customer";
+    public static final String CUSTOMER_GETBYACCOUNTID_URL = "https://swd-backend-lamtt.herokuapp.com/customers/getByAccountId?accountId=";
+    public static final String CUSTOMER_CREATE_URL = "https://swd-backend-lamtt.herokuapp.com/customers";
 
-    public static final String CYBER_GETALL_URL = "https://swd-backend-lamtt.herokuapp.com/cyber";
-    public static final String CYBER_GETCYBERBYID_URL = "https://swd-backend-lamtt.herokuapp.com/cyber/";
+    public static final String CYBER_GETALL_URL = "https://swd-backend-lamtt.herokuapp.com/cybers";
+    public static final String CYBER_GETCYBERBYID_URL = "https://swd-backend-lamtt.herokuapp.com/cybers/";
 
-    public static final String CONFIGURATION_GETBYCYBERID_URL = "https://swd-backend-lamtt.herokuapp.com/configuration/getByCyberId/";
+    public static final String CONFIGURATION_GETBYCYBERID_URL = "https://swd-backend-lamtt.herokuapp.com/configurations/getByCyberId/";
 
-    public static final String IMAGE_GETBYCYBERID_URL = "https://swd-backend-lamtt.herokuapp.com/image/getByCyberId?cyberId=";
+    public static final String IMAGE_GETBYCYBERID_URL = "https://swd-backend-lamtt.herokuapp.com/images/getByCyberId?cyberId=";
 
-    public static final String SERVICEREQUEST_GETBYACCOUNTID_URL = "https://swd-backend-lamtt.herokuapp.com/serviceRequest/getByAccountRequestId/";
-    public static final String SERVICEREQUEST_GETBYID_URL = "https://swd-backend-lamtt.herokuapp.com/serviceRequest/";
-    public static final String SERVICEREQUEST_UPDATE_COMPLATE_URL = "https://swd-backend-lamtt.herokuapp.com/serviceRequest/complete/";
+    public static final String SERVICEREQUEST_GETBYACCOUNTID_URL = "https://swd-backend-lamtt.herokuapp.com/serviceRequests/getByAccountRequestId/";
+    public static final String SERVICEREQUEST_GETBYID_URL = "https://swd-backend-lamtt.herokuapp.com/serviceRequests/";
+    public static final String SERVICEREQUEST_UPDATE_COMPLATE_URL = "https://swd-backend-lamtt.herokuapp.com/serviceRequests/complete/";
 
-    public static final String SERVICEREQUEST_UPDATE = "https://swd-backend-lamtt.herokuapp.com/serviceRequest/";
+    public static final String SERVICEREQUEST_UPDATE = "https://swd-backend-lamtt.herokuapp.com/serviceRequests/";
 
     public static final String VIETNAMESE_LANGUAGE = "vi";
     public static final String VIETNAMESE_COUNTRY = "VI";

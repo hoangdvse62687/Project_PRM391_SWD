@@ -13,7 +13,9 @@ public class CyberGamingDTO implements Serializable {
 
     private String address;
 
-    private Double starAverage;
+    private Double numberOfStar;
+
+    private Integer numberOfEvaluator;
 
     private Double logitude;
 
@@ -23,13 +25,14 @@ public class CyberGamingDTO implements Serializable {
 
     private Boolean deleted;
 
-    public CyberGamingDTO(Integer id, String name, String logo, Integer accountId, String address, Double starAverage, Double logitude, Double latitude, Boolean active, Boolean deleted) {
+    public CyberGamingDTO(Integer id, String name, String logo, Integer accountId, String address, Double numberOfStar, Integer numberOfEvaluator, Double logitude, Double latitude, Boolean active, Boolean deleted) {
         this.id = id;
         this.name = name;
         this.logo = logo;
         this.accountId = accountId;
         this.address = address;
-        this.starAverage = starAverage;
+        this.numberOfStar = numberOfStar;
+        this.numberOfEvaluator = numberOfEvaluator;
         this.logitude = logitude;
         this.latitude = latitude;
         this.active = active;
@@ -76,12 +79,20 @@ public class CyberGamingDTO implements Serializable {
         this.address = address;
     }
 
-    public Double getStarAverage() {
-        return starAverage;
+    public Double getNumberOfStar() {
+        return numberOfStar;
     }
 
-    public void setStarAverage(Double starAverage) {
-        this.starAverage = starAverage;
+    public void setNumberOfStar(Double numberOfStar) {
+        this.numberOfStar = numberOfStar;
+    }
+
+    public Integer getNumberOfEvaluator() {
+        return numberOfEvaluator;
+    }
+
+    public void setNumberOfEvaluator(Integer numberOfEvaluator) {
+        this.numberOfEvaluator = numberOfEvaluator;
     }
 
     public Double getLogitude() {

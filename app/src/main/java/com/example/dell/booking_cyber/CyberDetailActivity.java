@@ -108,7 +108,11 @@ public class CyberDetailActivity extends NavigationAdapter {
 
     private void renderView(CyberGamingDTO data) throws IOException{
         getSupportActionBar().setTitle(data.getName());
-        ratingbarCyber.setRating(Float.parseFloat(data.getStarAverage().toString()));
+        Double rating = Double.parseDouble("5");//default of rating in beginning
+        if(data.getNumberOfEvaluator() != null && data.getNumberOfEvaluator() != 0){
+            rating = (data.getNumberOfStar()/data.getNumberOfEvaluator());
+        }
+        ratingbarCyber.setRating(Float.parseFloat(rating.toString()));
         txtAddress.setText(data.getAddress());
         imgPoster.setImageBitmap(LocaleData.loadBitmap(data.getLogo()));
     }
