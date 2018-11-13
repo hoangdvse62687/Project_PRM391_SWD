@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class FirebaseInstanceIDService extends FirebaseInstanceIdService{
     private static final String TAG = "MyFirebaseIIDService";
@@ -13,7 +14,6 @@ public class FirebaseInstanceIDService extends FirebaseInstanceIdService{
 
         //Getting registration token
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-
         //Displaying token on logcat
         Log.d(TAG, "Refreshed token: " + refreshedToken);
 
