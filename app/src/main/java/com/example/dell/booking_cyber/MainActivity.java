@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
@@ -19,6 +20,9 @@ import com.example.dell.booking_cyber.DTO.ServiceRequestDetailDTO;
 import com.example.dell.booking_cyber.Fragment.GoogleMapApiFragment;
 import com.example.dell.booking_cyber.DTO.AccountDTO;
 import com.example.dell.booking_cyber.Model.ServiceRequestManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -65,12 +69,11 @@ public class MainActivity extends NavigationAdapter {
         progressDialog.setMessage("Đang tải...");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
-
+        FirebaseMessaging.getInstance().subscribeToTopic("all");
         // add google Map
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.googleMap, fragment);
         ft.commit();
-
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {

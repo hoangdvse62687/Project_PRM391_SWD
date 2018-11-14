@@ -26,6 +26,20 @@ public class CyberGamingDTO implements Serializable {
 
     private Boolean deleted;
 
+    public CyberGamingDTO(Integer id, String name, String logo, Integer accountId, String address, Double numberOfStar, Integer numberOfEvaluator, Double logitude, Double latitude, Boolean active, Boolean deleted) {
+        this.id = id;
+        this.name = name;
+        this.logo = logo;
+        this.accountId = accountId;
+        this.address = address;
+        this.numberOfStar = numberOfStar;
+        this.numberOfEvaluator = numberOfEvaluator;
+        this.logitude = logitude;
+        this.latitude = latitude;
+        this.active = active;
+        this.deleted = deleted;
+    }
+
     public Integer getId() {
         return id;
     }

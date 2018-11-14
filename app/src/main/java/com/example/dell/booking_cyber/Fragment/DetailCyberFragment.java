@@ -42,7 +42,7 @@ public class DetailCyberFragment extends Fragment {
     Spinner spnConfiguration;
 
     ConfigurationManager configurationManager = new ConfigurationManager();
-    List<ConfigurationDTO> configurationDTOs;
+    List<ConfigurationDTO> configurationDTOs = new ArrayList<>();
     Integer cyberId;
 
     public DetailCyberFragment() {

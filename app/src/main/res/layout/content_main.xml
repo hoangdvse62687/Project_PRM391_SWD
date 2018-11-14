@@ -47,7 +47,7 @@
                     android:textSize="13.4sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Chọn Khu Vực Bạn Muốn Tìm Kiếm"/>
+                    android:hint="Tìm kiếm quán net"/>
 
             </LinearLayout>
 

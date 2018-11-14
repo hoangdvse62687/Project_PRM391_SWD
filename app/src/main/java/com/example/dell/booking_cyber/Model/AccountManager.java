@@ -8,6 +8,7 @@ import com.example.dell.booking_cyber.Constant.LocaleData;
 import com.example.dell.booking_cyber.DTO.AccountDTO;
 import com.example.dell.booking_cyber.DTO.ConfigurationDTO;
 import com.example.dell.booking_cyber.DTO.CustomerDTO;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -84,10 +85,12 @@ public class AccountManager extends Activity {
             if (account != null) {
                 //matching data
                 if (postDataCheckLogin(account.getUsername(), account.getPassword())) {
+                    FirebaseMessaging.getInstance().subscribeToTopic("all");
                     return true;
                 }
             }
         }
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("all");
         return false;
     }
 
