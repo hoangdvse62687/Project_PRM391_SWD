@@ -48,6 +48,7 @@ public class LocaleData {
 
     public static final String VIETNAMESE_LANGUAGE = "vi";
     public static final String VIETNAMESE_COUNTRY = "VI";
+    public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS";
     public static final String HOUR_AND_MINUTE_FORMAT = "HH:mm";
     public static final String VIETNAMEESE_DATE_FORMAT = "dd/MM/yyyy";
     public static final String YOUR_EVALUATION = "Đánh giá của bạn";
@@ -61,13 +62,16 @@ public class LocaleData {
     public static final String EVALUATE_REQUIRED = "Xin hãy nhập đánh giá của bạn";
     public static final String LONG_EVALUATION = "Đánh giá của bạn quá dài";
     public static final String STAR_NOT_RATING = "Hãy chấm sao xếp hạng của bạn";
+    public static final String FIELD_EMPTY = "Xin hãy cung cấp đầy đủ thông tin";
+    public static final String BOOKING_ERROR = "Đã xảy ra lỗi, vui lòng thử lại";
+    public static final String BOOKING_SUCCESS = "Đặt chỗ thành công";
 
     public static final String GOING_DATE = "GOING_DATE";
     public static final String GOING_TIME = "GOING_TIME";
     public static final String DURATION = "DURATION";
 
     public static final String NO_OPTION = "...";
-
+    public static final double PRICE_PER_MINUTE = 50;
     public static int TIME_ZONE = 7;
 
     public static boolean HandleErrorMessageResponse(Integer statusResponse){

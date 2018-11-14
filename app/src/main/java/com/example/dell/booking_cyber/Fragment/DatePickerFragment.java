@@ -38,7 +38,7 @@ public class DatePickerFragment extends DialogFragment
     switch (editText) {
       case LocaleData.GOING_DATE:
         EditText edtGoingDate = getActivity().findViewById(R.id.edtGoingDate);
-        edtGoingDate.setText(String.valueOf(dayOfMonth) + "/" + String.valueOf(month) + "/" + String.valueOf(year));
+        edtGoingDate.setText(String.valueOf(dayOfMonth) + "/" + String.valueOf(month + 1) + "/" + String.valueOf(year));
         break;
       default:
         break;

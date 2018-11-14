@@ -1,10 +1,12 @@
 package com.example.dell.booking_cyber;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,15 +18,21 @@ import android.widget.TextView;
 
 import com.example.dell.booking_cyber.Constant.LocaleData;
 import com.example.dell.booking_cyber.DTO.ConfigurationDTO;
+import com.example.dell.booking_cyber.DTO.CustomerDTO;
 import com.example.dell.booking_cyber.DTO.CyberGamingDTO;
 import com.example.dell.booking_cyber.DTO.RoomDTO;
+import com.example.dell.booking_cyber.DTO.ServiceRequestDTO;
 import com.example.dell.booking_cyber.DTO.ServiceRequestDetailDTO;
 import com.example.dell.booking_cyber.Fragment.DatePickerFragment;
 import com.example.dell.booking_cyber.Fragment.TimePickerFragment;
+import com.example.dell.booking_cyber.Model.AccountManager;
 import com.example.dell.booking_cyber.Model.ConfigurationManager;
 import com.example.dell.booking_cyber.Model.RoomManager;
+import com.example.dell.booking_cyber.Model.ServiceRequestManager;
 
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -35,14 +43,18 @@ public class ServiceRequestNew extends AppCompatActivity {
   private EditText edtGoingDate, edtGoingTime, edtDuration;
   private Button btnBooking;
 
+  private AccountManager accountManager;
   private CyberGamingDTO cyberGamingDTO;
   private List<ConfigurationDTO> configurationList;
   private List<RoomDTO> roomList;
   private ServiceRequestDetailDTO serviceRequestDetailDTO;
+  private ServiceRequestDTO serviceRequestDTO;
 
   private int numberOfSeat, roomIndex, configurationIndex;
+  private double duration;
 
   private TextView txtRoomDescription, txtCpu, txtGpu, txtRam, txtMouse, txtKeyboard, txtHeadphone, txtPrice;
+  private TextView txtBookingError;
 
   Intent intent;
 
@@ -53,10 +65,16 @@ public class ServiceRequestNew extends AppCompatActivity {
 
     intent = getIntent();
 
+    getCurrentUser();
     identifyElements();
 //    setElementsShowAndDisplay();
     setElementsValueFromCreateNewService();
     setOnClickListener();
+  }
+
+  private void getCurrentUser() {
+    accountManager = new AccountManager(ServiceRequestNew.this);
+    accountManager.getAccount();
   }
 
   private void identifyElements() {
@@ -79,6 +97,7 @@ public class ServiceRequestNew extends AppCompatActivity {
     txtHeadphone = findViewById(R.id.txtHeadphone);
     txtPrice = findViewById(R.id.txtPrice);
     imgBack = findViewById(R.id.imgBack);
+    txtBookingError = findViewById(R.id.txtBookingError);
   }
 
   private void setOnClickListener() {
@@ -86,9 +105,11 @@ public class ServiceRequestNew extends AppCompatActivity {
     onGoingDateClick();
     onGoingTimeClick();
     onDurationClick();
+    onDurationChanged();
     onNumberOfSeatSelected();
     onRoomSelected();
     onConfigurationSelected();
+    onBookingClick();
   }
 
   private void onGoingTimeClick() {
@@ -163,7 +184,7 @@ public class ServiceRequestNew extends AppCompatActivity {
     }
 
     ArrayAdapter<String> configurationAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, configurationName);
-    spConfiguration.setAdapter(configurationAdapter );
+    spConfiguration.setAdapter(configurationAdapter);
 
     // Get room option
     RoomManager roomManager = new RoomManager();
@@ -176,16 +197,33 @@ public class ServiceRequestNew extends AppCompatActivity {
 
     ArrayAdapter<String> roomAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, roomName);
     spRoom.setAdapter(roomAdapter);
+
+    txtBookingError.setText("");
   }
 
   private void computePrice(int position) {
     if (position > -1) {
-      double price = (roomList.get(roomIndex).getPrice() + configurationList.get(configurationIndex).getPrice()) * numberOfSeat;
+      double price = (roomList.get(roomIndex).getPrice()
+                      + configurationList.get(configurationIndex).getPrice()
+                      + duration * LocaleData.PRICE_PER_MINUTE
+      ) * numberOfSeat;
       String strPrice = NumberFormat.getCurrencyInstance(new Locale(LocaleData.VIETNAMESE_LANGUAGE, LocaleData.VIETNAMESE_COUNTRY))
               .format(price).replace("US$", "");
       txtPrice.setText(strPrice);
     } else {
       txtPrice.setText(String.valueOf(LocaleData.NO_OPTION));
+    }
+  }
+
+  private void computeDuration() {
+    if (edtDuration.getText().toString().isEmpty()) {
+      duration = 0;
+    } else {
+      String[] parts = edtDuration.getText().toString().split(LocaleData.HOUR);
+      String strhour = parts[0];
+      String strMinute = parts[1].split(LocaleData.MINUTE)[0].replace(" ", "");
+      duration = Integer.parseInt(strhour) * 60 + Integer.parseInt(strMinute);
+      computePrice(1);
     }
   }
 
@@ -268,17 +306,126 @@ public class ServiceRequestNew extends AppCompatActivity {
     }
   }
 
-  private void onGoingDateChanged() {
-//    edtGoingDate.onchange
-  }
-
-  private void onGoingTimeChanged() {
-
-  }
-
   private void onDurationChanged() {
+    edtDuration.addTextChangedListener(new TextWatcher() {
+      @Override
+      public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+      }
+
+      @Override
+      public void onTextChanged(CharSequence s, int start, int before, int count) {
+        computeDuration();
+      }
+
+      @Override
+      public void afterTextChanged(Editable s) {
+
+      }
+    });
   }
+
+  private void onBookingClick() {
+    btnBooking.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (validateFields()) {
+          try {
+            CustomerDTO customerDTO = accountManager.customerDTO;
+            serviceRequestDTO = new ServiceRequestDTO(
+                    0,
+                    customerDTO.getId(),
+                    cyberGamingDTO.getId(),
+                    duration,
+                    numberOfSeat,
+                    false,
+                    false,
+                    null,
+                    new Date(),
+                    getGoingDate(),
+                    "",
+                    0,
+                    0.0,
+                    0.0,
+                    "QR code",
+                    Double.parseDouble(
+                            txtPrice.getText()
+                                    .toString()
+                                    .replace(".", "")
+                                    .replace(",00", "")
+                                    .replaceAll("\\s+", "")),
+                    roomList.get(roomIndex).getId(),
+                    configurationList.get(configurationIndex).getId(),
+                    false,
+                    true,
+                    false
+            );
+
+            System.out.println("Going date: " + serviceRequestDTO.getGoingDate());
+
+//             Call api to add new service request
+            ServiceRequestManager serviceRequestManager = new ServiceRequestManager();
+            if (serviceRequestManager.createServiceRequest(serviceRequestDTO)) {
+              // Return back
+              int green = ContextCompat.getColor(ServiceRequestNew.this, R.color.green);
+              txtBookingError.setTextColor(green);
+              txtBookingError.setText(LocaleData.BOOKING_SUCCESS);
+              finish();
+            } else {
+              txtBookingError.setText(LocaleData.BOOKING_ERROR);
+            }
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        }
+      }
+    });
+  }
+
+  private Date getGoingDate() {
+    Date goingTime = null;
+    try {
+      // Get day, mont, year
+      String[] strGoingDate = edtGoingDate.getText().toString().split("/");
+      String day = strGoingDate[0];
+      String month = strGoingDate[1];
+      String year = strGoingDate[2];
+
+      // Get hour, minute
+      String[] parts = edtGoingTime.getText().toString().split(LocaleData.HOUR);
+      int intHour = Integer.parseInt(parts[0]);
+      if (intHour >= 7) {
+        intHour -= LocaleData.TIME_ZONE;
+      } else {
+        intHour += (24 - LocaleData.TIME_ZONE);
+      }
+      String hour = String.valueOf(intHour);
+      String minute = parts[1].split(LocaleData.MINUTE)[0].replace(" ", "");
+
+      SimpleDateFormat simpleDateFormat = new SimpleDateFormat(LocaleData.DATE_FORMAT);
+      goingTime = simpleDateFormat.parse(year + "-" + month + "-" + day + "T" + hour + ":" + minute + ":00.000000");
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      return goingTime;
+    }
+  }
+
+  private boolean validateFields() {
+    boolean check = true;
+    if (
+        edtGoingDate.getText().toString().isEmpty()
+        || edtGoingTime.getText().toString().isEmpty()
+        || edtDuration.getText().toString().isEmpty()
+    ) {
+      txtBookingError.setText(LocaleData.FIELD_EMPTY);
+      check = false;
+    } else {
+      txtBookingError.setText("");
+    }
+    return check;
+  }
+
 //   private class AddAsyn extends AsyncTask<String, Void, Void>{
 //
 //     @Override

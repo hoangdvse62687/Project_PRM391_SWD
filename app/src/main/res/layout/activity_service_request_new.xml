@@ -589,6 +589,14 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/txtBookingError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Đây là lỗi"
+            android:gravity="center"
+            android:textColor="@color/red"/>
+
         <Button
             android:id="@+id/btnBooking"
             android:layout_width="350dp"

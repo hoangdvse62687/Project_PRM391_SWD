@@ -13,6 +13,7 @@ import com.example.dell.booking_cyber.DTO.ServiceRequestDetailDTO;
 import com.example.dell.booking_cyber.Model.AccountManager;
 import com.example.dell.booking_cyber.Model.ServiceRequestManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceRequestHistory extends AppCompatActivity {
@@ -38,6 +39,9 @@ public class ServiceRequestHistory extends AppCompatActivity {
     serviceRequestList = serviceRequestManager.getServiceRequestByCustomerId(
             accountManager.customerDTO.getId()
     );
+    if (serviceRequestList == null) {
+      serviceRequestList = new ArrayList<ServiceRequestDetailDTO>();
+    }
     ServiceRequestAdapter adapter = new ServiceRequestAdapter(ServiceRequestHistory.this, R.layout.service_request_item, serviceRequestList);
     listViewCybercore.setAdapter(adapter);
 
