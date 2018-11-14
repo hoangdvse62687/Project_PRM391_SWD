@@ -1,28 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginTop="30dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="100"
-    android:layout_marginBottom="5dp"
-    tools:context=".MainActivity">
-
-    <ImageView
-        android:id="@+id/imgBack"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/ic_arrow_back" />
+    tools:context=".TransactionActivity">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Lịch sử đặt máy"
-        android:textColor="@color/black"
+        android:id="@+id/txtClose"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:text="X"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         android:textSize="20dp"
-        android:gravity="center"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="20dp"/>
+        android:gravity="center"/>
 
     <ListView
         android:id="@+id/listViewCybercore"

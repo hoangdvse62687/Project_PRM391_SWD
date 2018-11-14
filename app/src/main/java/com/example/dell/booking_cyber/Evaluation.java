@@ -63,25 +63,11 @@ public class Evaluation extends AppCompatActivity {
   }
 
   private void setElementsShowAndDisplay() {
-    Bitmap cyberCoreIcon = getImageFromUrl(cyberGamingDTO.getLogo());
+    Bitmap cyberCoreIcon = LocaleData.getImageFromUrl(cyberGamingDTO.getLogo());
     if (cyberCoreIcon != null) { imgCybercoreIcon.setImageBitmap(cyberCoreIcon); }
     txtCybercoreName.setText(cyberGamingDTO.getName());
     txtAddress.setText(cyberGamingDTO.getAddress());
     txtEvaluationError.setText("");
-  }
-
-  private Bitmap getImageFromUrl(String... urls) {
-    String urldisplay = urls[0];
-    Bitmap bitmapResult = null;
-    if (urldisplay != null) {
-      try {
-        InputStream in = new java.net.URL(urldisplay).openStream();
-        bitmapResult = BitmapFactory.decodeStream(in);
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-    }
-    return bitmapResult;
   }
 
   private void onRatingStartListener() {

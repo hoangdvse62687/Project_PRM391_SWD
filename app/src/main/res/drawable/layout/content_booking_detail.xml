@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true"
+    android:layout_marginTop="20dp"
+    tools:context=".BookingDetailActivity">
+    <RelativeLayout
+        android:weightSum="5"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp">
+        <TextView
+            android:id="@+id/txtClose"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:text="X"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/header"
+            android:text="Phòng máy"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:textSize="26dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginLeft="30dp"
+            android:id="@+id/option"
+            android:layout_below="@+id/header"
+            android:text="Đã đặt:"
+            android:textColor="@color/black"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_toRightOf="@+id/option"
+            android:layout_below="@+id/header"
+            android:src="@drawable/gray_seat_st1"/>
+        <TextView
+            android:layout_marginLeft="30dp"
+            android:id="@+id/option2"
+            android:layout_toRightOf="@+id/icon"
+            android:layout_below="@+id/header"
+            android:text="Ghế trống:"
+            android:textColor="@color/black"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/icon2"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_toRightOf="@+id/option2"
+            android:layout_below="@+id/header"
+            android:src="@drawable/green_seat_st1"/>
+
+        <TextView
+            android:layout_marginLeft="30dp"
+            android:id="@+id/option3"
+            android:layout_toRightOf="@+id/icon2"
+            android:layout_below="@+id/header"
+            android:text="Bạn Đặt:"
+            android:textColor="@color/black"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/icon3"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_toRightOf="@+id/option3"
+            android:layout_below="@+id/header"
+            android:src="@drawable/yellow_seat_st1"/>
+        <View
+            android:layout_marginTop="20dp"
+            android:id="@+id/line"
+            android:layout_below="@+id/option3"
+            android:layout_height="1dp"
+            android:layout_width="match_parent"
+            android:background="@color/iron"/>
+
+        <RelativeLayout
+            android:background="@drawable/custom_border"
+            android:weightSum="5"
+            android:id="@+id/listSeat"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:orientation="vertical"
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp"
+            android:paddingTop="80dp">
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <include layout="@layout/base_list_view_component" />
+            </ScrollView>
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btnPurchase"
+            android:layout_below="@+id/listSeat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/button_bg_rounded_corners"
+            android:onClick="clickToPurchase"
+            android:text="Đặt"
+            android:layout_marginTop="19dp"
+            android:textColor="#fff" />
+    </RelativeLayout>
+</LinearLayout>

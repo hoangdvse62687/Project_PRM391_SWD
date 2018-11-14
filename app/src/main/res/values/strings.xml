@@ -16,4 +16,27 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="one_slot">1</string>
+    <string name="two_slot">2</string>
+    <string name="three_slot">3</string>
+    <string name="four_slot">4</string>
+    <string name="five_slot">5</string>
+    <string name="six_slot">6</string>
+    <string name="seven_slot">7</string>
+    <string name="eight_slot">8</string>
+    <string name="nine_slot">9</string>
+    <string name="ten_slot">10</string>
+
+    <string name="one_hour">1</string>
+    <string name="two_hour">2</string>
+    <string name="three_hour">3</string>
+    <string name="four_hour">4</string>
+    <string name="five_hour">5</string>
+
+    <string name="ten_minute">10</string>
+    <string name="tweenty_minute">20</string>
+    <string name="thirty_minute">30</string>
+    <string name="fourty_minute">40</string>
+    <string name="fifty_minute">50</string>
 </resources>

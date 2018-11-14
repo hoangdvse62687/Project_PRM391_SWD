@@ -3,29 +3,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ServiceRequestDetail">
+    tools:context=".BookingDetail2Activity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imgBack"
+        <TextView
+            android:id="@+id/txtClose"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:gravity="center"
-            android:src="@drawable/ic_arrow_back" />
+            android:text="X"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:gravity="center"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="5dp"
-            android:gravity="center"
-            android:text="Chi tiết đặt máy"
+            android:text="Chi tiết chỗ đặt"
             android:textColor="@color/black"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="5dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -66,7 +69,7 @@
                     android:paddingLeft="20dp"
                     android:paddingTop="5dp"
                     android:text="Địa chỉ(ngắn)"
-                    android:textColor="@color/black"
+                    android:textColor="@color/mainFontColor"
                     android:textSize="12dp" />
 
             </LinearLayout>
@@ -74,7 +77,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layoutEvaluation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -95,33 +97,51 @@
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:gravity="center"
                 android:paddingLeft="20dp"
                 android:paddingTop="5dp"
                 android:text="Đánh giá của bạn"
-                android:textColor="@color/black"
-                android:textSize="14dp" />
+                android:textColor="@color/mainFontColor"
+                android:textSize="14dp"
+                android:gravity="center"/>
 
             <LinearLayout
-                android:id="@+id/lEvaluation"
                 android:layout_width="200dp"
                 android:layout_height="50dp"
                 android:layout_weight="2"
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <RatingBar
-                    android:id="@+id/ratingStar"
+                <ImageView
+                    android:id="@+id/star01"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:numStars="5"
-                    android:scaleX="1.5"
-                    android:scaleY="1.5"
-                    android:theme="@style/RatingBar"
-                    style="@style/Base.Widget.AppCompat.RatingBar.Small"/>
+                    android:src="@drawable/ic_star"/>
+
+                <ImageView
+                    android:id="@+id/star02"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_star" />
+
+                <ImageView
+                    android:id="@+id/star03"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_star_half" />
+
+                <ImageView
+                    android:id="@+id/star04"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_star_border" />
+
+                <ImageView
+                    android:id="@+id/star05"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_star_border" />
 
             </LinearLayout>
-
         </LinearLayout>
 
         <LinearLayout
@@ -145,7 +165,18 @@
                     android:text="Chi tiết đặt chỗ"
                     android:textColor="@color/black"
                     android:textSize="17dp" />
-
+                <ImageView
+                    android:id="@+id/imgSaveBooking"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_save" />
+                <ImageView
+                    android:id="@+id/imgCancelEdit"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_cancel" />
                 <ImageView
                     android:id="@+id/imgEditBooking"
                     android:layout_width="120dp"
@@ -167,7 +198,7 @@
                 android:layout_height="0.1dp"
                 android:layout_marginTop="3dp"
                 android:layout_marginBottom="3dp"
-                android:background="@color/black" />
+                android:background="@color/gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -189,106 +220,29 @@
                     android:text="Số chỗ"
                     android:textColor="@color/black"
                     android:textSize="16dp" />
-
                 <TextView
                     android:id="@+id/txtnumOfSeat"
-                    android:layout_width="150dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:gravity="end"
-                    android:paddingRight="10sp"
-                    android:text="1"
+                    android:text="3"
                     android:textColor="@color/black"
                     android:textSize="16dp" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.1dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginBottom="3dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="6">
-
                 <ImageView
+                    android:id="@+id/imgEditSeats"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_room_service" />
-
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="Loại phòng"
-                    android:textColor="@color/black"
-                    android:textSize="16dp" />
-
-                <TextView
-                    android:id="@+id/txtRoom"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:gravity="end"
-                    android:paddingRight="10sp"
-                    android:text="phòng máy lạnh"
-                    android:textColor="@color/black"
-                    android:textSize="16dp" />
-
+                    android:src="@drawable/edit" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
                 android:layout_marginTop="3dp"
-                android:layout_marginBottom="3dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="6">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_center_focus_strong" />
-
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="Cấu hình máy"
-                    android:textColor="@color/black"
-                    android:textSize="16dp" />
-
-                <TextView
-                    android:id="@+id/txtConfiguration"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:gravity="end"
-                    android:paddingRight="10sp"
-                    android:text="máy siêu VIP"
-                    android:textColor="@color/black"
-                    android:textSize="16dp" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.1dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginBottom="3dp" />
-
+                android:layout_marginBottom="3dp"
+                android:background="@color/gray" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -312,23 +266,20 @@
 
                 <TextView
                     android:id="@+id/txtBookingDate"
-                    android:layout_width="150dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:gravity="end"
-                    android:paddingRight="10sp"
                     android:text="31/12/2012"
                     android:textColor="@color/black"
                     android:textSize="16dp" />
-
+                <ImageView
+                    android:id="@+id/imgEditDate"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/edit" />
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.1dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginBottom="3dp" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -340,75 +291,32 @@
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_today" />
+                    android:src="@drawable/ic_access_time" />
 
                 <TextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="Ngày đến"
+                    android:text="Thời gian bắt đầu"
                     android:textColor="@color/black"
                     android:textSize="16dp" />
 
                 <TextView
-                    android:id="@+id/txtGoingDate"
-                    android:layout_width="150dp"
+                    android:id="@+id/txtStartTime"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:gravity="end"
-                    android:paddingRight="10sp"
-                    android:text="31/12/2012..."
+                    android:text="3 giờ 15 phút"
                     android:textColor="@color/black"
                     android:textSize="16dp" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.1dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginBottom="3dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="6">
-
                 <ImageView
+                    android:id="@+id/imgEditStartTime"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_hourglass_empty" />
-
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="Thời gian đến"
-                    android:textColor="@color/black"
-                    android:textSize="16dp" />
-
-                <TextView
-                    android:id="@+id/txtGoingTime"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:gravity="end"
-                    android:paddingRight="10sp"
-                    android:text="2 giờ 00 phút..."
-                    android:textColor="@color/black"
-                    android:textSize="16dp" />
-
+                    android:src="@drawable/edit" />
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.1dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginBottom="3dp" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -432,12 +340,56 @@
 
                 <TextView
                     android:id="@+id/txtDuration"
-                    android:layout_width="150dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:gravity="end"
-                    android:paddingRight="10sp"
-                    android:text="3 giờ 15 phút..."
+                    android:text="3 giờ 15 phút"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+                <ImageView
+                    android:id="@+id/imgEditDuration"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/edit" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:background="@color/gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="6">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/sum" />
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="Tổng cộng"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/txtTotal"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="end"
+                    android:text="29.000 đ"
                     android:textColor="@color/black"
                     android:textSize="16dp" />
 
@@ -447,7 +399,48 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
                 android:layout_marginTop="3dp"
-                android:layout_marginBottom="3dp" />
+                android:layout_marginBottom="3dp"
+                android:background="@color/gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="6">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/discount" />
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="Giảm giá"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/txtDiscount"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="end"
+                    android:text="10 %"
+                    android:textColor="@color/green"
+                    android:textSize="16dp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:background="@color/gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -466,17 +459,16 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="Tổng cộng"
+                    android:text="Thành tiền"
                     android:textColor="@color/black"
                     android:textSize="16dp" />
 
                 <TextView
                     android:id="@+id/txtPrice"
-                    android:layout_width="150dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:gravity="end"
-                    android:paddingRight="10sp"
                     android:text="26.000 đ"
                     android:textColor="@color/black"
                     android:textSize="16dp" />
@@ -487,7 +479,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
                 android:layout_marginTop="3dp"
-                android:layout_marginBottom="3dp" />
+                android:layout_marginBottom="3dp"
+                android:background="@color/gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -506,30 +499,30 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="Trạng thái"
+                    android:text="Thanh toán"
                     android:textColor="@color/black"
                     android:textSize="16dp" />
 
                 <TextView
-                    android:id="@+id/txtStatus"
-                    android:layout_width="150dp"
+                    android:id="@+id/txtIsPaid"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:gravity="end"
-                    android:paddingRight="10sp"
                     android:text="Đã thanh toán"
                     android:textColor="@color/green"
                     android:textSize="16dp" />
 
             </LinearLayout>
 
-        </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:background="@color/gray" />
 
-        <ImageView
-            android:id="@+id/imgQrCode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/qr_code"/>
+        </LinearLayout>
 
     </LinearLayout>
 

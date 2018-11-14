@@ -24,24 +24,27 @@ public class LocaleData {
 
     public static final String AUTHENCATION_CHECKLOGIN_URL = "https://swd-backend-lamtt.herokuapp.com/authencation/checkLogin";
 
-    public static final String ACCOUNT_CREATE_URL = "https://swd-backend-lamtt.herokuapp.com/account";
-    public static final String ACCOUNT_GETALL_URL = "https://swd-backend-lamtt.herokuapp.com/account";
+    public static final String ACCOUNT_CREATE_URL = "https://swd-backend-lamtt.herokuapp.com/accounts";
+    public static final String ACCOUNT_GETALL_URL = "https://swd-backend-lamtt.herokuapp.com/accounts";
 
-    public static final String CUSTOMER_GETBYACCOUNTID_URL = "https://swd-backend-lamtt.herokuapp.com/customer/getByAccountId?accountId=";
-    public static final String CUSTOMER_CREATE_URL = "https://swd-backend-lamtt.herokuapp.com/customer";
+    public static final String CUSTOMER_GETBYACCOUNTID_URL = "https://swd-backend-lamtt.herokuapp.com/customers/getByAccountId?accountId=";
+    public static final String CUSTOMER_CREATE_URL = "https://swd-backend-lamtt.herokuapp.com/customers";
 
-    public static final String CYBER_GETALL_URL = "https://swd-backend-lamtt.herokuapp.com/cyber";
-    public static final String CYBER_GETCYBERBYID_URL = "https://swd-backend-lamtt.herokuapp.com/cyber/";
+    public static final String CYBER_GETALL_URL = "https://swd-backend-lamtt.herokuapp.com/cybers";
+    public static final String CYBER_GETCYBERBYID_URL = "https://swd-backend-lamtt.herokuapp.com/cybers/";
 
-    public static final String CONFIGURATION_GETBYCYBERID_URL = "https://swd-backend-lamtt.herokuapp.com/configuration/getByCyberId/";
+    public static final String CONFIGURATION_GETBYCYBERID_URL = "https://swd-backend-lamtt.herokuapp.com/configurations/getByCyberId/";
 
-    public static final String IMAGE_GETBYCYBERID_URL = "https://swd-backend-lamtt.herokuapp.com/image/getByCyberId?cyberId=";
+    public static final String IMAGE_GETBYCYBERID_URL = "https://swd-backend-lamtt.herokuapp.com/images/getByCyberId?cyberId=";
 
-    public static final String SERVICEREQUEST_GETBYACCOUNTID_URL = "https://swd-backend-lamtt.herokuapp.com/serviceRequest/getByAccountRequestId/";
-    public static final String SERVICEREQUEST_GETBYID_URL = "https://swd-backend-lamtt.herokuapp.com/serviceRequest/";
-    public static final String SERVICEREQUEST_UPDATE_COMPLATE_URL = "https://swd-backend-lamtt.herokuapp.com/serviceRequest/complete/";
+    public static final String SERVICEREQUEST_GETBYACCOUNTID_URL = "https://swd-backend-lamtt.herokuapp.com/serviceRequests/getByAccountRequestId/";
+    public static final String SERVICEREQUEST_GETBYID_URL = "https://swd-backend-lamtt.herokuapp.com/serviceRequests/";
+    public static final String SERVICEREQUEST_UPDATE_COMPLATE_URL = "https://swd-backend-lamtt.herokuapp.com/serviceRequests/complete/";
 
-    public static final String SERVICEREQUEST_UPDATE = "https://swd-backend-lamtt.herokuapp.com/serviceRequest/";
+    public static final String SERVICEREQUEST_UPDATE = "https://swd-backend-lamtt.herokuapp.com/serviceRequests/";
+    public static final String SERVICEREQUEST_CREATE = "https://swd-backend-lamtt.herokuapp.com/serviceRequests/";
+
+    public static final String ROOM_GETBY_CYBER_ID = "https://swd-backend-lamtt.herokuapp.com/rooms/getByCyberId/";
 
     public static final String VIETNAMESE_LANGUAGE = "vi";
     public static final String VIETNAMESE_COUNTRY = "VI";
@@ -58,6 +61,12 @@ public class LocaleData {
     public static final String EVALUATE_REQUIRED = "Xin hãy nhập đánh giá của bạn";
     public static final String LONG_EVALUATION = "Đánh giá của bạn quá dài";
     public static final String STAR_NOT_RATING = "Hãy chấm sao xếp hạng của bạn";
+
+    public static final String GOING_DATE = "GOING_DATE";
+    public static final String GOING_TIME = "GOING_TIME";
+    public static final String DURATION = "DURATION";
+
+    public static final String NO_OPTION = "...";
 
     public static int TIME_ZONE = 7;
 
@@ -109,5 +118,19 @@ public class LocaleData {
         byte [] b=baos.toByteArray();
         String temp= Base64.encodeToString(b, Base64.DEFAULT);
         return temp;
+    }
+
+    public static Bitmap getImageFromUrl(String... urls) {
+        String urldisplay = urls[0];
+        Bitmap bitmapResult = null;
+        if (urldisplay != null) {
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                bitmapResult = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return bitmapResult;
     }
 }

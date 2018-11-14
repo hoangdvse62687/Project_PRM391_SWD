@@ -2,10 +2,8 @@ package com.example.dell.booking_cyber;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,8 +20,6 @@ import com.example.dell.booking_cyber.Fragment.DetailCyberFragment;
 import com.example.dell.booking_cyber.Model.CybercoreManager;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class CyberDetailActivity extends NavigationAdapter {
     CyberGamingDTO detail;
@@ -88,8 +84,20 @@ public class CyberDetailActivity extends NavigationAdapter {
             ex.printStackTrace();
         }finally {
             progressDialog.dismiss();
+            onBookingClickListener();
         }
 
+    }
+
+    private void onBookingClickListener() {
+        btnBooking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CyberDetailActivity.this, ServiceRequestNew.class);
+                intent.putExtra("cyberGamingDTO", detail);
+                startActivity(intent);
+            }
+        });
     }
 
     private boolean getData(){
@@ -108,7 +116,7 @@ public class CyberDetailActivity extends NavigationAdapter {
 
     private void renderView(CyberGamingDTO data) throws IOException{
         getSupportActionBar().setTitle(data.getName());
-        ratingbarCyber.setRating(Float.parseFloat(data.getStarAverage().toString()));
+        ratingbarCyber.setRating(Float.parseFloat(data.getNumberOfStar().toString()));
         txtAddress.setText(data.getAddress());
         imgPoster.setImageBitmap(LocaleData.loadBitmap(data.getLogo()));
     }

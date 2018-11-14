@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <View
+        android:layout_height="1dp"
+        android:layout_width="match_parent"
+        android:background="@color/iron"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:id="@+id/imgUserComment"
+            android:contentDescription="desc"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/ic_user"
+            />
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/lblUsername"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/imgUserComment"
+            android:paddingBottom="10dp"
+            android:text="user@fpt.edu.vn"
+            android:textSize="16sp"
+            />
+        <RatingBar
+            android:layout_marginTop="12dp"
+            android:id="@+id/rbtUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:isIndicator="true"
+            android:layout_toRightOf="@+id/lblUsername"
+            android:numStars="5"
+            android:rating="2"
+            android:scaleX="1.0"
+            android:scaleY="1.0"
+            android:stepSize="1.0"
+            style="?android:attr/ratingBarStyleSmall"
+            android:theme="@style/RatingBar" />
+        <TextView
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/lblTimeComment"
+            android:layout_alignLeft="@+id/lblUsername"
+            android:layout_below="@+id/lblUsername"
+            android:text="20-10-2018"
+            android:singleLine="true"
+            android:textSize="16sp"
+            />
+        <TextView
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/lblDescription"
+            android:layout_alignLeft="@+id/lblTimeComment"
+            android:layout_below="@+id/lblTimeComment"
+            android:text="Đồ ăn ở đây hơi tệ"
+            android:singleLine="true"
+            android:textSize="16sp"/>
+    </RelativeLayout>
+</LinearLayout>
