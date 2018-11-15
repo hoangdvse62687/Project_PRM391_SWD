@@ -58,6 +58,9 @@ public class CyberDetailActivity extends NavigationAdapter {
                 try{
                     if(accountManager.isLogin()){
                         //add your booking action here
+                        Intent intent = new Intent(CyberDetailActivity.this, ServiceRequestNew.class);
+                        intent.putExtra("cyberGamingDTO", detail);
+                        startActivityForResult(intent, CREATE_SERVICE_REQUEST_CODE);
                     }else {
                         Intent intent1 = new Intent(CyberDetailActivity.this,LoginActivity.class);
                         startActivity(intent1);
@@ -87,20 +90,8 @@ public class CyberDetailActivity extends NavigationAdapter {
             ex.printStackTrace();
         }finally {
             progressDialog.dismiss();
-            onBookingClickListener();
         }
 
-    }
-
-    private void onBookingClickListener() {
-        btnBooking.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CyberDetailActivity.this, ServiceRequestNew.class);
-                intent.putExtra("cyberGamingDTO", detail);
-                startActivityForResult(intent, CREATE_SERVICE_REQUEST_CODE);
-            }
-        });
     }
 
     private boolean getData(){

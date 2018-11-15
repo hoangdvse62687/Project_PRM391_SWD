@@ -112,7 +112,7 @@ public class LocaleData {
         return cal.getTime();
     }
 
-    public static Bitmap renderQRCode(String barcode_content)throws WriterException{
+    public static Bitmap renderQRCode(String barcode_content){
         if(barcode_content == null && barcode_content.isEmpty()){
             return null;
         }

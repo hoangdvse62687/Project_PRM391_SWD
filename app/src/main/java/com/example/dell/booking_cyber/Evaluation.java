@@ -137,7 +137,6 @@ public class Evaluation extends AppCompatActivity {
           // Send put request
           ServiceRequestManager serviceRequestManager = new ServiceRequestManager();
           serviceRequestManager.ratingServiceRequest(serviceRequestDTO);
-
           // Oo back to service request detail & update UI
           Intent resultIntent = new Intent();
           resultIntent.putExtra("numOfStar", (int) ratingStar.getRating());

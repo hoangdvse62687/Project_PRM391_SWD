@@ -120,7 +120,7 @@ public class ServiceRequestManager {
         return false;
     }
 
-    public boolean createServiceRequest(ServiceRequestDTO dto) {
+    public ServiceRequestDTO createServiceRequest(ServiceRequestDTO dto) {
         boolean result = false;
         Gson gson = new GsonBuilder().setDateFormat(LocaleData.DATE_FORMAT).create();
         try {
@@ -140,14 +140,16 @@ public class ServiceRequestManager {
             String returnJson = reader.readLine();
             if(LocaleData.HandleErrorMessageResponse(response.getStatusLine().getStatusCode())){
                 if(returnJson != null){
-                   result = true;
+                    ServiceRequestDTO data = gson.fromJson(returnJson,ServiceRequestDTO.class);
+                    return data;
                 }
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
-          return result;
+
         }
+        return null;
     }
 
     public boolean updateServiceRequest(ServiceRequestDTO dto) {

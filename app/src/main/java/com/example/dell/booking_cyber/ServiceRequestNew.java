@@ -3,6 +3,7 @@ package com.example.dell.booking_cyber;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -399,7 +400,7 @@ public class ServiceRequestNew extends AppCompatActivity {
             false,
             null,
             new Date(),
-            getGoingDate(),
+            LocaleData.addHours(getGoingDate(),7),
             "",
             0,
             0.0,
@@ -417,8 +418,13 @@ public class ServiceRequestNew extends AppCompatActivity {
             true,
             false
     );
-
-    if (serviceRequestManager.createServiceRequest(serviceRequestDTO)) {
+    ServiceRequestDTO data = serviceRequestManager.createServiceRequest(serviceRequestDTO);
+    if (data != null && data.getId() != null) {
+      //Update QR code
+      Bitmap QR = LocaleData.renderQRCode(data.getId().toString());
+      String code = LocaleData.BitMapToString(QR);
+      data.setCode(code);
+      serviceRequestManager.updateServiceRequest(data);
       // Return back
       final AlertDialog.Builder bookingSuccessDialog = DialogHelper.createAlertDialogBuilder(
               ServiceRequestNew.this,
@@ -453,7 +459,7 @@ public class ServiceRequestNew extends AppCompatActivity {
             false,
             serviceRequestDetailDTO.getPaidDate(),
             serviceRequestDetailDTO.getDateRequest(),
-            getGoingDate(),
+            LocaleData.addHours(getGoingDate(),7),
             serviceRequestDetailDTO.getEvaluation(),
             serviceRequestDetailDTO.getStar(),
             serviceRequestDetailDTO.getLongitude(),
