@@ -2,10 +2,9 @@ package com.example.dell.booking_cyber;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.res.TypedArray;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,10 +21,10 @@ import com.example.dell.booking_cyber.Fragment.DetailCyberFragment;
 import com.example.dell.booking_cyber.Model.CybercoreManager;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class CyberDetailActivity extends NavigationAdapter {
+    private final int CREATE_SERVICE_REQUEST_CODE = 1;
+
     CyberGamingDTO detail;
     CybercoreManager cybercoreManager = new CybercoreManager();
     Integer IdCyber;
@@ -88,8 +87,20 @@ public class CyberDetailActivity extends NavigationAdapter {
             ex.printStackTrace();
         }finally {
             progressDialog.dismiss();
+            onBookingClickListener();
         }
 
+    }
+
+    private void onBookingClickListener() {
+        btnBooking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CyberDetailActivity.this, ServiceRequestNew.class);
+                intent.putExtra("cyberGamingDTO", detail);
+                startActivityForResult(intent, CREATE_SERVICE_REQUEST_CODE);
+            }
+        });
     }
 
     private boolean getData(){
@@ -108,6 +119,7 @@ public class CyberDetailActivity extends NavigationAdapter {
 
     private void renderView(CyberGamingDTO data) throws IOException{
         getSupportActionBar().setTitle(data.getName());
+
         Double rating = Double.parseDouble("5");//default of rating in beginning
         if(data.getNumberOfEvaluator() != null && data.getNumberOfEvaluator() != 0){
             rating = (data.getNumberOfStar()/data.getNumberOfEvaluator());
@@ -124,9 +136,16 @@ public class CyberDetailActivity extends NavigationAdapter {
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
-        finish();
-        startActivity(getIntent());
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case CREATE_SERVICE_REQUEST_CODE:
+                if (resultCode == RESULT_OK) {
+                  finish();
+                }
+                break;
+            default:
+                break;
+        }
     }
 }

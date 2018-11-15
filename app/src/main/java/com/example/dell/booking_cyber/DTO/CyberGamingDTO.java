@@ -3,6 +3,7 @@ package com.example.dell.booking_cyber.DTO;
 import java.io.Serializable;
 
 public class CyberGamingDTO implements Serializable {
+
     private Integer id;
 
     private String name;

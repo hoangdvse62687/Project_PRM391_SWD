@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="numberOfSlot">
+        <item>@string/one_slot</item>
+        <item>@string/two_slot</item>
+        <item>@string/three_slot</item>
+        <item>@string/four_slot</item>
+        <item>@string/five_slot</item>
+        <item>@string/six_slot</item>
+        <item>@string/seven_slot</item>
+        <item>@string/eight_slot</item>
+        <item>@string/nine_slot</item>
+        <item>@string/ten_slot</item>
+    </string-array>
+
+    <string-array name="hourRange">
+        <item>@string/one_hour</item>
+        <item>@string/two_hour</item>
+        <item>@string/three_hour</item>
+        <item>@string/four_hour</item>
+        <item>@string/five_hour</item>
+    </string-array>
+
+    <string-array name="minuteRange">
+        <item>@string/ten_minute</item>
+        <item>@string/tweenty_minute</item>
+        <item>@string/thirty_minute</item>
+        <item>@string/fourty_minute</item>
+        <item>@string/fifty_minute</item>
+    </string-array>
+</resources>

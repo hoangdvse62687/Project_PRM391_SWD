@@ -17,7 +17,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Lịch sử đặt chỗ"
+        android:text="Lịch sử đặt máy"
         android:textColor="@color/black"
         android:textSize="20dp"
         android:gravity="center"

@@ -46,6 +46,8 @@
         <activity android:name=".CustomerInformation" />
         <activity android:name=".ServiceRequestDetail" />
         <activity android:name=".Evaluation" />
+        <activity android:name=".DisplayQRResultActivity" />
+        <activity android:name=".ServiceRequestNew"></activity>
         <activity android:name=".DisplayQRResultActivity"></activity>
 
         <service

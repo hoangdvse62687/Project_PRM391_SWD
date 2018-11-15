@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:weightSum="100"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp">
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/loivao"
+            android:text="Lối vào"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:drawableBottom="@drawable/ic_loivao"/>
+        <RelativeLayout
+            android:layout_toRightOf="@+id/loivao"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/lblSeatSST"
+                android:layout_width="36dp"
+                android:layout_height="wrap_content"
+                android:text="Máy 1"
+                android:textSize="12dp"
+                android:textColor="@color/black" />
+
+            <ImageView
+                android:id="@+id/icSeat"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/lblSeatSST"
+                android:drawableStart="@drawable/gray_seat"
+                android:tag="1" />
+            <TextView
+                android:layout_marginLeft="20dp"
+                android:textSize="14sp"
+                android:id="@+id/lblSeatDescription"
+                android:layout_toRightOf="@+id/icSeat"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>
