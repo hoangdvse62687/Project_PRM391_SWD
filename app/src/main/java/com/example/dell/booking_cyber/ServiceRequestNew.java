@@ -400,7 +400,7 @@ public class ServiceRequestNew extends AppCompatActivity {
             false,
             null,
             new Date(),
-            LocaleData.addHours(getGoingDate(),7),
+            getGoingDate(),
             "",
             0,
             0.0,
@@ -459,7 +459,7 @@ public class ServiceRequestNew extends AppCompatActivity {
             false,
             serviceRequestDetailDTO.getPaidDate(),
             serviceRequestDetailDTO.getDateRequest(),
-            LocaleData.addHours(getGoingDate(),7),
+            getGoingDate(),
             serviceRequestDetailDTO.getEvaluation(),
             serviceRequestDetailDTO.getStar(),
             serviceRequestDetailDTO.getLongitude(),
@@ -514,11 +514,6 @@ public class ServiceRequestNew extends AppCompatActivity {
       // Get hour, minute
       String[] parts = edtGoingTime.getText().toString().split(LocaleData.HOUR);
       int intHour = Integer.parseInt(parts[0]);
-      if (intHour >= 7) {
-        intHour -= LocaleData.TIME_ZONE;
-      } else {
-        intHour += (24 - LocaleData.TIME_ZONE);
-      }
       String hour = String.valueOf(intHour);
       String minute = parts[1].split(LocaleData.MINUTE)[0].replace(" ", "");
 

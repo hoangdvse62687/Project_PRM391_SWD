@@ -1,5 +1,7 @@
 package com.example.dell.booking_cyber.DTO;
 
+import com.example.dell.booking_cyber.Constant.LocaleData;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -136,7 +138,7 @@ public class ServiceRequestDTO implements Serializable {
     }
 
     public Date getDateRequest() {
-        return dateRequest;
+        return LocaleData.addHours(dateRequest, -7);
     }
 
     public void setDateRequest(Date dateRequest) {
@@ -144,7 +146,7 @@ public class ServiceRequestDTO implements Serializable {
     }
 
     public Date getGoingDate() {
-        return goingDate;
+        return LocaleData.addHours(goingDate, -7);
     }
 
     public void setGoingDate(Date goingDate) {
