@@ -43,6 +43,7 @@ public class LocaleData {
 
     public static final String SERVICEREQUEST_UPDATE = "https://swd-backend-lamtt.herokuapp.com/serviceRequests/";
     public static final String SERVICEREQUEST_CREATE = "https://swd-backend-lamtt.herokuapp.com/serviceRequests/";
+    public static final String SERVICEREQUEST_DELETE = "https://swd-backend-lamtt.herokuapp.com/serviceRequests/";
 
     public static final String ROOM_GETBY_CYBER_ID = "https://swd-backend-lamtt.herokuapp.com/rooms/getByCyberId/";
 
@@ -63,8 +64,15 @@ public class LocaleData {
     public static final String LONG_EVALUATION = "Đánh giá của bạn quá dài";
     public static final String STAR_NOT_RATING = "Hãy chấm sao xếp hạng của bạn";
     public static final String FIELD_EMPTY = "Xin hãy cung cấp đầy đủ thông tin";
-    public static final String BOOKING_ERROR = "Đã xảy ra lỗi, vui lòng thử lại";
+    public static final String BOOKING_ERROR = "Đã xảy ra lỗi, vui lòng thử lại sau!";
     public static final String BOOKING_SUCCESS = "Đặt chỗ thành công";
+    public static final String DELETE_COMFIRMATION = "Bạn có chắc chắn muốn xóa lịch đặt máy?";
+    public static final String DELETE_SUCCESS = "Xóa thành công";
+    public static final String DELETE_FAILED = "Hiện tại không thể xóa, vui lòng thử lại sau!";
+    public static final String YES = "Có";
+    public static final String NO = "Không";
+    public static final String OK = "Đồng ý";
+    public static final String FINISH = "Xong";
 
     public static final String GOING_DATE = "GOING_DATE";
     public static final String GOING_TIME = "GOING_TIME";

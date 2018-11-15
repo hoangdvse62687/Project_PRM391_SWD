@@ -11,6 +11,7 @@ import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
@@ -18,7 +19,6 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.protocol.HTTP;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -147,6 +147,29 @@ public class ServiceRequestManager {
             ex.printStackTrace();
         } finally {
           return result;
+        }
+    }
+
+    public boolean deleteServiceRequestByid(Integer serviceRequestId) {
+        boolean result = false;
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpDelete httpDelete = new HttpDelete(LocaleData.SERVICEREQUEST_DELETE + serviceRequestId);
+
+            HttpResponse response = httpclient.execute(httpDelete);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+            String returnJson = reader.readLine();
+            if(LocaleData.HandleErrorMessageResponse(response.getStatusLine().getStatusCode())){
+                if(returnJson != null){
+                    result = true;
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            return result;
         }
     }
 }

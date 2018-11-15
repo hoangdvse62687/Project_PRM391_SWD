@@ -2,6 +2,7 @@ package com.example.dell.booking_cyber;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceRequestHistory extends AppCompatActivity {
+  private final int DELETE_REQUEST_CODE = 1;
   private ListView listViewCybercore;
   private ImageView imgBack;
   private List<ServiceRequestDetailDTO> serviceRequestList;
@@ -57,7 +59,7 @@ public class ServiceRequestHistory extends AppCompatActivity {
         Intent intent = new Intent(ServiceRequestHistory.this, ServiceRequestDetail.class);
         ServiceRequestDetailDTO serviceRequestDetailDTO = serviceRequestList.get(position);
         intent.putExtra("serviceRequestDetailDTO", serviceRequestDetailDTO);
-        startActivity(intent);
+        startActivityForResult(intent, DELETE_REQUEST_CODE);
       }
     });
   }
@@ -69,5 +71,20 @@ public class ServiceRequestHistory extends AppCompatActivity {
         finish();
       }
     });
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    switch (requestCode) {
+      case DELETE_REQUEST_CODE:
+        if (resultCode == RESULT_OK) {
+          finish();
+          startActivity(getIntent());
+        }
+        break;
+      default:
+        break;
+    }
   }
 }

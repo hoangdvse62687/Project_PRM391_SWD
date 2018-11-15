@@ -1,8 +1,9 @@
 package com.example.dell.booking_cyber;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -25,6 +26,7 @@ import com.example.dell.booking_cyber.DTO.ServiceRequestDTO;
 import com.example.dell.booking_cyber.DTO.ServiceRequestDetailDTO;
 import com.example.dell.booking_cyber.Fragment.DatePickerFragment;
 import com.example.dell.booking_cyber.Fragment.TimePickerFragment;
+import com.example.dell.booking_cyber.Helper.DialogHelper;
 import com.example.dell.booking_cyber.Model.AccountManager;
 import com.example.dell.booking_cyber.Model.ConfigurationManager;
 import com.example.dell.booking_cyber.Model.RoomManager;
@@ -35,6 +37,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Callable;
 
 public class ServiceRequestNew extends AppCompatActivity {
   private ImageView imgCybercoreIcon, imgBack;
@@ -361,18 +364,28 @@ public class ServiceRequestNew extends AppCompatActivity {
                     false
             );
 
-            System.out.println("Going date: " + serviceRequestDTO.getGoingDate());
-
 //             Call api to add new service request
             ServiceRequestManager serviceRequestManager = new ServiceRequestManager();
             if (serviceRequestManager.createServiceRequest(serviceRequestDTO)) {
               // Return back
-              int green = ContextCompat.getColor(ServiceRequestNew.this, R.color.green);
-              txtBookingError.setTextColor(green);
-              txtBookingError.setText(LocaleData.BOOKING_SUCCESS);
-              finish();
+              final AlertDialog.Builder bookingSuccessDialog = DialogHelper.createAlertDialogBuilder(
+                      ServiceRequestNew.this,
+                      LocaleData.BOOKING_SUCCESS,
+                      LocaleData.FINISH,
+                      new Callable() {
+                        @Override
+                        public Object call() throws Exception {
+                          setResult(Activity.RESULT_OK);
+                          finish();
+                          return null;
+                        }
+                      });
+              bookingSuccessDialog.create().show();
             } else {
-              txtBookingError.setText(LocaleData.BOOKING_ERROR);
+              final  AlertDialog.Builder bookingFailedDialog = DialogHelper.createAlertDialogBuilder(
+                      ServiceRequestNew.this,
+                      LocaleData.BOOKING_ERROR,
+                      LocaleData.OK);
             }
           } catch (Exception e) {
             e.printStackTrace();

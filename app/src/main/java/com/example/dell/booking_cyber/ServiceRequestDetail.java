@@ -1,6 +1,7 @@
 package com.example.dell.booking_cyber;
 
-import android.app.Dialog;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -17,19 +18,20 @@ import com.example.dell.booking_cyber.Constant.LocaleData;
 import com.example.dell.booking_cyber.DTO.CustomerDTO;
 import com.example.dell.booking_cyber.DTO.CyberGamingDTO;
 import com.example.dell.booking_cyber.DTO.ServiceRequestDetailDTO;
+import com.example.dell.booking_cyber.Helper.DialogHelper;
 import com.example.dell.booking_cyber.Model.AccountManager;
 import com.example.dell.booking_cyber.Model.CybercoreManager;
+import com.example.dell.booking_cyber.Model.ServiceRequestManager;
 
-import java.io.InputStream;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.Callable;
 
 public class ServiceRequestDetail extends AppCompatActivity {
   private final int EVALUATION_REQUEST_CODE = 1;
-
-  private Dialog dialog;
+  private final int EDIT_REQUEST_CODE = 2;
 
   private TextView txtCybercoreName, txtAddress, txtEvaluation;
   private TextView txtnumOfSeat, txtGoingDate, txtGoingTime, txtDuration, txtPrice, txtStatus, txtBookingDate, txtRoom, txtConfiguration;
@@ -52,9 +54,6 @@ public class ServiceRequestDetail extends AppCompatActivity {
 
     // Get intent & bundle
     intent = getIntent();
-
-    // Get dialog
-    dialog = new Dialog(this);
 
     serviceRequestDetailDTO = (ServiceRequestDetailDTO) intent.getSerializableExtra("serviceRequestDetailDTO");
 
@@ -209,48 +208,60 @@ public class ServiceRequestDetail extends AppCompatActivity {
   }
 
   private void onEditListener() {
-//    this,imgEditBooking.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View v) {
-//
-//      }
-//    });
+    imgEditBooking.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent intent = new Intent(ServiceRequestDetail.this, ServiceRequestNew.class);
+//        serviceRequestDetailDTO
+      }
+    });
   }
 
   private void onDeleteListener() {
-//    this.imgDeleteBooking.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View v) {
-//        dialog.setContentView(R.layout.delete_confirmation_popup);
-//
-//        // Identify elements in popup
-//        Button btnDelete = dialog.findViewById(R.id.btnDelete);
-//        Button btnGoBack = dialog.findViewById(R.id.btnGoback);
-//
-//        // Set listener for buttons
-//        btnDelete.setOnClickListener(new View.OnClickListener() {
-//          @Override
-//          public void onClick(View v) {
-////            BookingList.bookingList.remove(booking);
-//            finish();
-//            dialog.dismiss();
-//          }
-//        });
-//
-//        btnGoBack.setOnClickListener(new View.OnClickListener() {
-//          @Override
-//          public void onClick(View v) {
-//            dialog.dismiss();
-//          }
-//        });
-//
-//        // This is used to fill popup with the window
-//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//
-//        // Start dialog
-//        dialog.show();
-//      }
-//    });
+    final AlertDialog.Builder deleteConfirmationDialog = DialogHelper.createAlertDialogBuilder(
+            ServiceRequestDetail.this,
+            LocaleData.DELETE_COMFIRMATION,
+            LocaleData.YES,
+            LocaleData.NO,
+            new Callable() {
+              @Override
+              public Object call() throws Exception {
+                deleteServiceRequest();
+                return null;
+              }
+            });
+
+    imgDeleteBooking.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        deleteConfirmationDialog.create().show();
+      }
+    });
+  }
+
+  private void deleteServiceRequest() {
+    ServiceRequestManager serviceRequestManager = new ServiceRequestManager();
+    if (serviceRequestManager.deleteServiceRequestByid(serviceRequestDetailDTO.getId())) {
+      final AlertDialog.Builder successDialog = DialogHelper.createAlertDialogBuilder(
+              ServiceRequestDetail.this,
+              LocaleData.DELETE_SUCCESS,
+              LocaleData.FINISH,
+              new Callable() {
+                @Override
+                public Object call() throws Exception {
+                  finish();
+                  return null;
+                }
+              });
+      setResult(Activity.RESULT_OK);
+      successDialog.create().show();
+    } else {
+      final AlertDialog.Builder failedDialog = DialogHelper.createAlertDialogBuilder(
+              ServiceRequestDetail.this,
+              LocaleData.DELETE_FAILED,
+              LocaleData.OK);
+      failedDialog.create().show();
+    };
   }
 
   private void onEvaluateListener(boolean isExpired) {
@@ -282,6 +293,8 @@ public class ServiceRequestDetail extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
           ratingStar.setRating(data.getIntExtra("numOfStar", 0));
         }
+        break;
+      case EDIT_REQUEST_CODE:
         break;
       default:
         break;

@@ -2,6 +2,7 @@ package com.example.dell.booking_cyber;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
@@ -22,6 +23,8 @@ import com.example.dell.booking_cyber.Model.CybercoreManager;
 import java.io.IOException;
 
 public class CyberDetailActivity extends NavigationAdapter {
+    private final int CREATE_SERVICE_REQUEST_CODE = 1;
+
     CyberGamingDTO detail;
     CybercoreManager cybercoreManager = new CybercoreManager();
     Integer IdCyber;
@@ -95,7 +98,7 @@ public class CyberDetailActivity extends NavigationAdapter {
             public void onClick(View v) {
                 Intent intent = new Intent(CyberDetailActivity.this, ServiceRequestNew.class);
                 intent.putExtra("cyberGamingDTO", detail);
-                startActivity(intent);
+                startActivityForResult(intent, CREATE_SERVICE_REQUEST_CODE);
             }
         });
     }
@@ -133,9 +136,16 @@ public class CyberDetailActivity extends NavigationAdapter {
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
-        finish();
-        startActivity(getIntent());
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case CREATE_SERVICE_REQUEST_CODE:
+                if (resultCode == RESULT_OK) {
+                  finish();
+                }
+                break;
+            default:
+                break;
+        }
     }
 }
