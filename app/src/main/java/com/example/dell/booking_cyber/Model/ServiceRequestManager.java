@@ -129,7 +129,7 @@ public class ServiceRequestManager {
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(LocaleData.SERVICEREQUEST_CREATE);
 
-            // Add params to put request
+            // Add params to post request
             StringEntity params = new StringEntity(gson.toJson(dto));
             gson.toJson(dto);
             params.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
@@ -147,6 +147,36 @@ public class ServiceRequestManager {
             ex.printStackTrace();
         } finally {
           return result;
+        }
+    }
+
+    public boolean updateServiceRequest(ServiceRequestDTO dto) {
+        boolean result = false;
+        Gson gson = new GsonBuilder().setDateFormat(LocaleData.DATE_FORMAT).create();
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPut httpPut = new HttpPut(LocaleData.SERVICEREQUEST_UPDATE);
+
+            // Add params to put request
+            StringEntity params = new StringEntity(gson.toJson(dto));
+            gson.toJson(dto);
+            params.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+            httpPut.setEntity(params);
+
+            HttpResponse response = httpclient.execute(httpPut);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+            String returnJson = reader.readLine();
+            if(LocaleData.HandleErrorMessageResponse(response.getStatusLine().getStatusCode())){
+                if(returnJson != null){
+                    result = true;
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            return result;
         }
     }
 

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.example.dell.booking_cyber.Constant.LocaleData;
 import com.example.dell.booking_cyber.DTO.CustomerDTO;
 import com.example.dell.booking_cyber.DTO.CyberGamingDTO;
+import com.example.dell.booking_cyber.DTO.ServiceRequestDTO;
 import com.example.dell.booking_cyber.DTO.ServiceRequestDetailDTO;
 import com.example.dell.booking_cyber.Helper.DialogHelper;
 import com.example.dell.booking_cyber.Model.AccountManager;
@@ -212,7 +213,8 @@ public class ServiceRequestDetail extends AppCompatActivity {
       @Override
       public void onClick(View v) {
         Intent intent = new Intent(ServiceRequestDetail.this, ServiceRequestNew.class);
-//        serviceRequestDetailDTO
+        intent.putExtra("serviceRequestDetailDTO", serviceRequestDetailDTO);
+        startActivityForResult(intent, EDIT_REQUEST_CODE);
       }
     });
   }
@@ -295,9 +297,49 @@ public class ServiceRequestDetail extends AppCompatActivity {
         }
         break;
       case EDIT_REQUEST_CODE:
+        if (resultCode == RESULT_OK) {
+          updateUiWhenEditSuccessful(data);
+        }
         break;
       default:
         break;
     }
+  }
+
+  private void updateUiWhenEditSuccessful(Intent data) {
+    ServiceRequestManager serviceRequestManager = new ServiceRequestManager();
+    serviceRequestDetailDTO = serviceRequestManager.getServiceRequestById(serviceRequestDetailDTO.getId());
+
+    String numberOfSeat = serviceRequestDetailDTO.getNumberOfServiceSlot().toString();
+    String room = serviceRequestDetailDTO.getRoomname();
+    String configuration = serviceRequestDetailDTO.getConfigurationName();
+
+    String hour, minute;
+
+    String goingDate = new SimpleDateFormat(LocaleData.VIETNAMEESE_DATE_FORMAT)
+            .format(serviceRequestDetailDTO.getGoingDate());
+
+    String goingTime = new SimpleDateFormat(LocaleData.HOUR_AND_MINUTE_FORMAT)
+            .format(serviceRequestDetailDTO.getGoingDate());
+    goingTime = goingTime.replace(":", LocaleData.HOUR + " ") + LocaleData.MINUTE;
+
+    hour = String.valueOf((int) (serviceRequestDetailDTO.getDuration() / 60));
+    minute = String.valueOf((int) (serviceRequestDetailDTO.getDuration() % 60));
+
+    String duration = (Integer.parseInt(hour) > 0) ?
+            hour + LocaleData.HOUR + " " + minute + LocaleData.MINUTE
+            : minute + LocaleData.MINUTE;
+
+    String price = NumberFormat.getCurrencyInstance(new Locale(LocaleData.VIETNAMESE_LANGUAGE, LocaleData.VIETNAMESE_COUNTRY))
+            .format(serviceRequestDetailDTO.getTotalPrice()).replace("US$", "");
+
+    txtnumOfSeat.setText(numberOfSeat);
+    txtRoom.setText(room);
+    txtConfiguration.setText(configuration);
+    txtGoingDate.setText(goingDate);
+    txtGoingTime.setText(goingTime);
+    txtDuration.setText(duration);
+    txtPrice.setText(price);
+    txtStatus.setText(LocaleData.WAITING_TO_APPROVED);
   }
 }

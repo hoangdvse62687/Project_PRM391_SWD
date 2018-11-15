@@ -29,6 +29,7 @@ import com.example.dell.booking_cyber.Fragment.TimePickerFragment;
 import com.example.dell.booking_cyber.Helper.DialogHelper;
 import com.example.dell.booking_cyber.Model.AccountManager;
 import com.example.dell.booking_cyber.Model.ConfigurationManager;
+import com.example.dell.booking_cyber.Model.CybercoreManager;
 import com.example.dell.booking_cyber.Model.RoomManager;
 import com.example.dell.booking_cyber.Model.ServiceRequestManager;
 
@@ -41,7 +42,7 @@ import java.util.concurrent.Callable;
 
 public class ServiceRequestNew extends AppCompatActivity {
   private ImageView imgCybercoreIcon, imgBack;
-  private TextView txtCybercoreName, txtAddress;
+  private TextView txtCybercoreName, txtAddress, txtBookingTitle;
   private Spinner spNumOfSeat, spRoom, spConfiguration;
   private EditText edtGoingDate, edtGoingTime, edtDuration;
   private Button btnBooking;
@@ -70,7 +71,7 @@ public class ServiceRequestNew extends AppCompatActivity {
 
     getCurrentUser();
     identifyElements();
-//    setElementsShowAndDisplay();
+    getCyberGaming();
     setElementsValueFromCreateNewService();
     setOnClickListener();
   }
@@ -84,6 +85,7 @@ public class ServiceRequestNew extends AppCompatActivity {
     imgCybercoreIcon = findViewById(R.id.imgCybercoreIcon);
     txtCybercoreName = findViewById(R.id.txtCybercoreName);
     txtAddress = findViewById(R.id.txtAddress);
+    txtBookingTitle = findViewById(R.id.txtBookingTitle);
     spNumOfSeat = findViewById(R.id.spNumOfSeat);
     spRoom = findViewById(R.id.spRoom);
     spConfiguration = findViewById(R.id.spConfiguration);
@@ -163,15 +165,45 @@ public class ServiceRequestNew extends AppCompatActivity {
     dialogFragment.show(getSupportFragmentManager(), "Chọn ngày");
   }
 
+  private void getCyberGaming() {
+    // Get cyber gaming object from creating new service request
+    cyberGamingDTO = (CyberGamingDTO) intent.getSerializableExtra("cyberGamingDTO");
+
+    // Get cyber gaming object from edit service request
+    if (cyberGamingDTO == null) {
+      serviceRequestDetailDTO = (ServiceRequestDetailDTO) intent.getSerializableExtra("serviceRequestDetailDTO");
+      CybercoreManager cybercoreManager = new CybercoreManager();
+      cyberGamingDTO = cybercoreManager.getCyberById(serviceRequestDetailDTO.getCyberGamingId());
+    }
+  }
+
   // Used when customer want to edit the going or confirmed service request
   private void setElementsValueFromEdit() {
+    String hour, minute;
+    String goingDate = new SimpleDateFormat(LocaleData.VIETNAMEESE_DATE_FORMAT)
+            .format(serviceRequestDetailDTO.getGoingDate());
 
+    String goingTime = new SimpleDateFormat(LocaleData.HOUR_AND_MINUTE_FORMAT)
+            .format(serviceRequestDetailDTO.getGoingDate());
+    goingTime = goingTime.replace(":", LocaleData.HOUR + " ") + LocaleData.MINUTE;
+
+    hour = String.valueOf((int) (serviceRequestDetailDTO.getDuration() / 60));
+    minute = String.valueOf((int) (serviceRequestDetailDTO.getDuration() % 60));
+
+    String duration = (Integer.parseInt(hour) > 0) ?
+            hour + LocaleData.HOUR + " " + minute + LocaleData.MINUTE
+            : minute + LocaleData.MINUTE;
+
+    edtGoingDate.setText(goingDate);
+    edtGoingTime.setText(goingTime);
+    edtDuration.setText(duration);
+
+    txtBookingTitle.setText(LocaleData.UPDATE_SERVICE_REQUEST_TITLE);
+    btnBooking.setText(LocaleData.UPDATE_SERVICE_REQUEST);
   }
 
   // Used when customer want to request new service
   private void setElementsValueFromCreateNewService() {
-    cyberGamingDTO = (CyberGamingDTO) intent.getSerializableExtra("cyberGamingDTO");
-
     // Set icon, name & address of cybergaming
     imgCybercoreIcon.setImageBitmap(LocaleData.getImageFromUrl(cyberGamingDTO.getLogo()));
     txtCybercoreName.setText(cyberGamingDTO.getName());
@@ -200,6 +232,11 @@ public class ServiceRequestNew extends AppCompatActivity {
 
     ArrayAdapter<String> roomAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, roomName);
     spRoom.setAdapter(roomAdapter);
+
+    // Render and set UI from edit service request
+    if (serviceRequestDetailDTO != null) {
+      setElementsValueFromEdit();
+    }
 
     txtBookingError.setText("");
   }
@@ -334,65 +371,129 @@ public class ServiceRequestNew extends AppCompatActivity {
       public void onClick(View v) {
         if (validateFields()) {
           try {
-            CustomerDTO customerDTO = accountManager.customerDTO;
-            serviceRequestDTO = new ServiceRequestDTO(
-                    0,
-                    customerDTO.getId(),
-                    cyberGamingDTO.getId(),
-                    duration,
-                    numberOfSeat,
-                    false,
-                    false,
-                    null,
-                    new Date(),
-                    getGoingDate(),
-                    "",
-                    0,
-                    0.0,
-                    0.0,
-                    "QR code",
-                    Double.parseDouble(
-                            txtPrice.getText()
-                                    .toString()
-                                    .replace(".", "")
-                                    .replace(",00", "")
-                                    .replaceAll("\\s+", "")),
-                    roomList.get(roomIndex).getId(),
-                    configurationList.get(configurationIndex).getId(),
-                    false,
-                    true,
-                    false
-            );
-
-//             Call api to add new service request
             ServiceRequestManager serviceRequestManager = new ServiceRequestManager();
-            if (serviceRequestManager.createServiceRequest(serviceRequestDTO)) {
-              // Return back
-              final AlertDialog.Builder bookingSuccessDialog = DialogHelper.createAlertDialogBuilder(
-                      ServiceRequestNew.this,
-                      LocaleData.BOOKING_SUCCESS,
-                      LocaleData.FINISH,
-                      new Callable() {
-                        @Override
-                        public Object call() throws Exception {
-                          setResult(Activity.RESULT_OK);
-                          finish();
-                          return null;
-                        }
-                      });
-              bookingSuccessDialog.create().show();
+            CustomerDTO customerDTO = accountManager.customerDTO;
+
+            if (serviceRequestDetailDTO == null) {
+              createNewServiceRequest(serviceRequestManager, customerDTO);
             } else {
-              final  AlertDialog.Builder bookingFailedDialog = DialogHelper.createAlertDialogBuilder(
-                      ServiceRequestNew.this,
-                      LocaleData.BOOKING_ERROR,
-                      LocaleData.OK);
+              updateServiceRequest(serviceRequestManager, customerDTO);
             }
+
           } catch (Exception e) {
             e.printStackTrace();
           }
         }
       }
     });
+  }
+
+  private void createNewServiceRequest(ServiceRequestManager serviceRequestManager, CustomerDTO customerDTO) {
+    serviceRequestDTO = new ServiceRequestDTO(
+            0,
+            customerDTO.getId(),
+            cyberGamingDTO.getId(),
+            duration,
+            numberOfSeat,
+            false,
+            false,
+            null,
+            new Date(),
+            getGoingDate(),
+            "",
+            0,
+            0.0,
+            0.0,
+            "QR code",
+            Double.parseDouble(
+                    txtPrice.getText()
+                            .toString()
+                            .replace(".", "")
+                            .replace(",00", "")
+                            .replaceAll("\\s+", "")),
+            roomList.get(roomIndex).getId(),
+            configurationList.get(configurationIndex).getId(),
+            false,
+            true,
+            false
+    );
+
+    if (serviceRequestManager.createServiceRequest(serviceRequestDTO)) {
+      // Return back
+      final AlertDialog.Builder bookingSuccessDialog = DialogHelper.createAlertDialogBuilder(
+              ServiceRequestNew.this,
+              LocaleData.BOOKING_SUCCESS,
+              LocaleData.FINISH,
+              new Callable() {
+                @Override
+                public Object call() throws Exception {
+                  setResult(Activity.RESULT_OK);
+                  finish();
+                  return null;
+                }
+              });
+      bookingSuccessDialog.create().show();
+    } else {
+      final  AlertDialog.Builder bookingFailedDialog = DialogHelper.createAlertDialogBuilder(
+              ServiceRequestNew.this,
+              LocaleData.BOOKING_ERROR,
+              LocaleData.OK);
+      bookingFailedDialog.create().show();
+    }
+  }
+
+  private void updateServiceRequest(ServiceRequestManager serviceRequestManager, CustomerDTO customerDTO) {
+    serviceRequestDTO = new ServiceRequestDTO(
+            serviceRequestDetailDTO.getId(),
+            serviceRequestDetailDTO.getUserId(),
+            cyberGamingDTO.getId(),
+            duration,
+            numberOfSeat,
+            false,
+            false,
+            serviceRequestDetailDTO.getPaidDate(),
+            serviceRequestDetailDTO.getDateRequest(),
+            getGoingDate(),
+            serviceRequestDetailDTO.getEvaluation(),
+            serviceRequestDetailDTO.getStar(),
+            serviceRequestDetailDTO.getLongitude(),
+            serviceRequestDetailDTO.getLatitude(),
+            "",
+            Double.parseDouble(
+                    txtPrice.getText()
+                            .toString()
+                            .replace(".", "")
+                            .replace(",00", "")
+                            .replaceAll("\\s+", "")),
+            roomList.get(roomIndex).getId(),
+            configurationList.get(configurationIndex).getId(),
+            false,
+            serviceRequestDetailDTO.getActive(),
+            serviceRequestDetailDTO.getDeleted()
+    );
+
+    if (serviceRequestManager.updateServiceRequest(serviceRequestDTO)) {
+      // Return back
+      final AlertDialog.Builder bookingEditSuccessDialog = DialogHelper.createAlertDialogBuilder(
+              ServiceRequestNew.this,
+              LocaleData.BOOKING_UPDATE_SUCCESS,
+              LocaleData.FINISH,
+              new Callable() {
+                @Override
+                public Object call() throws Exception {
+                  setResult(Activity.RESULT_OK);
+                  finish();
+                  return null;
+                }
+              });
+      bookingEditSuccessDialog.create().show();
+    } else {
+      final  AlertDialog.Builder bookingUpdateFailedDialog = DialogHelper.createAlertDialogBuilder(
+              ServiceRequestNew.this,
+              LocaleData.BOOKING_ERROR,
+              LocaleData.OK);
+      bookingUpdateFailedDialog.create().show();
+    }
   }
 
   private Date getGoingDate() {
